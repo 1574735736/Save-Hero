@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "4eefb959-3684-4657-8dd4-7ad9bcb5fecf",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 319,
+  "height": 141,
+  "platformSettings": {},
+  "subMetas": {
+    "img_vpnConnectBg": {
+      "ver": "1.0.4",
+      "uuid": "3beceb17-3241-42e3-a50a-352d921ae4ab",
+      "rawTextureUuid": "4eefb959-3684-4657-8dd4-7ad9bcb5fecf",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 0,
+      "width": 315,
+      "height": 141,
+      "rawWidth": 319,
+      "rawHeight": 141,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

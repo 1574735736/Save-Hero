@@ -1,0 +1,100 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[-230,360]
+    },
+    "archend":
+    {
+        "typeid":2,
+        "arch_pos":[220,-360]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":14,
+        "arch_start_people_count":12,
+        "outer_people_list":[
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[ 150,130]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[170,130]
+            }  ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-210, -350]
+            }  ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-190, -350]
+            }  
+        ]   
+        
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+ 
+            {
+                  
+                "typeid":8,
+                "obj_pos":[160,100] 
+                
+            }     ,{
+                  
+                "typeid":8,
+                "obj_pos":[ -200, -380] 
+                
+            }  
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [ 
+            
+            {
+                "typeid":11,
+                "initpos":[160,260],
+                "initrotation":0, "rotate":
+                {
+                    "rotateing_rate":2
+                } 
+                ,"circlemove":{
+                    "rotateing_rate":0.3,      
+                    "ciclemove_centerpt":[160,100]
+                }
+             
+            },{
+                "typeid":11,
+                "initpos":[-200,-220],
+                "initrotation":0, "rotate":
+                {
+                    "rotateing_rate":2
+                } 
+                ,"circlemove":{
+                    "rotateing_rate":0.3,      
+                    "ciclemove_centerpt":[-200, -380]
+                }
+             
+            }
+        ]
+
+    }
+}

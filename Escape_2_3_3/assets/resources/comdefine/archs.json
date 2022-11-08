@@ -1,0 +1,468 @@
+{
+    "desc":"建筑类型定义,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
+    "archtypes":
+    [
+        {
+            "desc1":"开始建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
+            "type":1,
+            "arch_pic":"game/arch/4", 
+            "arch_size":[260,330],
+            "joint_pic":"game/slop/2",
+            "joint_relative_pos":[110,55],
+            "joint_size":[60,60], 
+            "people_info_relative_pos":[10,120],
+            "arch_start_peoples":
+            {
+                "desc1":"relative_startx:等待解救人在建筑中开始的相对x坐标,relative_endx:等待解救人在建筑中结束的相对x坐标",
+                "relative_startx":-80,
+                "relative_endx":80,
+                "relative_y":20, 
+                "valid_w":40,
+                "valid_h":60,
+                "valid_center_releative_pos":[0,30],
+                "people_id_list":[1,2]
+            }
+        },
+        {
+            "type":2,
+            "desc1":"结束建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
+            "arch_pic":"game/arch/3", 
+            "arch_size":[320,315],
+            "joint_pic":"game/slop/1",
+            "joint_pos":[-115, 45],
+            "joint_size":[50,50],
+            "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
+            "joint_touch_valid_range":60,
+            "joint_relative_pos":[-115, 45],
+            "joint_radius":18,
+            "desc3":"用户数目信息位置",
+            "people_info_relative_pos":[10,200],
+            "arch_success_people_pos":
+            {
+                "desc":"解救结束点人物在startx到endx,py位置中",
+                "relative_startx":-80,
+                "relative_endx":80,
+                "relative_y":60
+            }
+        },
+        {
+            "type":3,
+            "desc1":"结束建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
+            "arch_pic":"game/arch/3", 
+            "arch_size":[320,315],
+            "joint_pic":"game/slop/1", 
+            "joint_size":[50,50],
+            "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
+            "joint_touch_valid_range":60,
+            "joint_relative_pos":[115, 45],
+            "joint_radius":18,
+            "desc3":"用户数目信息位置",
+            "people_info_relative_pos":[-50,220],
+            "arch_success_people_pos":
+            {
+                "desc":"解救结束点人物在startx到endx,py位置中",
+                "relative_startx":-80,
+                "relative_endx":80,
+                "relative_y":60
+            }
+        },
+        {
+            "desc1":"开始建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
+            "type":4,
+            "arch_pic":"game/arch/4", 
+            "arch_size":[260,330],
+            "joint_pic":"game/slop/2",
+            "people_info_relative_pos":[10,120],
+            "joint_relative_pos":[-110,55],
+            "joint_size":[60,60], 
+            "arch_start_peoples":
+            {
+                "desc1":"relative_startx:等待解救人在建筑中开始的相对x坐标,relative_endx:等待解救人在建筑中结束的相对x坐标",
+                "relative_startx":-80,
+                "relative_endx":80,
+                "relative_y":20, 
+                "valid_w":40,
+                "valid_h":60,
+                "valid_center_releative_pos":[0,30],
+                "people_id_list":[1,2]
+            }
+        }
+    ],
+    "touchmovejoints":
+    [
+        {
+            "desc":"按下鼠标移动的时候的连接点,joint_pic:连接点图片，joint_size：连接点尺寸，joint_radius：连接点半径,joint_touch_valid_range:移动到中途的时候有效区域范围",
+            "type":1,
+            "joint_pic":"game/slop/1", 
+            "joint_size":[50,50],
+            "joint_radius":18,
+            "joint_touch_valid_range":60
+        }
+
+    ],
+    "obstacles":
+    [
+        {
+            "desc":" type:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":1,
+            "namedesc":"小矩形",
+            "obj_pic":"game/obstacle/7",
+            "obj_pic_size":[120,120],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-60,-60],
+            "obj_valid_size":[120,120]
+            
+        } ,
+        {
+            "desc":"为圆形,obj_type为2，obj_valid_center_pt为圆心点，obj_radius为圆半径",
+            "type":2,
+            "namedesc":"小圆形",
+            "obj_pic":"game/obstacle/t4",
+            "obj_pic_size":[100,100],
+            "obj_type":2,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_center_pt":[0,0],
+            "obj_radius":50
+        } ,
+        {
+            "desc":"为圆形,obj_type为2，obj_valid_center_pt为圆心点，obj_radius为圆半径",
+            "type":3,
+            "namedesc":"大圆形",
+            "obj_pic":"game/obstacle/t4",
+            "obj_pic_size":[200,200],
+            "obj_type":2,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_center_pt":[0,0],
+            "obj_radius":100
+        },
+        {
+            "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":4,
+            "namedesc":"长矩形",
+            "obj_pic":"game/obstacle/17",
+            "obj_pic_size":[300,100],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-150,-50],
+            "obj_valid_size":[300,100]
+            
+        },
+        {
+            "desc":"为圆形,obj_type为2，obj_valid_center_pt为圆心点，obj_radius为圆半径",
+            "type":5,
+            "namedesc":"中等圆形",
+            "obj_pic":"game/obstacle/t4",
+            "obj_pic_size":[150,150],
+            "obj_type":2,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_center_pt":[0,0],
+            "obj_radius":75
+        },
+        {
+            "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":6,
+            "namedesc":"细长矩形",
+            "obj_pic":"game/obstacle/17",
+            "obj_pic_size":[400,60],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-200,-30],
+            "obj_valid_size":[400,60]
+            
+        },
+        {
+            "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":7,
+            "namedesc":"竖向长矩形",
+            "obj_pic":"game/obstacle/17",
+            "obj_pic_size":[60,200],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-30,-100],
+            "obj_valid_size":[60,200]
+            
+        },
+        {
+            "desc":"为圆形,obj_type为2，obj_valid_center_pt为圆心点，obj_radius为圆半径",
+            "type":8,
+            "namedesc":"超小圆形",
+            "obj_pic":"game/obstacle/t4",
+            "obj_pic_size":[60,60],
+            "obj_type":2,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_center_pt":[0,0],
+            "obj_radius":30
+        } ,
+        {
+            "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":9,
+            "namedesc":"超小矩形",
+            "obj_pic":"game/obstacle/7",
+            "obj_pic_size":[60,60],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-30,-30],
+            "obj_valid_size":[60,60]
+            
+        },
+        {
+            "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
+            "type":10,
+            "namedesc":"普通长矩形",
+            "obj_pic":"game/obstacle/17",
+            "obj_pic_size":[200,50],
+            "obj_type":1,
+            "obj_type_desc":"1:矩形，2：圆形",
+            "obj_valid_relative_left_pt":[-100,-25],
+            "obj_valid_size":[200,50]
+            
+        }
+    ],
+    "killobjs":
+    [
+        {
+            "type":1,
+            "namedesc":"小横线",
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "desc1":"obj_pic-物体图片，anchropt中心点位置，obj_pic_size-物体尺寸,initpos-物体初始位置,initrotation-物体初始角度",
+            "obj_pic":"game/slop/31",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[360,15],
+            "desc2":"bkill-是否碰撞后杀死人物,为0碰到不会杀死，为1会杀死", 
+            "desc3":"rotate-物体是否旋转，rotateing_rate没：每0.1秒旋转角度",
+            "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)" 
+
+        },
+        {
+            "type":2,
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人,shapeobj:存在的时候说明为可以遮挡子弹和射线的物体",
+            "bgraphic":0,
+            "obj_pic":"game/obstacle/8",
+            "namedesc":"小齿轮",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[100,102],
+            "shapeobj":1,
+            
+            "killinfo":
+            {
+                "desc":"valid_killtype为2-代表杀死是圆形，valid_radius为圆形半径,   为3-使用valid_w,valid_h自定义矩形区域 ",
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":2,
+                "valid_radius":50,
+                "valid_w":100,
+                "valid_h":100
+            }
+            
+
+        },
+        {
+            "type":3,
+            "namedesc":"小长方形齿轮",
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "obj_pic":"game/killobj/t4",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[200,60],
+            "shapeobj":1,
+           
+            "killinfo":
+            {
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":3,
+                "valid_radius":50,
+                "valid_w":180,
+                "valid_h":50
+            }
+          
+
+        },
+        {
+            "type":4,
+            "desc":"小炸弹",
+            "bgraphic":0,
+            "obj_pic":"/game/boombeffect/bomb1",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[50,52],
+           
+            "killinfo":
+            {
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":2,
+                "valid_radius":28,
+                "valid_w":100,
+                "valid_h":100
+            },
+            "boombinfo":
+            {
+                "desc":"爆炸信息，boombpreab爆炸预支体，scale-爆炸预支体爆炸的时候的缩放度，bomb_radius：在爆炸区域bomb_radius圆内碰到人就算",
+                "boombpreab":"prefab/boomb1",
+                "scale":1,
+                "bomb_radius":40
+            }
+
+        }
+        , 
+        {
+            "type":5, 
+            "bgraphic":0,
+            "namedesc":"子弹发射器1",
+            "obj_pic":"game/killobj/t1",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[113,66], 
+            "bullets":
+            [
+                {
+                    "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为子弹的起始点,与src_offset_pos组合成向量代表子弹方向,rotation_add:在父节点旋转基础上加上",
+                   
+                    "desc1":"从父物体中心点center_parent_pt偏移点位置出发，向src_offset_pos位置，这个方向的子弹,从src_offset_pos出发。speedtime:每隔几秒发射一次子弹,obj_pic:子弹图片,obj_pic_size:子弹图片尺寸",
+                    "center_parent_pt":[0,0],
+                    "src_offset_pos":[50,0],
+                    "speedtime":2,
+                    "obj_pic":"game/killobj/feidao",
+                    "obj_pic_size":[60,15],
+                    "anchropt":[0,0.5],
+                    "desc2":"rotation_add在父物体角度基础上加上rotation_add这个角度,movespeed:子弹移动速度",
+                    "rotation_add":0,
+                    "movespeed":300
+                }
+               
+            ]
+        }
+        , 
+        {
+            "type":6, 
+            "namedesc":"双向射线",
+            "bgraphic":0,
+            "obj_pic":"game/killobj/t3",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[122,73], 
+            "firelines":
+            [
+                {
+                    "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
+                    "center_parent_pt":[0,0],
+                    "src_offset_pos":[62,0],
+                    "color":[247,247,247]
+                },
+                {
+                    "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
+                    "center_parent_pt":[0,0],
+                    "src_offset_pos":[-62,0],
+                    "color":[247,247,247]
+                }
+            ]
+            
+        }, 
+        {
+            "type":7, 
+            "namedesc":"单向射线",
+            "bgraphic":0,
+            "obj_pic":"game/killobj/t2",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[96,73], 
+            "firelines":
+            [
+                {
+                    "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
+                    "center_parent_pt":[0,3],
+                    "src_offset_pos":[46,3],
+                    "color":[247,247,247]
+                } 
+            ]
+            
+        },
+        {
+            "type":8,
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "obj_pic":"game/obstacle/8",
+            "namedesc":"大齿轮",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[180,180],
+            "shapeobj":1,
+            "killinfo":
+            {
+                "desc":"valid_killtype为2-代表杀死是圆形，valid_radius为圆形半径,   为3-使用valid_w,valid_h自定义矩形区域 ",
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":2,
+                "valid_radius":90,
+                "valid_w":180,
+                "valid_h":180
+            }
+           
+        },
+        {
+            "type":9,
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "obj_pic":"game/obstacle/8",
+            "namedesc":"中等齿轮",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[150,150],
+            "shapeobj":1,
+            "killinfo":
+            {
+                "desc":"valid_killtype为2-代表杀死是圆形，valid_radius为圆形半径,   为3-使用valid_w,valid_h自定义矩形区域 ",
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":2,
+                "valid_radius":70,
+                "valid_w":150,
+                "valid_h":150
+            }
+            
+
+        },
+        {
+            "type":10,
+            "namedesc":"小长横线",
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "desc1":"obj_pic-物体图片，anchropt中心点位置，obj_pic_size-物体尺寸,initpos-物体初始位置,initrotation-物体初始角度",
+            "obj_pic":"game/slop/31",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[500,15],
+            "desc2":"bkill-是否碰撞后杀死人物,为0碰到不会杀死，为1会杀死", 
+            "desc3":"rotate-物体是否旋转，rotateing_rate没：每0.1秒旋转角度",
+            "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)"
+          
+
+        },
+        {
+            "type":11,
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "obj_pic":"game/obstacle/8",
+            "namedesc":"超小齿轮",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[60,60],
+            "shapeobj":1,
+            "killinfo":
+            {
+                "desc":"valid_killtype为2-代表杀死是圆形，valid_radius为圆形半径,   为3-使用valid_w,valid_h自定义矩形区域 ",
+                "valid_killtype:desc":"1:使用系统图片节点的boundrect,2:圆形kill区域,使用valid_radius,3:使用valid_w,valid_h自定义矩形",
+                "valid_killtype":2,
+                "valid_radius":30,
+                "valid_w":60,
+                "valid_h":60
+            }
+            
+
+        } ,
+        {
+            "type":12,
+            "namedesc":"短横线",
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "desc1":"obj_pic-物体图片，anchropt中心点位置，obj_pic_size-物体尺寸,initpos-物体初始位置,initrotation-物体初始角度",
+            "obj_pic":"game/slop/31",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[200,15],
+            "desc2":"bkill-是否碰撞后杀死人物,为0碰到不会杀死，为1会杀死", 
+            "desc3":"rotate-物体是否旋转，rotateing_rate没：每0.1秒旋转角度",
+            "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)" 
+
+        }  
+    ]
+}

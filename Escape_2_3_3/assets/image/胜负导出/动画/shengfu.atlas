@@ -1,0 +1,41 @@
+
+shengfu.png
+size: 707,683
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+anniu
+  rotate: true
+  xy: 607, 112
+  size: 283, 98
+  orig: 283, 98
+  offset: 0, 0
+  index: -1
+g
+  rotate: false
+  xy: 2, 78
+  size: 603, 603
+  orig: 615, 615
+  offset: 6, 6
+  index: -1
+sz
+  rotate: false
+  xy: 2, 2
+  size: 352, 74
+  orig: 352, 74
+  offset: 0, 0
+  index: -1
+t2
+  rotate: true
+  xy: 607, 397
+  size: 284, 98
+  orig: 284, 98
+  offset: 0, 0
+  index: -1
+z3
+  rotate: false
+  xy: 356, 2
+  size: 325, 74
+  orig: 325, 74
+  offset: 0, 0
+  index: -1

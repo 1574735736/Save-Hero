@@ -1,0 +1,20 @@
+
+zhu.png
+size: 260,140
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+an
+  rotate: true
+  xy: 2, 2
+  size: 136, 145
+  orig: 136, 145
+  offset: 0, 0
+  index: -1
+t
+  rotate: false
+  xy: 149, 22
+  size: 109, 116
+  orig: 114, 120
+  offset: 2, 2
+  index: -1

@@ -1,0 +1,132 @@
+{
+    "archstart":
+    {
+        "typeid":4,
+        "arch_pos":[250,360]
+    },
+    "archend":
+    {
+        "typeid":3,
+        "arch_pos":[-230,-450]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":11,
+        "arch_start_people_count":10 ,
+        "outer_people_list":[
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[0,80]
+            },
+            {
+                "peopleid":1,
+                "rotation":90,
+                "pos":[-80,0]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":-90,
+                "pos":[80,0]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":180,
+                "pos":[0,-80]
+            } 
+        ]
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+
+            {
+                  
+                "typeid":3,
+                "obj_pos":[0,0] 
+                
+            } ,
+            {
+                  
+                "typeid":8,
+                "obj_pos":[-280,0] 
+                
+            }  
+             
+
+
+
+
+
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [
+            {
+                  
+                "typeid":1, 
+                "initpos":[0,200],
+                "initrotation":0
+            },
+            {
+                 
+               "typeid":1, 
+               "initpos":[0,-200],
+               "initrotation":0
+           },
+            {
+                  
+                "typeid":2, 
+                "initpos":[-150,200],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                ,
+                "move":{
+                    "movespeed":40,
+                    "movestart":[-150,200],
+                    "moveend":[ 150,200]
+                }
+
+            },
+            {
+                  
+                "typeid":2, 
+                "initpos":[-150,-200],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                ,
+                "move":{
+                    "movespeed":40,
+                    "movestart":[-159,-200],
+                    "moveend":[ 150,-200]
+                }
+
+            }
+
+
+              
+            
+
+
+        ]
+
+    }
+}

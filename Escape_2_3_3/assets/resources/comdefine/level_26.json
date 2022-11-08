@@ -1,0 +1,113 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[-230,360]
+    },
+    "archend":
+    {
+        "typeid":2,
+        "arch_pos":[230,-450]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":12,
+        "arch_start_people_count":15
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+
+            {
+                  
+                "typeid":1,
+                "obj_pos":[-150,0] 
+                
+            } ,
+             {
+                  
+                "typeid":1,
+                "obj_pos":[150,250] 
+                
+            } ,
+             {
+                  
+                "typeid":1,
+                "obj_pos":[100,-200] 
+                
+            } 
+             
+
+
+
+
+
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [
+           
+           
+            
+            {
+                  
+                "typeid":7,
+                "initpos":[-110, 0],
+                "initrotation":0 
+                , 
+                "move":{
+                   "movespeed":40,
+                   "movestart":[-110, -20],
+                   "moveend":[ -110, 20]
+               }
+                
+                
+            } ,
+            {
+                  
+                "typeid":7,
+                "initpos":[110, 250],
+                "initrotation":180
+                , 
+                "move":{
+                   "movespeed":40,
+                   "movestart":[110, 230],
+                   "moveend":[ 110, 270]
+               }
+                
+            } ,
+            {
+                  
+                "typeid":7,
+                "initpos":[60, -200],
+                "initrotation":180
+                , 
+                "move":{
+                   "movespeed":40,
+                   "movestart":[60, -180],
+                   "moveend":[ 60, -220]
+               }
+                
+            } 
+
+
+              
+            
+
+
+        ]
+
+    }
+}

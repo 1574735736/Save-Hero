@@ -1,0 +1,34 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[-190,200]
+    },
+    "archend":
+    {
+        "typeid":2,
+        "arch_pos":[230,-200]
+    },
+    "touchmovejoint":
+    {
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":10,
+        "arch_start_people_count":10 
+    }
+    ,
+    "obstacle":
+    {
+         
+    }
+    ,
+    "killobjs":
+    {
+        
+
+
+    }
+}

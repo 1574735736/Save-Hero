@@ -1,0 +1,73 @@
+{
+    "archstart":
+    {
+        "typeid":4,
+        "arch_pos":[230,330]
+    },
+    "archend":
+    {
+        "typeid":2,
+        "arch_pos":[230,-440]
+    },
+    "touchmovejoint":
+    {
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":4,
+        "arch_start_people_count":1,
+        "outer_people_list":[
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[200,70]
+            },
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-60,300]
+            },
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-130,-160]
+            }
+        ]
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":[
+            {
+                  
+                "typeid":5,
+                "obj_pos":[200,0] 
+                
+            } ,
+            {
+                  
+                "typeid":5,
+                "obj_pos":[-60,230] 
+                
+            }  
+            ,
+            {
+                  
+                "typeid":5,
+                "obj_pos":[-130,-230] 
+                
+            }  
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":[
+            
+        ]
+
+    }
+}

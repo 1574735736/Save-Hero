@@ -1,0 +1,108 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[-230,360]
+    },
+    "archend":
+    {
+        "typeid":3,
+        "arch_pos":[-260,-400]
+    },
+    "touchmovejoint":
+    {
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":10,
+        "arch_start_people_count":15 
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+
+            {
+                  
+                "typeid":1,
+                "obj_pos":[-60, 70] 
+                
+            } 
+             
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":[
+              
+            {
+                  
+                "typeid":1, 
+                "initpos":[60,-130],
+                "initrotation":0 
+            },
+            {
+                  
+                "typeid":2, 
+                "initpos":[-60,-130],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                },
+                "move":{
+                    "movespeed":40,
+                    "movestart":[-60,-130],
+                    "moveend":[ 180,-130]
+                }
+                
+
+            },
+            {
+                  
+                "typeid":1, 
+                "initpos":[60,230],
+                "initrotation":0
+            },
+            {
+                  
+                "typeid":2, 
+                "initpos":[-60,230],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                ,
+                "move":{
+                    "movespeed":40,
+                    "movestart":[-60,230],
+                    "moveend":[ 180,230]
+                }
+
+            }
+            ,
+            {
+                  
+                "typeid":8, 
+                "initpos":[-260,70],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+
+            }
+
+
+
+        ]
+
+    }
+}

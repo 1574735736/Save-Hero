@@ -1,0 +1,102 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[-230,360]
+    },
+    "archend":
+    {
+        "typeid":3,
+        "arch_pos":[-230,-480]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":14,
+        "arch_start_people_count":15  ,
+        "outer_people_list":[
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[160,110]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-180,10]
+            }  
+        ]
+        
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+ 
+            {
+                  
+                "typeid":8,
+                "obj_pos":[160, 80] 
+                
+            }  ,{
+                  
+                "typeid":8,
+                "obj_pos":[-180, -20] 
+                
+            } ,{
+                  
+                "typeid":9,
+                "obj_pos":[ 0, -250] 
+                
+            } 
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [ 
+         
+            {
+                "typeid":1,
+                "initpos":[ 30, 220],
+                "initrotation":0
+             
+            }  , 
+           
+            {
+                "typeid":11,
+                "initpos":[30,220],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                },
+                "move":{
+                    "movespeed":20,
+                    "movestart":[-140,220],
+                    "moveend":[ 200,220]
+                } 
+             
+            }  ,
+            {
+                "typeid":7,
+                "initpos":[ -160, -140],
+                "initrotation":0
+                
+             
+            }  
+          
+          
+          
+        ]
+
+    }
+}

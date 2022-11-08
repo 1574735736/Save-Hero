@@ -1,0 +1,145 @@
+{
+    "archstart":
+    {
+        "typeid":1,
+        "arch_pos":[ -230,360]
+    },
+    "archend":
+    {
+        "typeid":3,
+        "arch_pos":[-230,-520]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":25,
+        "arch_start_people_count":30   
+        
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+ 
+            {
+                  
+                "typeid":8,
+                "obj_pos":[-240, 0] 
+                
+            },
+            {
+                  
+                "typeid":8,
+                "obj_pos":[ 40, -130] 
+                
+            } ,
+            {
+                  
+                "typeid":8,
+                "obj_pos":[ 280, -260] 
+                
+            }  ,
+            {
+                  
+                "typeid":2,
+                "obj_pos":[ 280,  0] 
+                
+            }   ,
+            {
+                  
+                "typeid":8,
+                "obj_pos":[ -180, 200] 
+                
+            }  ,
+            {
+                  
+                "typeid":2,
+                "obj_pos":[ 130,  360] 
+                
+            }
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [ 
+         
+            {
+                  
+                "typeid":11,
+                "initpos":[-280, -200],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }  , {
+                  
+                "typeid":11,
+                "initpos":[ -60, -200],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }  
+            , 
+            {
+                  
+                "typeid":11,
+                "initpos":[ -120, -20],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }   , 
+            {
+                  
+                "typeid":11,
+                "initpos":[  160, -60],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }  , 
+            {
+                  
+                "typeid":2,
+                "initpos":[ -20,240],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }  , 
+            {
+                  
+                "typeid":2,
+                "initpos":[240,200],
+                "initrotation":0,
+                "rotate":
+                {
+                    "rotateing_rate":10
+                }
+                
+            }  
+          
+        ]
+
+    }
+}

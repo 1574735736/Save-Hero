@@ -1,0 +1,48 @@
+
+Win_Lose.png
+size: 829,298
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+left_1
+  rotate: false
+  xy: 2, 2
+  size: 216, 107
+  orig: 216, 108
+  offset: 0, 0
+  index: -1
+left_2
+  rotate: false
+  xy: 393, 27
+  size: 163, 136
+  orig: 164, 136
+  offset: 1, 0
+  index: -1
+right_1
+  rotate: false
+  xy: 558, 34
+  size: 214, 129
+  orig: 215, 129
+  offset: 1, 0
+  index: -1
+right_2
+  rotate: false
+  xy: 231, 22
+  size: 160, 141
+  orig: 161, 142
+  offset: 0, 0
+  index: -1
+right_3
+  rotate: true
+  xy: 2, 111
+  size: 185, 227
+  orig: 185, 227
+  offset: 0, 0
+  index: -1
+text_box
+  rotate: false
+  xy: 231, 165
+  size: 596, 131
+  orig: 596, 131
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "b68b585b-f6dc-4580-8b5d-92abd51aa5ef",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 586,
+  "height": 139,
+  "platformSettings": {},
+  "subMetas": {
+    "hcr_logo": {
+      "ver": "1.0.4",
+      "uuid": "9e7c7ef4-393e-4900-b3b2-15d1d4d355e1",
+      "rawTextureUuid": "b68b585b-f6dc-4580-8b5d-92abd51aa5ef",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -19,
+      "trimX": 0,
+      "trimY": 38,
+      "width": 586,
+      "height": 101,
+      "rawWidth": 586,
+      "rawHeight": 139,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+    "archstart":
+    {
+        "typeid":4,
+        "arch_pos":[230,360]
+    },
+    "archend":
+    {
+        "typeid":2,
+        "arch_pos":[-240,-420]
+    },
+    "touchmovejoint":
+    { 
+        "typeid":1
+    },
+    "peopleinfo":
+    {
+        "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
+        "need_resure_min_people_count":10,
+        "arch_start_people_count":8 ,
+        "outer_people_list":[
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[ 0,260]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[ 0,-180]
+            }  ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[-220,40]
+            }   ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[220,40]
+            }  
+        ]  
+        
+    }
+    ,
+    "obstacle":
+    {
+        "desc":"障碍物列表",
+        "objlist":
+        [
+ 
+            {
+                  
+                "typeid":8,
+                "obj_pos":[0,220] 
+                
+            } ,  {
+                  
+                "typeid":8,
+                "obj_pos":[0,-220] 
+                
+            }  ,  {
+                  
+                "typeid":8,
+                "obj_pos":[-220, 0] 
+                
+            }  ,  {
+                  
+                "typeid":8,
+                "obj_pos":[220,0] 
+                
+            }   
+
+        ]
+    }
+    ,
+    "killobjs":
+    {
+        "objlist":
+        [ 
+            {
+                "typeid":4,
+                "initpos":[200, 220],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":40,
+                    "movestart":[200,220],
+                    "moveend":[ 120,140]
+                } 
+            } , {
+                "typeid":4,
+                "initpos":[-220, 220],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":40,
+                    "movestart":[-220,220],
+                    "moveend":[ -300,140]
+                } 
+            } 
+        ]
+
+    }
+}
