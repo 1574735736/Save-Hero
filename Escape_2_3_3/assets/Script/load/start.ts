@@ -10,44 +10,55 @@ export default class start extends cc.Component {
 
     private static _instance: start = null; 
 
+    coinCount: cc.Label = null;
+
+    peoplePos: cc.Vec3 = null;
+
+    prefabP: cc.Node = null;
+
+    curShowID: number = 0;
+
     public static getInstance(): start {
         if (start._instance == null) {
             start._instance = new start();
         }
         return start._instance;
     }
-
-    coinLable: cc.Label = null;
+   
     
     onLoad () 
     {
         start._instance = this;
-        //var startgame = this.node.getChildByName("nstartgame");
+        //var startgame = this.node.getChildByName("startgame");
         //startgame.on("click",this.OnBtnStartGame.bind(this));
-
-        var btnStart = cc.find("btstart/startgame", this.node);
-        btnStart.on("click", this.OnBtnStartGame.bind(this));
     
         EscapeMng.GetInstance().InitLoad_All_Config_Files(()=>{} );
         EscapeMng.GetInstance().InitLoadLevelInfo();
+        EscapeMng.GetInstance().InitAllInfos();
 
         var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
    
-        var startgame_l = cc.find("btstart/startgame/l",this.node);
+        var startgame_l = cc.find("btn_startbg/startgame/l",this.node);
         startgame_l.getComponent(cc.Label).string = "LEVEL "+ilevel;
+
+        var startgame = cc.find("btn_startbg/startgame",this.node);
+        startgame.on("click", this.OnBtnStartGame.bind(this));
 
         var selgkComp = cc.find("selgk",this.node);
         selgkComp.on("click", this.OnBtnSelGK.bind(this));
 
-        var zhuComp = cc.find("zhu", this.node);
-        zhuComp.on("click", this.OnBtnSkinView.bind(this));
+        var btnSkin = cc.find("btn_skin", this.node);
+        btnSkin.on("click", this.OnBtnSkin.bind(this));
 
-        var Lgold = cc.find("jb/Gold", this.node);
-        this.coinLable = Lgold.getComponent(cc.Label)
-        
+        var jinbi = cc.find("jb/Gold", this.node);
+        this.coinCount = jinbi.getComponent(cc.Label)
 
+        this.peoplePos = cc.find("people", this.node).position;
+
+
+        this.onUpdateCoin();
+        this.onUpdateHero();
         BackGroundSoundUtils.GetInstance().PlayMusic("datingbj");
-        this.OnUpdateCoin();
         
     }
 
@@ -93,7 +104,8 @@ export default class start extends cc.Component {
 
         });
     }
-    OnBtnSkinView(): void {
+
+    OnBtnSkin() {
         var self = this;
         cc.loader.loadRes("prefab/SkinView", cc.Prefab, (e, p) => {
             var pnode = cc.instantiate(p as cc.Prefab);
@@ -102,9 +114,38 @@ export default class start extends cc.Component {
         });
     }
 
-    OnUpdateCoin() {
+    onUpdateCoin() {
         var coin = EscapeMng.GetInstance().Get_Gold_Coin();
-        this.coinLable.string = "" + coin;
+        this.coinCount.string = "" + coin
     }
+    onUpdateHero() {
+        var hero = EscapeMng.GetInstance().Get_Hero();
+        if (this.curShowID == Number(hero)) {
+            return;
+        }
+        if (this.prefabP) {
+            for (var i = 0; i < this.prefabP.childrenCount; i++) {
+                this.prefabP.children[i].active = false;
+            }
+            this.prefabP.children[hero - 1].active = true;
+            this.prefabP.getChildByName("p" + hero).setScale(1, 1);
+            return
+        }
+        this.prefabP = null;
+        
+        
+        var self = this;
+        cc.loader.loadRes("prefab/pre", cc.Prefab, (e, p) => {
+            var pnode = cc.instantiate(p as cc.Prefab);
+            self.node.addChild(pnode, 50);
+            pnode.position = this.peoplePos;
+            pnode.getChildByName("p" + hero).setScale(1, 1);
+            this.prefabP = pnode;       
+            for (var i = 0; i < this.prefabP.childrenCount; i++) {
+                this.prefabP.children[i].active = false;
+            }
+            this.prefabP.children[hero - 1].active = true;
+        });
 
+    }
 }

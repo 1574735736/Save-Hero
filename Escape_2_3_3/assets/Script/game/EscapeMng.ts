@@ -111,13 +111,13 @@ export default class EscapeMng
     //初始化读取上次游戏的数据
     InitLoadLevelInfo():void
     {
-        var iprevlevel = MyLocalStorge.getItem("espace_save_level","");
+        var iprevlevel = 1;//MyLocalStorge.getItem("espace_save_level","");
         if(!iprevlevel)
         {
             iprevlevel = 1;
         }
 
-        this.m_last_enter_level  = Number(iprevlevel); 
+        this.m_last_enter_level = Number(iprevlevel); 
 
         let unlockLevel = MyLocalStorge.getItem("espace_unlock_level","");
         if (!unlockLevel) {
@@ -129,11 +129,11 @@ export default class EscapeMng
     //保存信息
     SaveLevelInfo():void
     {
-        MyLocalStorge.setItem("espace_save_level",this.m_last_enter_level);  
+        MyLocalStorge.setItem("espace_save_level", this.m_last_enter_level);  
     }
     //保存最大解锁关卡记录
     SavaUnlocklevelInfo(): void {
-        MyLocalStorge.setItem("espace_unlock_level",this.m_unlock_level);  
+        MyLocalStorge.setItem("espace_unlock_level", this.m_unlock_level);  
     }
 
     //获得配置在archs.json文件里面的建筑信息archtypes节点下
@@ -201,6 +201,10 @@ export default class EscapeMng
         return null;
     }
 
+    InitAllInfos() {
+        this.InitLoadCoinInfo();
+        this.InitLoadHeroInfo();
+    }
 
     //金币相关
     m_Gold_Coin: number = 0;
@@ -214,51 +218,41 @@ export default class EscapeMng
         if (!coin) {
             coin = 0;
         }
-
         this.m_Gold_Coin = Number(coin);
     }
     //获取金币信息
     Get_Gold_Coin(): number {
         return this.m_Gold_Coin;
     }
+    //设置当前金币信息
+    Set_Gold_Coin(count: number) {
+        this.m_Gold_Coin = count;
+        this.SaveCoinInfo();
+    }
 
-    skinsData = [
-        {
-            "id":1,
-            "type": 1,     //1关卡解锁   2金币解锁   3广告解锁
-            "progress": 100,  //当前解锁进度
-            "price":0,  //价格
-        },
-        {
-            "id": 2,
-            "type": 1,    
-            "progress": 0,  
-            "price": 0,  
-        },
-        {
-            "id": 3,
-            "type": 3,    
-            "progress": 0, 
-            "price": 0,  
-        },
-        {
-            "id": 4,
-            "type": 1,  
-            "progress": 0,  
-            "price": 5000,  
-        },
-        {
-            "id": 5,
-            "type": 1,     
-            "progress": 0, 
-            "price": 5000, 
-        },
-        {
-            "id": 6,
-            "type": 1,  
-            "progress": 0, 
-            "price": 5000,
-        },
-    ];
-          
+
+    //当前选择的英雄
+    m_Cur_Hero: number = 0;
+    //保存角色信息
+    SaveHeroInfo(): void {
+        MyLocalStorge.setItem("save_Hero", this.m_Cur_Hero);
+    }
+    //读取角色信息
+    InitLoadHeroInfo(): void {
+        var hero = MyLocalStorge.getItem("save_Hero", "");
+        if (!hero) {
+            hero = 1;
+        }       
+        this.m_Cur_Hero = Number(hero);
+    }
+    //设置当前角色
+    Set_Hero(count: number) {
+        this.m_Cur_Hero = count;
+        this.SaveHeroInfo();
+    }
+    //获取当前角色
+    Get_Hero(): number {      
+        return this.m_Cur_Hero;        
+    }
+
 }

@@ -130,15 +130,15 @@ export default class EscapePeople
         return polplist;
     }
     //设置缩放比例
-    SetScale(s:number)
+    SetScale(s: number, index: number = 1)
     {
-        var wnode = this.m_node.getChildByName("w");
+        var wnode = this.m_node.getChildByName("p" + index);//("w");
         wnode.scale  = s;
     }
     //设置人骨骼动画显示
-    Set_Node_Animate(aniname:string)
+    Set_Node_Animate(aniname: string, index: number = 1)
     {
-        var wnode = this.m_node.getChildByName("w");
+        var wnode = this.m_node.getChildByName("p" + index);//("w");
         var sp_com = wnode.getComponent(sp.Skeleton);
         sp_com.setToSetupPose();
         sp_com.setAnimation(0,""+aniname,true);
