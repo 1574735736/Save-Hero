@@ -1,5 +1,6 @@
 import MyLocalStorge from "../utils/MyLocalStorge";
 import WMap from "../utils/WMap"; 
+import List from "../surface/List";
 //全局单实例变量
 export default class EscapeMng 
 {
@@ -22,6 +23,17 @@ export default class EscapeMng
 
     //默认每次过关获得的分数
     m_Default_Coin: number = 100;
+
+    //每款皮肤基础价格
+    m_DefaultBuy_Coin: number = 5000;
+
+    //当前皮肤种类数量
+    m_Skins_Count: number = 10;
+
+    //已经拥有的皮肤
+    m_Has_Skins = [];//new List<SkineDataInfo>();
+
+    
 
     static _instance = null;
     static GetInstance() 
@@ -213,6 +225,7 @@ export default class EscapeMng
         this.InitLoadCoinInfo();
         this.InitLoadHeroInfo();
         this.InitLoadProgressInfo();
+        this.InitLoadHasSkins();
     }
 
     //金币相关
@@ -267,7 +280,10 @@ export default class EscapeMng
 
     //获取下一个未解锁的皮肤，要是没有就返回最后一个
     Get_NoHasHero(): number{
-        return 2;
+        if (this.m_Has_Skins[this.m_Has_Skins.length - 1].id == this.m_Skins_Count) {
+            return this.m_Skins_Count
+        }
+        return this.m_Has_Skins[this.m_Has_Skins.length - 1].id + 1;
     }
     //获取当前解锁进度
     Get_SkinProgress(): number {
@@ -301,4 +317,31 @@ export default class EscapeMng
         }
         this.m_Skin_Progress = Number(pro);
     }
+
+    //读取已经拥有的皮肤，已经拥有的类型  0完全拥有，1需要看广告
+    InitLoadHasSkins(): void{
+        var user = JSON.parse(cc.sys.localStorage.getItem('hasskins'));
+        //this.m_Has_Skins.clear();
+        this.m_Has_Skins = user;
+        if (this.m_Has_Skins.length == 0) {
+            this.Set_HasSkins(1, 0);
+        }
+        
+    }
+
+    //存储皮肤数据
+    Set_HasSkins(id,type) {        
+        var addSkine = new SkineDataInfo();
+        addSkine.id = id;
+        addSkine.type = type;
+        this.m_Has_Skins.push(addSkine);
+        cc.sys.localStorage.setItem('hasskins', JSON.stringify(this.m_Has_Skins));
+
+    }
+
+}
+
+export class SkineDataInfo {
+    public id: number = 0;
+    public type: number = 0;    
 }
