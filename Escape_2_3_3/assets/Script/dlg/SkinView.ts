@@ -9,7 +9,7 @@ import Game from "../game/game";
 export default class SkinView extends cc.Component {
    
 
-    // onLoad () {}
+     
     coinCount: cc.Label = null;
     curClick: number = 1;
     content: cc.Node = null;
@@ -27,7 +27,11 @@ export default class SkinView extends cc.Component {
         new cc.Vec3(-65.51, 207.179),
         new cc.Vec3(-65.51, 202.839),
     ] 
+    onLoad() {
+        this.node.setScale(0, 0);
 
+        this.node.runAction(cc.scaleTo(0.3, 1, 1));
+    }
 
     start () {
 
@@ -74,7 +78,10 @@ export default class SkinView extends cc.Component {
         else if (cc.director.getScene().name == "game") {
             Game.getInstance().onUpdateHero();
         }
-        this.node.destroy();
+        var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
+            this.node.destroy();
+        }));//.easing(cc.easeQuarticActionOut)
+        this.node.runAction(actionScale);
     }
 
     onSetIcon(nodePath: string, iconPath: string) {

@@ -13,7 +13,15 @@ export default class EscapeMng
     m_unlock_level:number = 1;
 
 
-    m_config_archs_info =  null;
+    m_config_archs_info = null;
+
+    //当前皮肤的解锁进度
+    m_Skin_Progress: number = 0;
+    //每次默认解锁进度
+    m_Skin_AddProgress: number = 0.2; 
+
+    //默认每次过关获得的分数
+    m_Default_Coin: number = 100;
 
     static _instance = null;
     static GetInstance() 
@@ -111,7 +119,7 @@ export default class EscapeMng
     //初始化读取上次游戏的数据
     InitLoadLevelInfo():void
     {
-        var iprevlevel = 1;//MyLocalStorge.getItem("espace_save_level","");
+        var iprevlevel = MyLocalStorge.getItem("espace_save_level","");
         if(!iprevlevel)
         {
             iprevlevel = 1;
@@ -204,6 +212,7 @@ export default class EscapeMng
     InitAllInfos() {
         this.InitLoadCoinInfo();
         this.InitLoadHeroInfo();
+        this.InitLoadProgressInfo();
     }
 
     //金币相关
@@ -255,4 +264,41 @@ export default class EscapeMng
         return this.m_Cur_Hero;        
     }
 
+
+    //获取下一个未解锁的皮肤，要是没有就返回最后一个
+    Get_NoHasHero(): number{
+        return 2;
+    }
+    //获取当前解锁进度
+    Get_SkinProgress(): number {
+        return this.m_Skin_Progress;
+    }
+    //设置当前解锁进度
+    Set_SkinProgress(count = 0) {
+        if (count == 0) {
+            this.m_Skin_Progress = this.m_Skin_Progress + this.m_Skin_AddProgress;
+        }
+        else {
+            this.m_Skin_Progress = count;
+        }        
+        if (this.m_Skin_Progress >= 1) {    //皮肤全部解锁，就是1，没全部，就重新从0循环
+            var curSkine = this.Get_NoHasHero();
+            if (curSkine < 10) {
+                this.m_Skin_Progress = 0;
+            }
+            else {
+                this.m_Skin_Progress = 1;
+            }
+        }
+
+        MyLocalStorge.setItem("SkinProgress", this.m_Gold_Coin + "");
+    }
+    //初始化当前解锁进度
+    InitLoadProgressInfo(): void {
+        var pro = MyLocalStorge.getItem("SkinProgress", "");
+        if (!pro) {
+            pro = 0;
+        }
+        this.m_Skin_Progress = Number(pro);
+    }
 }

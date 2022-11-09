@@ -381,7 +381,7 @@ export default class game extends cc.Component
         //结束圈的信息
         var endquan =  cc.find("endquan",this.node);
         endquan.setPosition(this.m_end_joint_pt);
-        endquan.runAction(cc.repeatForever(cc.rotateBy(0.1,10)))
+        endquan.runAction(cc.repeatForever(cc.rotateBy(0.1, 10)));
       
         if(this.m_enter_level == 1)
         {
@@ -403,53 +403,88 @@ export default class game extends cc.Component
     //拖动到结束点以后的指引
     Add_Touch_Valid_Pos_Action_Tip()
     {
-        if(this.m_arch_start_tip_user_node)
-        {
-            this.m_arch_start_tip_user_node.active =false;
-        }
-        if(this.m_arch_end_tip_user_node)
-        {
-            this.m_arch_end_tip_user_node.active =false;
-        }
+        //if(this.m_arch_start_tip_user_node)
+        //{
+        //    this.m_arch_start_tip_user_node.active =false;
+        //}
+        //if(this.m_arch_end_tip_user_node)
+        //{
+        //    this.m_arch_end_tip_user_node.active =false;
+        //}
 
-        var pnode = new MySprite("game/qipao/t");
-        this.node.addChild(pnode,5);
-        pnode.setPosition(0,-500);
+        //var pnode = new MySprite("game/qipao/t");
+        //this.node.addChild(pnode,5);
+        //pnode.setPosition(0,-500);
+        var row = cc.find("guide/guide_row", this.node);
+        row.active = false;
+        var dianji = cc.find("guide/guide_dianji", this.node);
+        dianji.active = false;
+        var light = cc.find("guide/img_light", this.node);
+        light.active = false;
+        var jiantou = cc.find("guide/guide_jiantou", this.node);
+        jiantou.active = false;
+        var content = cc.find("guide/Connect", this.node);
+        content.active = false;
+        var touch = cc.find("guide/Touch", this.node);
+        touch.active = true;
+
         
     }
     //添加游戏结束tip
     Add_Level_End_Tip()
     {
-        if(this.m_arch_end_tip_user_node)
-        {
-            return;
-        }
+        //if(this.m_arch_end_tip_user_node)
+        //{
+        //    return;
+        //}
 
-        this.m_arch_end_tip_user_node = new MySprite("game/qipao/3");
-        this.node.addChild(this.m_arch_end_tip_user_node,5);
-        this.m_arch_end_tip_user_node.setPosition(this.m_end_joint_pt.x - 160,this.m_end_joint_pt.y + 40);
+        //this.m_arch_end_tip_user_node = new MySprite("game/qipao/3");
+        //this.node.addChild(this.m_arch_end_tip_user_node,5);
+        //this.m_arch_end_tip_user_node.setPosition(this.m_end_joint_pt.x - 160,this.m_end_joint_pt.y + 40);
+
+     
+      
+        var end_pos = this.m_enter_level_config.archend.arch_pos;
+        var archEnd_info = this.Get_Arch_End_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archend.typeid);
+        var endX = end_pos[0] + archEnd_info.joint_relative_pos[0];
+        var endY = end_pos[1] + archEnd_info.joint_relative_pos[1];
+        var jiantou = cc.find("guide/guide_jiantou", this.node);
+        jiantou.active = true;
+        jiantou.setPosition(endX - 100, endY - 150);
+        var content = cc.find("guide/Connect", this.node);
+        content.active = true;
+
+        var row = cc.find("guide/guide_row", this.node);
+        //row.active = false;
+        row.setPosition(endX, endY - 50);
+        var dianji = cc.find("guide/guide_dianji", this.node);
+        //dianji.active = false;
+        dianji.setPosition(endX + 100, endY - 100);
+        var light = cc.find("guide/img_light", this.node);
+        light.active = false;
+
     }
     //添加游戏开始建筑旁边的，救救我们，按下开始等提示
     Add_Level_Start_Tip()
     {
-        var  archstart_config_info = this.m_enter_level_config.archstart;
+        //var  archstart_config_info = this.m_enter_level_config.archstart;
       
-        var arch_pos =  archstart_config_info.arch_pos;
+        //var arch_pos =  archstart_config_info.arch_pos;
 
-        this.m_arch_start_tip_user_node = new cc.Node();
-        this.node.addChild(this.m_arch_start_tip_user_node,5);
+        //this.m_arch_start_tip_user_node = new cc.Node();
+        //this.node.addChild(this.m_arch_start_tip_user_node,5);
    
-        //救救我们提示
+        ////救救我们提示
         //var ps = new MySprite("game/qipao/1");
         //this.node.addChild(ps,35);
         //ps.setPosition(arch_pos[0] - 50,arch_pos[1] + 200);
-       
-        //按下提示
+
+        ////按下提示
         //var touchstarttip = new MySprite("game/qipao/2");
         //this.m_arch_start_tip_user_node.addChild(touchstarttip,5);
         //touchstarttip.setPosition(this.m_start_joint_pt.x+180,this.m_start_joint_pt.y + 80);
         //touchstarttip.active = false;
-        
+
         //var pseq = cc.sequence(cc.delayTime(2),cc.callFunc(()=>
         //{
         //    touchstarttip.active = true;
@@ -458,6 +493,41 @@ export default class game extends cc.Component
 
         //this.node.runAction(pseq);
 
+        //var config_info = this.m_enter_level_config.archend.arch_pos;
+
+        //var dianji = cc.find("guide_dianji", this.node);
+        //var jiantou = cc.find("guide_jiantou", this.node);
+        //var row = cc.find("guide_row", this.node);
+        //dianji.active = true;
+        //jiantou.active = true;
+        //row.active = true;
+        //dianji.setPosition(config_info[0], config_info[1]);
+        //row.setPosition(config_info[0], config_info[1]);
+        //jiantou.setPosition(config_info[0], config_info[1] );
+
+        var guide = cc.find("guide", this.node);
+        guide.active = true;
+        guide.zIndex = 50;
+
+        var light = cc.find("guide/img_light", this.node);
+        light.active = true;
+        var actionScale = cc.sequence(cc.scaleTo(2, 0.85, 1), cc.callFunc(() => {
+            light.setScale(0, 1);
+        }));
+        light.runAction(cc.repeatForever(actionScale));
+      
+        var start_pos = this.m_enter_level_config.archstart.arch_pos;
+        
+        var archStart_info = this.Get_Arch_Start_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archstart.typeid);
+        var startX = start_pos[0] + archStart_info.joint_relative_pos[0];
+        var startY = start_pos[1] + archStart_info.joint_relative_pos[1];
+        var row = cc.find("guide/guide_row", this.node);
+        row.active = true;        
+        row.setPosition(startX, startY - 50);
+        var dianji = cc.find("guide/guide_dianji", this.node);
+        dianji.active = true;
+        dianji.setPosition(startX + 100, startY - 100);
+         
     }
 
     //获得移动绳子圈的配置信息。主要是有效半径,也就是按下点在圈中心点多少半径内有效
@@ -3832,7 +3902,7 @@ export default class game extends cc.Component
         game.getInstance().FD_Success_Next();
     }
     //营救成功,进入下一关
-    FD_Success_Next()
+    FD_Success_Next(isJinru: boolean = true)
     {
         
         EscapeMng.GetInstance().On_Change_To_Next_Level();
@@ -3855,8 +3925,9 @@ export default class game extends cc.Component
 
             EscapeMng.GetInstance().m_enter_level = ilevel;
             EscapeMng.GetInstance().m_enter_level_config = pobj;
-
-            cc.director.loadScene("game");
+            if (isJinru) {
+                cc.director.loadScene("game");
+            }            
         });
     }
     //营救失败，重新开始

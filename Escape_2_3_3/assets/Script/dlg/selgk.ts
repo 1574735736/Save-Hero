@@ -49,6 +49,9 @@ export default class selgk extends cc.Component {
             ff_node_t.on("click",this.OnBtnEnter.bind(this,ff));
         }
 
+        this.node.setScale(0, 0);
+        this.node.runAction(cc.scaleTo(0.3, 1, 1));
+
         this.updateSelgk();
     }
     OnBtnEnter(iindex)
@@ -125,7 +128,10 @@ export default class selgk extends cc.Component {
 
     OnBtnExit()
     {
-        this.node.destroy();
+        var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
+            this.node.destroy();
+        }));
+        this.node.runAction(actionScale);
     }
     updateSelgk()
     {
