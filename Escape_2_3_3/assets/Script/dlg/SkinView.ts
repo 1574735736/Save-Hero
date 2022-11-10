@@ -27,6 +27,9 @@ export default class SkinView extends cc.Component {
         new cc.Vec3(-65.51, 207.179),
         new cc.Vec3(-65.51, 202.839),
     ] 
+
+    m_HeroNote: cc.Node[] = [];
+
     onLoad() {
         this.node.setScale(0, 0);
 
@@ -43,8 +46,8 @@ export default class SkinView extends cc.Component {
         this.content = cc.find("ScrollView/view/content", this.node);
         this.item = cc.find("Item", this.node)
         this.tophero = cc.find("top/tophero", this.node);
-        this.onUpdateTopHero();
         this.onInitScroll();
+        this.onUpdateTopHero();        
     }
 
 
@@ -59,14 +62,7 @@ export default class SkinView extends cc.Component {
         this.onSetIcon("top/tophero", "game/heroicon/noside/" + curHiroId);
         this.tophero.position = this.iconPos[curHiroId - 1];
        
-        for (var i = 1; i <= 10; i++) {
-            if (curHiroId == i) {
-                cc.find("ScrollView/view/content/Item" + i + "/btn_change", this.node).active = false;
-            }
-            else {
-                cc.find("ScrollView/view/content/Item" + i + "/btn_change", this.node).active = true;
-            }
-        }
+        this.OnUpdateMenuStatus()
     }
 
     // update (dt) {}
@@ -74,6 +70,7 @@ export default class SkinView extends cc.Component {
     OnBtnExit() {
         if (cc.director.getScene().name == "start") {
             Start.getInstance().onUpdateHero();
+            Start.getInstance().onUpdateCoin();
         }        
         else if (cc.director.getScene().name == "game") {
             Game.getInstance().onUpdateHero();
@@ -94,8 +91,18 @@ export default class SkinView extends cc.Component {
     onInitScroll() {        
         for (var i = 1; i <= 10; i++) {
           
-            var btnSkin = cc.find("ScrollView/view/content/Item" + i + "/btn_change", this.node);
-            btnSkin.on("click", this.OnBtnAction.bind(this,i));                 
+            //var btnSkin = cc.find("ScrollView/view/content/Item" + i + "/btn_change", this.node);
+            //btnSkin.on("click", this.OnBtnAction.bind(this,i));
+
+            var Item = cc.find("ScrollView/view/content/Item" + i, this.node);
+            this.m_HeroNote.push(Item);
+            var btChange = Item.getChildByName("btn_change");
+            btChange.on("click", this.OnBtnAction.bind(this, i));
+            var btBuy = Item.getChildByName("btn_buy");
+            btBuy.on("click", this.OnBtnBuy.bind(this, i));
+            var btAds = Item.getChildByName("btn_ads");
+            btAds.on("click", this.OnBtnShowAds.bind(this, i));
+            
         }
     }
 
@@ -104,6 +111,58 @@ export default class SkinView extends cc.Component {
         this.onUpdateTopHero();
     }
 
+    OnBtnBuy(clickID: number) {
+        var coin = EscapeMng.GetInstance().Get_Gold_Coin()
+        if (coin < EscapeMng.GetInstance().m_DefaultBuy_Coin) {
+            return;
+        }
+        coin = coin - EscapeMng.GetInstance().m_DefaultBuy_Coin;
+        EscapeMng.GetInstance().Set_Gold_Coin(coin);
+        EscapeMng.GetInstance().Set_HasSkins(clickID, 0);
+        this.OnUpdateMenuStatus();
+        this.onUpdateCoin();
+    }
 
+    OnBtnShowAds(clikID: number) {
+        EscapeMng.GetInstance().Set_HasSkins(clikID, 0);
+        this.OnUpdateMenuStatus();
+    }
+
+    OnUpdateMenuStatus() {
+        var curHiroId = EscapeMng.GetInstance().Get_Hero();
+        var coin = EscapeMng.GetInstance().Get_Gold_Coin()
+
+        //var curTable = EscapeMng.GetInstance().Get_SkinStatus();
+        var count = EscapeMng.GetInstance().Get_ShinStatusCount();
+  
+        for (var i = 0; i < EscapeMng.GetInstance().m_Skins_Count; i++) {
+            this.m_HeroNote[i].getChildByName("btn_nohave").active = false;
+            this.m_HeroNote[i].getChildByName("btn_buy").active = false;
+            this.m_HeroNote[i].getChildByName("btn_change").active = false;
+            this.m_HeroNote[i].getChildByName("btn_ads").active = false;
+            if (EscapeMng.GetInstance().Get_SkinStatusHas(i + 1)) {
+                var curTable: number = EscapeMng.GetInstance().Get_SkinStatusType(i + 1);
+                if (curHiroId == i + 1) {
+
+                }
+                else {
+                    if (curTable == 1) {
+                        this.m_HeroNote[i].getChildByName("btn_ads").active = true;
+                    }
+                    else {
+                        this.m_HeroNote[i].getChildByName("btn_change").active = true;
+                    }
+                }
+            }
+            else {
+                if (coin < EscapeMng.GetInstance().m_DefaultBuy_Coin) {
+                    this.m_HeroNote[i].getChildByName("btn_nohave").active = true;
+                }
+                else {
+                    this.m_HeroNote[i].getChildByName("btn_buy").active = true;
+                }
+            }          
+        }
+    }
     
 }

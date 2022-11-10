@@ -33,6 +33,8 @@ export default class EscapeMng
     //已经拥有的皮肤
     m_Has_Skins = [];//new List<SkineDataInfo>();
 
+    m_Has_SkinIDs = [];
+    m_Has_SkinStatus = [];
     
 
     static _instance = null;
@@ -137,7 +139,7 @@ export default class EscapeMng
             iprevlevel = 1;
         }
 
-        this.m_last_enter_level = Number(iprevlevel); 
+        this.m_last_enter_level = 20;//Number(iprevlevel); 
 
         let unlockLevel = MyLocalStorge.getItem("espace_unlock_level","");
         if (!unlockLevel) {
@@ -280,34 +282,45 @@ export default class EscapeMng
 
     //获取下一个未解锁的皮肤，要是没有就返回最后一个
     Get_NoHasHero(): number{
-        if (this.m_Has_Skins[this.m_Has_Skins.length - 1].id == this.m_Skins_Count) {
-            return this.m_Skins_Count
+        //if (this.m_Has_Skins[this.m_Has_Skins.length - 1].id == this.m_Skins_Count) {
+        //    return this.m_Skins_Count
+        //}
+        //return this.m_Has_Skins[this.m_Has_Skins.length - 1].id + 1;
+        for (var i = 1; i <= this.m_Skins_Count; i++) {
+            if (this.Get_SkinStatusHas(i) == false) {
+                return i;
+            }
         }
-        return this.m_Has_Skins[this.m_Has_Skins.length - 1].id + 1;
+        return this.m_Skins_Count;
     }
     //获取当前解锁进度
     Get_SkinProgress(): number {
         return this.m_Skin_Progress;
     }
     //设置当前解锁进度
-    Set_SkinProgress(count = 0) {
+    Set_SkinProgress(count: number = 0) {
         if (count == 0) {
             this.m_Skin_Progress = this.m_Skin_Progress + this.m_Skin_AddProgress;
         }
         else {
             this.m_Skin_Progress = count;
-        }        
+        }
+
         if (this.m_Skin_Progress >= 1) {    //皮肤全部解锁，就是1，没全部，就重新从0循环
             var curSkine = this.Get_NoHasHero();
-            if (curSkine < 10) {
+            if (curSkine < this.m_Skins_Count) {
                 this.m_Skin_Progress = 0;
+                this.Set_HasSkins(curSkine, 1);
             }
             else {
+                if (this.m_Has_Skins.length < this.m_Skins_Count) {
+                    this.Set_HasSkins(curSkine, 1);
+                }
                 this.m_Skin_Progress = 1;
             }
         }
 
-        MyLocalStorge.setItem("SkinProgress", this.m_Gold_Coin + "");
+        MyLocalStorge.setItem("SkinProgress", this.m_Skin_Progress + "");
     }
     //初始化当前解锁进度
     InitLoadProgressInfo(): void {
@@ -322,21 +335,58 @@ export default class EscapeMng
     InitLoadHasSkins(): void{
         var user = JSON.parse(cc.sys.localStorage.getItem('hasskins'));
         //this.m_Has_Skins.clear();
-        this.m_Has_Skins = user;
-        if (this.m_Has_Skins.length == 0) {
-            this.Set_HasSkins(1, 0);
+        if (user) {
+            this.m_Has_Skins = user;
         }
-        
+        else {
+            if (Number(this.m_Has_Skins.length) == 0) {
+                this.Set_HasSkins(1, 0);
+            }
+        }  
+    }
+    // "0" 完全拥有 "1"广告拥有 
+    //存储皮肤数据
+    Set_HasSkins(id, type) {
+        var has: Boolean = false;
+        for (var i = 0; i < this.m_Has_Skins.length; i++) {
+            if (id == this.m_Has_Skins[i].id) {
+                this.m_Has_Skins[i].type = type;
+                has = true;
+            }
+        }
+        if (has == false) {
+            var addSkine = new SkineDataInfo();
+            addSkine.id = id;
+            addSkine.type = type;
+            this.m_Has_Skins.push(addSkine);
+        }
+       
+        cc.sys.localStorage.setItem('hasskins', JSON.stringify(this.m_Has_Skins));
+    
+
+    }
+    //获取皮肤对应的存储状态
+    Get_SkinStatusType(id: number): number {
+        for (var i = 0; i < this.m_Has_Skins.length; i++) {
+            if (id == this.m_Has_Skins[i].id) {
+                return this.m_Has_Skins[i].type;
+            }
+        }
+        return 1;
+    }
+    //判断有没有对应的皮肤
+    Get_SkinStatusHas(id: number): boolean {
+        for (var i = 0; i < this.m_Has_Skins.length; i++) {
+            if (id == this.m_Has_Skins[i].id) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    //存储皮肤数据
-    Set_HasSkins(id,type) {        
-        var addSkine = new SkineDataInfo();
-        addSkine.id = id;
-        addSkine.type = type;
-        this.m_Has_Skins.push(addSkine);
-        cc.sys.localStorage.setItem('hasskins', JSON.stringify(this.m_Has_Skins));
-
+    //获取皮肤的数量
+    Get_ShinStatusCount(): number {
+        return this.m_Has_Skins.length;
     }
 
 }
