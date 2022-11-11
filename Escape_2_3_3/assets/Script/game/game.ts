@@ -180,6 +180,9 @@ export default class game extends cc.Component
     //安卓端第一关进入时间点
     timeOfFirstLevel = 0;
 
+    //营救的间隔时间
+    timeInterval: number = 100;
+
 
     public static getInstance(): game {
         if (game._instance == null) {
@@ -427,6 +430,10 @@ export default class game extends cc.Component
         content.active = false;
         var touch = cc.find("guide/Touch", this.node);
         touch.active = true;
+        var jiantou2 = cc.find("guide/guide_jiantou2", this.node);
+        jiantou2.active = false;
+        var dianji2 = cc.find("guide/guide_dianji2", this.node);
+        dianji2.active = true;
 
         
     }
@@ -448,20 +455,16 @@ export default class game extends cc.Component
         var archEnd_info = this.Get_Arch_End_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archend.typeid);
         var endX = end_pos[0] + archEnd_info.joint_relative_pos[0];
         var endY = end_pos[1] + archEnd_info.joint_relative_pos[1];
-        var jiantou = cc.find("guide/guide_jiantou", this.node);
-        jiantou.active = true;
-        jiantou.setPosition(endX - 100, endY - 150);
-        var content = cc.find("guide/Connect", this.node);
-        content.active = true;
+      
 
         var row = cc.find("guide/guide_row", this.node);
         //row.active = false;
         row.setPosition(endX, endY - 50);
-        var dianji = cc.find("guide/guide_dianji", this.node);
+        //var dianji = cc.find("guide/guide_dianji", this.node);
         //dianji.active = false;
-        dianji.setPosition(endX + 100, endY - 100);
-        var light = cc.find("guide/img_light", this.node);
-        light.active = false;
+        //dianji.setPosition(endX + 100, endY - 100);
+        //var light = cc.find("guide/img_light", this.node);
+        //light.active = false;
 
     }
     //添加游戏开始建筑旁边的，救救我们，按下开始等提示
@@ -509,25 +512,50 @@ export default class game extends cc.Component
         guide.active = true;
         guide.zIndex = 50;
 
-        var light = cc.find("guide/img_light", this.node);
-        light.active = true;
-        var actionScale = cc.sequence(cc.scaleTo(2, 0.85, 1), cc.callFunc(() => {
-            light.setScale(0, 1);
-        }));
-        light.runAction(cc.repeatForever(actionScale));
+        //var light = cc.find("guide/img_light", this.node);
+        //light.active = true;
+        //var actionScale = cc.sequence(cc.scaleTo(2, 0.85, 1), cc.callFunc(() => {
+        //    light.setScale(0, 1);
+        //}));
+        //light.runAction(cc.repeatForever(actionScale));
       
-        var start_pos = this.m_enter_level_config.archstart.arch_pos;
-        
+        var start_pos = this.m_enter_level_config.archstart.arch_pos;        
         var archStart_info = this.Get_Arch_Start_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archstart.typeid);
         var startX = start_pos[0] + archStart_info.joint_relative_pos[0];
         var startY = start_pos[1] + archStart_info.joint_relative_pos[1];
+
+        var end_pos = this.m_enter_level_config.archend.arch_pos;
+        var archEnd_info = this.Get_Arch_End_Info();
+        var endX = end_pos[0] + archEnd_info.joint_relative_pos[0];
+        var endY = end_pos[1] + archEnd_info.joint_relative_pos[1];
+
         var row = cc.find("guide/guide_row", this.node);
         row.active = true;        
         row.setPosition(startX, startY - 50);
         var dianji = cc.find("guide/guide_dianji", this.node);
         dianji.active = true;
-        dianji.setPosition(startX + 100, startY - 100);
-         
+        dianji.setPosition(startX + 30, startY - 100);
+        var anim = dianji.getComponent(sp.Skeleton);
+        anim.setToSetupPose();
+        anim.setAnimation(0, "dianji", false);
+       
+        
+        var func = cc.sequence(cc.delayTime(1), cc.moveTo(1.5, endX + 30, endY - 100), cc.delayTime(0.5), cc.callFunc(() => {            
+            dianji.setPosition(startX + 30, startY - 100);           
+            anim.setToSetupPose();
+            anim.setAnimation(0, "dianji", false);
+        }));
+        dianji.runAction(cc.repeatForever(func));
+
+        var jiantou = cc.find("guide/guide_jiantou", this.node);
+        jiantou.active = true;
+        jiantou.setPosition(endX - 100, endY - 150);
+        var content = cc.find("guide/Connect", this.node);
+        content.active = true;
+
+        var jiantou2 = cc.find("guide/guide_jiantou2", this.node);
+        jiantou2.active = true;
+        jiantou2.setPosition(startX + 150, startY + 50);
     }
 
     //获得移动绳子圈的配置信息。主要是有效半径,也就是按下点在圈中心点多少半径内有效
@@ -3459,7 +3487,7 @@ export default class game extends cc.Component
             src_people_info.Set_Move_Path_Info(node_path_list,people_in_role_index);
             src_people_info.Caculate_Set_Pos(rate);
 
-            src_people_info.SetScale(0.15, EscapeMng.GetInstance().Get_Hero());
+            src_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
 
             this.m_rescureing_people_list.push(src_people_info);
         }
@@ -3490,10 +3518,10 @@ export default class game extends cc.Component
         {
             var ieplsetick = Date.now() - this.m_last_rescure_tick;
 
-            var ineedtick=  400;
+            var ineedtick = this.timeInterval;//400
             if(this.m_rescureing_people_list.length == 0)
             {
-                ineedtick=  200;
+                ineedtick = 200;
             }
 
             //每1秒救一个人到绳子上
@@ -3743,7 +3771,7 @@ export default class game extends cc.Component
 
         //this.m_all_start_arch_waitfor_resure_people_list.push({"id":1,"node": pnode , "info:":ff_info});
 
-        first_people_info.SetScale(0.15, EscapeMng.GetInstance().Get_Hero());
+        first_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
         this.m_rescureing_people_list.push(first_people_info);
 
         this.m_last_add_arch_start_people_resruing_type = first_people_info.Get_Start_Arch_Type_Pos_Index();

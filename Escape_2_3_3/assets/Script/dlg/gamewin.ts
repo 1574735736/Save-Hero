@@ -42,14 +42,25 @@ export default class gamewin extends cc.Component {
     m_EndX: number = 225
     m_CurX: number = 0;
     m_CanMove: boolean = false;
-    m_Direction: number = 3; //位移速度  1正方向，-1负方向
+    m_Direction: number = 5; //位移速度  1正方向，-1负方向
     m_CurMul: number = 0;//当前的倍数
 
     m_PosXs: number[] = [-155, -95, -30, 45, 110, 170, 226];
     m_Muls: number[] = [2, 3, 4, 5, 4, 3, 2];
     m_HerPosX: number[] = [90.046, 14.179, -1.383, -1.383, -28.617, 33.633, 33.633, 4.453, -34.453, -55.851];
 
+    m_NormalMul: cc.Node[] = []; 
+    m_SelectMul: cc.Node[] = [];
+    m_CurPos: number = 0;
+
     m_CoinFly: cc.Node = null;
+
+    m_ProSpeed: number = 0.01;
+    m_PreTimer: number = 0.04;
+    m_CurAddPro: number = 0;
+    m_TimerAdd: number = 0;
+    curProgress: number = 0;
+    m_CanAddPro: boolean = false;
 
     
     onLoad () 
@@ -63,14 +74,15 @@ export default class gamewin extends cc.Component {
         var winads = cc.find("ani_winads", this.node);
         winads.on("click", this.onClickAds.bind(this));
 
-        
+        var btnSkin = cc.find("img_herobg", this.node);
+        btnSkin.on("click", this.OnBtnSkin.bind(this));
        
         
         BackGroundSoundUtils.GetInstance().PlayEffect("victory");        
     }
 
     start() {
-        this.m_AdsGetCoin = cc.find("txt_winCount", this.node).getComponent(cc.Label);
+        this.m_AdsGetCoin = cc.find("ani_winads/txt_winCount", this.node).getComponent(cc.Label);
         this.m_CurCoin = cc.find("jb/Gold", this.node).getComponent(cc.Label);
         this.m_NoAdsCoin = cc.find("img_noadscount/txt_noadscount", this.node).getComponent(cc.Label);
         this.m_CurProLable = cc.find("txt_curProgress", this.node).getComponent(cc.Label);
@@ -85,16 +97,25 @@ export default class gamewin extends cc.Component {
 
         this.m_NoAdsCoin.string = "" + EscapeMng.GetInstance().m_Default_Coin;
 
+        for (var i = 1; i <= 7; i++) {
+            this.m_NormalMul.push(cc.find("img_multiplebg/n_" + i, this.node))
+            this.m_SelectMul.push(cc.find("img_multiplebg/s_" + i, this.node))
+            this.m_SelectMul[i - 1].opacity = 0;
+        }
+
+        var aniwin = cc.find("ani_win", this.node);
+        aniwin.active = false;
+        aniwin.active = true;
+
         this.m_CurX = this.m_StartX;
         this.m_CanMove = true;
 
         this.onSetIcon();
         this.onUpdateCoin();
 
-        //this.scheduleOnce(() => {
-        //    var actFade = cc.sequence(cc.fadeTo(1, 0.5));
-        //    this.m_BtnNext.runAction(actFade)
-        //}, 3);
+        this.scheduleOnce(() => {
+            this.m_CanAddPro = true;
+        }, 0.5);
         this.m_BtnNext.setScale(0, 0,0);
         //this.m_BtnNext.runAction(cc.fadeTo(0.1, 0));
         var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1,1), cc.callFunc(() => {
@@ -159,8 +180,12 @@ export default class gamewin extends cc.Component {
             else if (this.m_CurX <= this.m_StartX) {
                 this.m_Direction = this.m_Direction * -1;       
             }
-            this.onUpdateAdsCoin(this.getCurMultiple()); 
+            this.onUpdateAdsCoin(this.getCurMultiple());
+            this.onUpdateMulChange();            
         }
+        if (this.m_CanAddPro) {
+            this.onUpdateSkinAni();
+        }        
     }
 
     getCurMultiple(): number{
@@ -180,13 +205,49 @@ export default class gamewin extends cc.Component {
             return;
         }
         this.m_CurMul = mul;
-        this.m_AdsGetCoin.string = (EscapeMng.GetInstance().m_Default_Coin * this.m_CurMul) + "";
+        this.m_AdsGetCoin.string = (EscapeMng.GetInstance().m_Default_Coin * this.m_CurMul) + "";   
     }
 
+    onUpdateMulChange() {
+        var x = this.m_arrow.position.x;
+        var pos = 0;
+        for (var i = 0; i < this.m_PosXs.length; i++) {
+            if (x < this.m_PosXs[i]) {
+                pos = i + 1;
+                break;
+            }
+        }
+
+        if (pos > this.m_PosXs.length || pos <= 0) {
+            pos = this.m_PosXs.length;
+        }        
+
+        if (pos == this.m_CurPos) {
+            return;
+        }
+
+        if (this.m_NormalMul[this.m_CurPos - 1]) {
+            this.m_NormalMul[this.m_CurPos - 1].opacity = 255;
+            this.m_SelectMul[this.m_CurPos - 1].opacity = 0;
+        }
+      
+        this.m_CurPos = pos;
+
+        if (this.m_NormalMul[this.m_CurPos - 1]) {
+            this.m_NormalMul[this.m_CurPos - 1].opacity = 0;
+            this.m_SelectMul[this.m_CurPos - 1].opacity = 255;
+        }
+        else {
+            console.log("pos  :" + pos + "  this.m_CurPos : " + this.m_CurPos);
+        }
+        
+    }
+
+    nextID: number = 0;
     onSetIcon() {
-        var nextID = EscapeMng.GetInstance().Get_NoHasHero();
-        var iconPath1 = "game/heroicon/noside/" + nextID;
-        var iconPath2 = "game/heroicon/side/" + nextID;
+        this.nextID = EscapeMng.GetInstance().Get_NoHasHero();
+        var iconPath1 = "game/heroicon/noside/" + this.nextID;
+        var iconPath2 = "game/heroicon/side/" + this.nextID;
         cc.loader.loadRes(iconPath1, cc.SpriteFrame, (err, sp) => {
             this.m_HeroIcon.spriteFrame = sp as cc.SpriteFrame;
         })
@@ -194,15 +255,35 @@ export default class gamewin extends cc.Component {
             this.m_HeroIconBg.spriteFrame = sp as cc.SpriteFrame;
         })
 
-        var curProgress = EscapeMng.GetInstance().Get_SkinProgress();
-        curProgress = curProgress + EscapeMng.GetInstance().m_Skin_AddProgress;
-        if (curProgress >= 1) {
-            curProgress = 1;
+        this.m_CurAddPro = EscapeMng.GetInstance().Get_SkinProgress();
+        this.curProgress = this.m_CurAddPro + EscapeMng.GetInstance().m_Skin_AddProgress;
+        if (this.curProgress >= 1) {
+            this.curProgress = 1;
         }
-        this.m_HeroIcon.fillStart = curProgress;
+        this.m_CurProLable.string = Math.floor(this.m_CurAddPro * 100) + "%";
+        this.m_HeroIcon.fillStart = this.m_CurAddPro;
         EscapeMng.GetInstance().Set_SkinProgress();
-        this.m_CurProLable.string = Math.floor(curProgress * 100) + "%"
-        cc.find("img_herobg", this.node).setPosition(this.m_HerPosX[nextID - 1], 80.788) ;
+        
+        cc.find("img_herobg", this.node).setPosition(this.m_HerPosX[this.nextID - 1], 80.788) ;
+    }
+
+    onUpdateSkinAni() {
+        if (this.curProgress > this.m_CurAddPro) {
+            this.m_TimerAdd = this.m_TimerAdd + 0.02;
+        }
+        else {
+            return
+        }
+        if (this.m_TimerAdd >= this.m_PreTimer) {
+            this.m_TimerAdd = 0;
+            this.m_CurAddPro = this.m_CurAddPro + this.m_ProSpeed;
+            if (this.m_CurAddPro >= this.curProgress) {
+                this.m_CurAddPro = this.curProgress;
+            }
+
+            this.m_HeroIcon.fillStart = this.m_CurAddPro;
+            this.m_CurProLable.string = Math.floor(this.m_CurAddPro * 100) + "%";
+        }        
     }
 
     onUpdateCoin() {
@@ -253,9 +334,31 @@ export default class gamewin extends cc.Component {
             var nowCoin = getCount + EscapeMng.GetInstance().Get_Gold_Coin();
             EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
             this.onUpdateCoin();
-        }), cc.delayTime(1), cc.callFunc(() => { this.OnBtnExit(); }))
+        }), cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); }))
         this.m_GetCoin.runAction(func);  
     }
 
+    OnBtnSkin() {
+        if (this.curProgress < 1) {
+            return;
+        }
+        var self = this;
+        cc.loader.loadRes("prefab/getSkinView", cc.Prefab, (e, p) => {
+            var pnode = cc.instantiate(p as cc.Prefab);
+            self.m_plisnter.node.addChild(pnode, 90);
+            var getskin = pnode.getComponent("GetSkinView");
+          
+            if (getskin) {
+                getskin.onInitView(this, this.nextID, this.m_HerPosX[this.nextID - 1]);
+            }
+            else {
+                console.log("getskin is null   !!!");
+            }
+        });
+        this.node.setPosition(10000, 10000);
+    }
 
+    OnGoBack() {
+        this.node.setPosition(0, 0);
+    }
 }

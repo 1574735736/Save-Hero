@@ -19,12 +19,20 @@ export default class gamefail extends cc.Component {
         //guangbi.on("click",this.OnBtnExit.bind(this));
 
         var failads = this.node.getChildByName("ani_failads");
-        failads.on("click", this.OnBtnExit.bind(this));
+        failads.on("click", this.OnNextExit.bind(this));
 
         var replay = this.node.getChildByName("btn_replay");
         replay.on("click", this.OnBtnExit.bind(this));
        
         BackGroundSoundUtils.GetInstance().PlayEffect("fail");
+
+        replay.setScale(0, 0, 0);
+        var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1, 1), cc.callFunc(() => {
+
+        }));
+
+        replay.runAction(pseq);
+
 
     }
     OnBtnExit()
@@ -35,8 +43,14 @@ export default class gamefail extends cc.Component {
         {
             this.m_exitbtn_callback();
         }
-        
+
+
         BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+    }
+
+    OnNextExit() {
+        BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+        this.m_plisnter.FD_Success_Next(true);
     }
    
     setCallBack(plisnter,exitbtn_callback)

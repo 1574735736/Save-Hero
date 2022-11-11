@@ -1166,7 +1166,7 @@
     "defaultAnimation": "shibai biaoti",
     "_preCacheMode": 0,
     "_cacheMode": 0,
-    "loop": true,
+    "loop": false,
     "premultipliedAlpha": true,
     "timeScale": 1,
     "_accTime": 0,
@@ -1177,7 +1177,7 @@
     "_animationName": "shibai biaoti",
     "_animationQueue": [],
     "_headAniInfo": null,
-    "_playTimes": 0,
+    "_playTimes": 1,
     "_isAniComplete": true,
     "_N$skeletonData": {
       "__uuid__": "6ade464e-a825-40e3-8440-ec8f731d2a60"

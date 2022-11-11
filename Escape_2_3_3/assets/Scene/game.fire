@@ -129,13 +129,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 77
+        "__id__": 83
       },
       {
-        "__id__": 78
+        "__id__": 84
       },
       {
-        "__id__": 79
+        "__id__": 85
       }
     ],
     "_prefab": null,
@@ -225,7 +225,7 @@
       "array": [
         0,
         0,
-        448.85826045208773,
+        449.4562794014547,
         0,
         0,
         0,
@@ -645,7 +645,7 @@
       "__id__": 2
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 13
@@ -820,7 +820,7 @@
       "__id__": 2
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 16
@@ -3201,6 +3201,12 @@
       },
       {
         "__id__": 75
+      },
+      {
+        "__id__": 77
+      },
+      {
+        "__id__": 80
       }
     ],
     "_active": false,
@@ -3359,7 +3365,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "guide_dianji",
+    "_name": "guide_jiantou2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 64
@@ -3394,13 +3400,13 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        218.024,
-        -209.782,
+        19.373,
+        -277.243,
         0,
         0,
         0,
-        0,
-        1,
+        0.9396926207859083,
+        0.3420201433256688,
         1,
         1,
         1
@@ -3410,14 +3416,14 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": 140
     },
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "d9Gsrpj6FCEZY2/D7tJVRR"
+    "_id": "5ep4a+IFxLC5Lv/ElVAEqW"
   },
   {
     "__type__": "sp.Skeleton",
@@ -3434,7 +3440,7 @@
     ],
     "paused": false,
     "defaultSkin": "default",
-    "defaultAnimation": "dianji",
+    "defaultAnimation": "jiantou",
     "_preCacheMode": 0,
     "_cacheMode": 0,
     "loop": true,
@@ -3445,7 +3451,7 @@
     "_frameCache": null,
     "_curFrame": null,
     "_skeletonCache": null,
-    "_animationName": "dianji",
+    "_animationName": "jiantou",
     "_animationQueue": [],
     "_headAniInfo": null,
     "_playTimes": 0,
@@ -3459,7 +3465,7 @@
     "_N$debugMesh": false,
     "_N$useTint": false,
     "_N$enableBatch": false,
-    "_id": "22xa/iO6BOVLydemUe2BZY"
+    "_id": "e9fRP1qO9BS4ch54DyS7fg"
   },
   {
     "__type__": "cc.Node",
@@ -3567,7 +3573,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "img_light",
+    "_name": "guide_dianji",
     "_objFlags": 0,
     "_parent": {
       "__id__": 64
@@ -3577,6 +3583,214 @@
     "_components": [
       {
         "__id__": 72
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 142.57,
+      "height": 142.52
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        218.024,
+        -209.782,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "d9Gsrpj6FCEZY2/D7tJVRR"
+  },
+  {
+    "__type__": "sp.Skeleton",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 71
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "7afd064b-113f-480e-b793-8817d19f63c3"
+      }
+    ],
+    "paused": false,
+    "defaultSkin": "default",
+    "defaultAnimation": "dianji",
+    "_preCacheMode": 0,
+    "_cacheMode": 0,
+    "loop": false,
+    "premultipliedAlpha": true,
+    "timeScale": 1,
+    "_accTime": 0,
+    "_playCount": 0,
+    "_frameCache": null,
+    "_curFrame": null,
+    "_skeletonCache": null,
+    "_animationName": "dianji",
+    "_animationQueue": [],
+    "_headAniInfo": null,
+    "_playTimes": 1,
+    "_isAniComplete": true,
+    "_N$skeletonData": {
+      "__uuid__": "2d05d932-326e-45ed-bd72-4175b5c9d001"
+    },
+    "_N$_defaultCacheMode": 0,
+    "_N$debugSlots": false,
+    "_N$debugBones": false,
+    "_N$debugMesh": false,
+    "_N$useTint": false,
+    "_N$enableBatch": false,
+    "_id": "22xa/iO6BOVLydemUe2BZY"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "guide_dianji2",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 64
+    },
+    "_children": [],
+    "_active": false,
+    "_components": [
+      {
+        "__id__": 74
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 142.57,
+      "height": 142.52
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        -39.521,
+        -274.344,
+        0,
+        0,
+        0,
+        -0.25881904510252074,
+        0.9659258262890683,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": -30
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "0bYMSlabpPZZGDUCBoA0KR"
+  },
+  {
+    "__type__": "sp.Skeleton",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 73
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "7afd064b-113f-480e-b793-8817d19f63c3"
+      }
+    ],
+    "paused": false,
+    "defaultSkin": "default",
+    "defaultAnimation": "dianji",
+    "_preCacheMode": 0,
+    "_cacheMode": 0,
+    "loop": true,
+    "premultipliedAlpha": true,
+    "timeScale": 1,
+    "_accTime": 0,
+    "_playCount": 0,
+    "_frameCache": null,
+    "_curFrame": null,
+    "_skeletonCache": null,
+    "_animationName": "dianji",
+    "_animationQueue": [],
+    "_headAniInfo": null,
+    "_playTimes": 0,
+    "_isAniComplete": true,
+    "_N$skeletonData": {
+      "__uuid__": "2d05d932-326e-45ed-bd72-4175b5c9d001"
+    },
+    "_N$_defaultCacheMode": 0,
+    "_N$debugSlots": false,
+    "_N$debugBones": false,
+    "_N$debugMesh": false,
+    "_N$useTint": false,
+    "_N$enableBatch": false,
+    "_id": "6ahFwtJxlBCL8WP+GpaiL/"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "img_light",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 64
+    },
+    "_children": [],
+    "_active": false,
+    "_components": [
+      {
+        "__id__": 76
       }
     ],
     "_prefab": null,
@@ -3632,7 +3846,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 71
+      "__id__": 75
     },
     "_enabled": true,
     "_materials": [
@@ -3670,7 +3884,10 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 74
+        "__id__": 78
+      },
+      {
+        "__id__": 79
       }
     ],
     "_prefab": null,
@@ -3726,7 +3943,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 73
+      "__id__": 77
     },
     "_enabled": true,
     "_materials": [
@@ -3754,6 +3971,16 @@
     "_id": "30oagHQe9K0qx4RBT78wdJ"
   },
   {
+    "__type__": "3c91aIF059FL49aruHGz1wE",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 77
+    },
+    "_enabled": true,
+    "_id": "edmpM6QYVHaITCaascFuEZ"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "Touch",
     "_objFlags": 0,
@@ -3764,7 +3991,10 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 76
+        "__id__": 81
+      },
+      {
+        "__id__": 82
       }
     ],
     "_prefab": null,
@@ -3820,7 +4050,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 75
+      "__id__": 80
     },
     "_enabled": true,
     "_materials": [
@@ -3846,6 +4076,16 @@
     "_isTrimmedMode": true,
     "_atlas": null,
     "_id": "1eZm5gHZNJY4v69BPmBAjM"
+  },
+  {
+    "__type__": "3c91aIF059FL49aruHGz1wE",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 80
+    },
+    "_enabled": true,
+    "_id": "c70C05GI5Jv5dEAVsitHo+"
   },
   {
     "__type__": "cc.Canvas",
