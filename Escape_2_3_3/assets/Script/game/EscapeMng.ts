@@ -328,7 +328,7 @@ export default class EscapeMng
         if (!pro) {
             pro = 0;
         }
-        this.m_Skin_Progress = 0.8;//Number(pro);
+        this.m_Skin_Progress = Number(pro);
     }
 
     //读取已经拥有的皮肤，已经拥有的类型  0完全拥有，1需要看广告

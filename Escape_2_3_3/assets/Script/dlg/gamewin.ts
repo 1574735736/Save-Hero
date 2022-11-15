@@ -342,6 +342,10 @@ export default class gamewin extends cc.Component {
         if (this.curProgress < 1) {
             return;
         }
+        var status = EscapeMng.GetInstance().Get_SkinStatusType(this.nextID);
+        if (status == 0) {
+            return;
+        }
         var self = this;
         cc.loader.loadRes("prefab/getSkinView", cc.Prefab, (e, p) => {
             var pnode = cc.instantiate(p as cc.Prefab);

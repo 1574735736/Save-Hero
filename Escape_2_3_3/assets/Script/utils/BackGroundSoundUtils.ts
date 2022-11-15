@@ -9,8 +9,8 @@ export default class BackGroundSoundUtils
     static _instance = null;
     m_sound_kai = true;
        
-    m_bk_music_sound_volum = 0.1;
-    m_effect_sound_volum = 0.5;
+    m_bk_music_sound_volum = 1;
+    m_effect_sound_volum = 0.8;
     m_b_record_or_playing_user_sound = false;
     m_bkMusics = null;
 
@@ -31,8 +31,8 @@ export default class BackGroundSoundUtils
 
         this.m_sound_kai = true;
        
-        this.m_bk_music_sound_volum = 0.1;
-        this.m_effect_sound_volum = 0.5;
+        this.m_bk_music_sound_volum = 1;
+        this.m_effect_sound_volum = 0.8;
         this.initMusicSound();
 
 
@@ -45,13 +45,13 @@ export default class BackGroundSoundUtils
         const music = MyLocalStorge.getItem("bk_music_shaonaomukuai_volum");
         if (music != null && music != undefined && music!= "") this.m_bk_music_sound_volum = Number(music);
         else {
-            this.m_bk_music_sound_volum = 0.1;
+            this.m_bk_music_sound_volum = 1;
             this.saveMusic();
         }
         const sound = MyLocalStorge.getItem("bk_sound_shaonaomukuai_volum");
         if (sound != null && sound != undefined && sound != "") this.m_effect_sound_volum = Number(sound);
         else {
-            this.m_effect_sound_volum = 0.5;
+            this.m_effect_sound_volum = 0.8;
             this.saveSound();
         } 
     }
@@ -62,26 +62,31 @@ export default class BackGroundSoundUtils
     }
     playBakMusic(strfilename)    //循环播放
     {
+        
         var endfix = strfilename.substr(strfilename.length - 4, 4);
         if (endfix == ".mp3") {
             strfilename = strfilename.substr(0, strfilename.length - 4);
         }
 
         let self = this;
-        
 
-        cc.loader.loadRes(strfilename, cc.AudioClip, (err, audioClip)=>
+        strfilename = "music/" + strfilename;
+
+        cc.loader.loadRes(strfilename, cc.AudioClip, (err: Error, audioClip: cc.AudioClip) =>
         {
             if (!err) {
-                if (self.m_bkMusics !== undefined) {
+                if (self.m_bkMusics !== null) {
                     cc.audioEngine.stop(self.m_bkMusics);
-                    self.m_bkMusics = undefined;
+                    self.m_bkMusics = null;
                 }
-                //cc.log(audioClip);
-                self.m_bkMusics = cc.audioEngine.play(audioClip as cc.AudioClip, true, self.m_bk_music_sound_volum);
+                cc.log("audio is load " + audioClip);
+                //self.m_bkMusics = cc.audioEngine.playMusic(audioClip, true);//play(audioClip as cc.AudioClip, true, self.m_bk_music_sound_volum);            
+                let m_bkMusics  = cc.audioEngine.playMusic(audioClip, true);
+                cc.audioEngine.setVolume(m_bkMusics, self.m_bk_music_sound_volum);
             }
         });
-
+    
+        
     }
 
     PlayEffect(str,ivlummul = 1) {
@@ -106,6 +111,7 @@ export default class BackGroundSoundUtils
        // if (endfix == ".mp3") {
           //  strfilename = strfilename.substr(0, strfilename.length - 4);
         //}
+        strfilename = "music/" + strfilename;
 
         if (this.m_sound_kai) 
         {

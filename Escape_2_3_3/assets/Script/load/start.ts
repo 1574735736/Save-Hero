@@ -62,6 +62,10 @@ export default class start extends cc.Component {
         
     }
 
+    start() {
+
+    }
+
     
     public static JavaCall_StartGame():void {
         start.getInstance().OnBtnStartGame();

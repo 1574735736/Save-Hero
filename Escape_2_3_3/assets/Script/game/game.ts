@@ -3773,7 +3773,7 @@ export default class game extends cc.Component
 
         first_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
         this.m_rescureing_people_list.push(first_people_info);
-
+        first_people_info.Set_Node_Animate("diao", EscapeMng.GetInstance().Get_Hero());
         this.m_last_add_arch_start_people_resruing_type = first_people_info.Get_Start_Arch_Type_Pos_Index();
 
        

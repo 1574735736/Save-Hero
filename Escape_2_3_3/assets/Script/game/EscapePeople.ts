@@ -141,7 +141,7 @@ export default class EscapePeople
         var wnode = this.m_node.getChildByName("p" + index);//("w");
         var sp_com = wnode.getComponent(sp.Skeleton);
         sp_com.setToSetupPose();
-        sp_com.setAnimation(0,""+aniname,true);
+        sp_com.setAnimation(0, "" + aniname, true);     
     }
     Init(pnode:cc.Node, pinfo)
     {
