@@ -240,6 +240,15 @@ export default class gamewin extends cc.Component {
         else {
             console.log("pos  :" + pos + "  this.m_CurPos : " + this.m_CurPos);
         }
+
+        //调用手机振动
+        if (cc.sys.os === cc.sys.OS_IOS) {
+            //调用苹果的方法;
+        }
+        else if (cc.sys.os === cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "vibrate", "()V");
+            /*jsb.reflection.callStaticMethod("org.cocos2dx.javascript/AppActivity", "vibrate", "()V");*/
+        }
         
     }
 
