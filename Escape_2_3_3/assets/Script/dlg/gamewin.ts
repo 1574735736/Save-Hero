@@ -127,13 +127,18 @@ export default class gamewin extends cc.Component {
         this.scheduleOnce(() => {
             this.m_CanAddPro = true;
         }, 0.5);
-        this.m_BtnNext.setScale(0, 0,0);
-        //this.m_BtnNext.runAction(cc.fadeTo(0.1, 0));
-        var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1,1), cc.callFunc(() => {
+        this.m_BtnNext.setScale(0, 0, 0);
 
-        }));
+        var num = EscapeMng.GetInstance().Get_Unlock_level();
+        if (num > 1) {
+            var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1, 1), cc.callFunc(() => {
 
-        this.m_BtnNext.runAction(pseq);
+            }));
+            this.m_BtnNext.runAction(pseq);
+        }
+
+        //let sp = this.answerPanel.getComponent(Sprite);
+        //tween(sp.color.a).to(0.5, 255);
 
     }
 
@@ -335,7 +340,8 @@ export default class gamewin extends cc.Component {
         next.interactable = false;
         this.TempGetCount = getCount;
         //
-        if (cc.sys.platform === cc.sys.ANDROID) {
+        var num = EscapeMng.GetInstance().Get_Unlock_level();
+        if (cc.sys.platform === cc.sys.ANDROID && num > 1) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");
         }
         else {

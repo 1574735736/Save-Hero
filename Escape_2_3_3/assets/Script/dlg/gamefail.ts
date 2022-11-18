@@ -31,7 +31,7 @@ export default class gamefail extends cc.Component {
         //var guangbi = this.node.getChildByName("guangbi");
         //guangbi.on("click",this.OnBtnExit.bind(this));
 
-        var failads = this.node.getChildByName("ani_failads");
+        var failads = cc.find("ani_failads/btn_fail", this.node);
         failads.on("click", this.OnNextExit.bind(this));
 
         var replay = this.node.getChildByName("btn_replay");

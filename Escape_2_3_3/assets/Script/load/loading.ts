@@ -14,6 +14,7 @@ import gamewin from "../dlg/gamewin";
 import getSkinView from "../dlg/GetSkinView";
 import sdkManager from "../game/SdkManager";
 import skinView from "../dlg/SkinView";
+import EscapeMng from "../game/EscapeMng";
 
 const {ccclass, property} = cc._decorator;
 
@@ -75,20 +76,21 @@ export default class loading extends cc.Component {
 
 
     public static JavaCall_OpenAppAdLoadSuccess() {
+        
         if (loading.getInstance().timer < loading.getInstance().loadingTime) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
         }
     }
 
     public static JavaCall_loadStartScene() {
 
-        if (loading.getInstance().timer >= loading.getInstance().loadingTime) {
-            if (loading.getInstance().updateLock == false) {
-                loading.getInstance().updateLock = true;
-                loading.getInstance().loadStartScene();
-            }
-        }
-        //loading.getInstance().loadStartScene();
+        //if (loading.getInstance().timer >= loading.getInstance().loadingTime) {
+        //    if (loading.getInstance().updateLock == false) {
+        //        loading.getInstance().updateLock = true;
+        //        loading.getInstance().loadStartScene();
+        //    }
+        //}
+        loading.getInstance().loadStartScene();
         
     }
 
@@ -103,10 +105,14 @@ export default class loading extends cc.Component {
             if (!this.updateLock) {
                 this.updateLock = true;
                 if (cc.sys.platform === cc.sys.ANDROID) {
-                
-                    let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
-                    if (!isShowAd) {                    
+
+                    //let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
+                    //if (!isShowAd ||  EscapeMng.GetInstance().GetPlayeringTimes()) {
+                    if (EscapeMng.GetInstance().GetPlayeringTimes()) { 
                         this.loadStartScene();
+                    }
+                    else {
+                        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
                     }
                     //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
                 }

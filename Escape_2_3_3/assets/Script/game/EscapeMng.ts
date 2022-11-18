@@ -129,6 +129,25 @@ export default class EscapeMng
         })
 
     }
+    //是否首次进入游戏
+    GetPlayeringTimes(): boolean {
+        var times = MyLocalStorge.getItem("GetPlayeringTimes", "0");
+        if (!times) {
+            times = 0;
+        }
+        this.SetPlayeringTimes();
+        if (times == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    SetPlayeringTimes(): void {
+        MyLocalStorge.setItem("GetPlayeringTimes","1");  
+    }
+
 
     //初始化读取上次游戏的数据
     InitLoadLevelInfo():void

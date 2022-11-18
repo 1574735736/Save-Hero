@@ -326,7 +326,7 @@ export default class game extends cc.Component
 
 
         var backhome = cc.find("backhome",this.node);
-        backhome.on("click", this.OnBtnExitHome.bind(this));
+        backhome.on("click", this.OnReturnHome.bind(this));
 
         var btnSkin = cc.find("btn_skin", this.node);
         btnSkin.on("click", this.OnBtnSkin.bind(this));
@@ -594,12 +594,24 @@ export default class game extends cc.Component
         {
             var pnode:cc.Node =  cc.instantiate(p as cc.Prefab);
             self.node.addChild(pnode,80);
-
          
-
         });
         
     }
+
+    OnReturnHome() {
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gameRun'].JavaCallReturnHome()");
+        }
+        else {
+            this.OnBtnExitHome();
+        }
+    }
+
+    public static JavaCallReturnHome() {
+        game.getInstance().OnBtnExitHome();
+    }
+
     //返回首页
     OnBtnExitHome()
     {
