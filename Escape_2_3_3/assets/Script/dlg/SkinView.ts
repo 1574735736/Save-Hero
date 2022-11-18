@@ -30,9 +30,18 @@ export default class SkinView extends cc.Component {
 
     m_HeroNote: cc.Node[] = [];
 
-    onLoad() {
-        this.node.setScale(0, 0);
+    private static _instance: SkinView = null;
 
+    public static getInstance(): SkinView {
+        if (SkinView._instance == null) {
+            SkinView._instance = new SkinView();
+        }
+        return SkinView._instance;
+    }
+
+    onLoad() {
+        SkinView._instance = this;
+        this.node.setScale(0, 0);
         this.node.runAction(cc.scaleTo(0.3, 1, 1));
     }
 
@@ -123,9 +132,24 @@ export default class SkinView extends cc.Component {
         this.onUpdateCoin();
     }
 
+    curClickId: number = 0;
     OnBtnShowAds(clikID: number) {
-        EscapeMng.GetInstance().Set_HasSkins(clikID, 0);
+        this.curClickId = clikID;
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['skinView'].CallJaveGetSkin()");
+        }
+        else {
+            this.OnChangeAdsShinStatus();
+        }       
+    }
+
+    OnChangeAdsShinStatus() {
+        EscapeMng.GetInstance().Set_HasSkins(this.curClickId, 0);
         this.OnUpdateMenuStatus();
+    }
+
+    public static CallJaveGetSkin() {
+        SkinView.getInstance().OnChangeAdsShinStatus();
     }
 
     OnUpdateMenuStatus() {

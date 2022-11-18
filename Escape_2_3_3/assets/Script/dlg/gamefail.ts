@@ -13,8 +13,21 @@ export default class gamefail extends cc.Component {
     m_plisnter = null;
     m_exitbtn_callback = null;
     m_nextbtn_callback = null;
+
+
+    private static _instance: gamefail = null;
+
+    public static getInstance(): gamefail {
+        if (gamefail._instance == null) {
+            gamefail._instance = new gamefail();
+        }
+        return gamefail._instance;
+    }
+
+
     onLoad () 
     {
+        gamefail._instance = this;
         //var guangbi = this.node.getChildByName("guangbi");
         //guangbi.on("click",this.OnBtnExit.bind(this));
 
@@ -37,20 +50,44 @@ export default class gamefail extends cc.Component {
     }
     OnBtnExit()
     {
-        this.node.destroy();
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
+        }
+        else {
+            this.OnExit();
+        }            
+    }
 
-        if(this.m_exitbtn_callback )
-        {
+    OnExit() {
+        this.node.destroy();
+        if (this.m_exitbtn_callback) {
             this.m_exitbtn_callback();
         }
-
-
         BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
     }
 
+    public static InterstitialCallBack() {
+        gamefail.getInstance().OnExit();
+    }
+
+
     OnNextExit() {
+
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].RewardedCallBack()");
+        }
+        else {
+            this.OnNext();
+        }      
+    }
+
+    OnNext() {
         BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
         this.m_plisnter.FD_Success_Next(true);
+    }
+
+    public static RewardedCallBack() {
+        gamefail.getInstance().OnNext();
     }
    
     setCallBack(plisnter,exitbtn_callback)

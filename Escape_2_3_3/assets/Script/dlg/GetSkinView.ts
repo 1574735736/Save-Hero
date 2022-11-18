@@ -9,7 +9,18 @@ export default class GetSkinView extends cc.Component {
     m_plisnter = null;
     curHeroId: number = 0;
 
+
+    private static _instance: GetSkinView = null;
+
+    public static getInstance(): GetSkinView {
+        if (GetSkinView._instance == null) {
+            GetSkinView._instance = new GetSkinView();
+        }
+        return GetSkinView._instance;
+    }
+
     onLoad() {
+        GetSkinView._instance = this;
         var frame = this.node.getChildByName("Frame");
         frame.setScale(0, 0);
         frame.runAction(cc.scaleTo(0.3, 1, 1));
@@ -49,7 +60,22 @@ export default class GetSkinView extends cc.Component {
     }
 
     OnClickAds() {
+
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['getSkinView'].CallJaveClosePanel()");
+        }
+        else {
+            this.onSaveClose();
+        }  
+    
+    }
+
+    onSaveClose() {
         EscapeMng.GetInstance().Set_HasSkins(this.curHeroId, 0);
         this.OnClose();
+    }
+
+    public static CallJaveClosePanel() {
+        GetSkinView.getInstance().onSaveClose();
     }
 }

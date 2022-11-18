@@ -61,10 +61,21 @@ export default class gamewin extends cc.Component {
     m_TimerAdd: number = 0;
     curProgress: number = 0;
     m_CanAddPro: boolean = false;
+    private static _instance: gamewin = null;
 
-    
+    public static getInstance(): gamewin {
+        if (gamewin._instance == null) {
+            gamewin._instance = new gamewin();
+        }
+        return gamewin._instance;
+    }
+
     onLoad () 
     {
+        gamewin._instance = this;
+        this.node.setScale(0, 0);
+        this.node.runAction(cc.scaleTo(0.3, 1, 1));
+
         this.m_BtnNext = cc.find("btn_next", this.node);
         this.m_BtnNext.on("click", this.onClickNormal.bind(this));
 
@@ -167,7 +178,14 @@ export default class gamewin extends cc.Component {
         var nowCoin = getCount + EscapeMng.GetInstance().Get_Gold_Coin()
         EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
 
-        cc.director.loadScene("start");
+       // cc.director.loadScene("start");
+
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveChangePanel()");
+        }
+        else {
+            cc.director.loadScene("start");
+        } 
     }
 
     update() {
@@ -292,6 +310,9 @@ export default class gamewin extends cc.Component {
 
             this.m_HeroIcon.fillStart = this.m_CurAddPro;
             this.m_CurProLable.string = Math.floor(this.m_CurAddPro * 100) + "%";
+            if (this.m_CurAddPro >= 1) {
+                this.OnBtnSkin();
+            }
         }        
     }
 
@@ -302,7 +323,8 @@ export default class gamewin extends cc.Component {
     //广告按钮点击
     onClickAds() {
         //this.m_GetCoin.zIndex = 10;
-        this.m_CanMove = false;        
+        this.m_CanMove = false;   
+        this.TempGetCount = 0;
         var getCount = (EscapeMng.GetInstance().m_Default_Coin * this.m_CurMul);
         //this.m_GetCoin.getComponent(cc.Label).string = "+" + getCount + "";
         var startPos = cc.find("txt_winCount", this.node);
@@ -311,13 +333,23 @@ export default class gamewin extends cc.Component {
         winads.interactable = false;
         var next = cc.find("btn_next", this.node).getComponent(cc.Button);
         next.interactable = false;
-        this.onEndAni(getCount)
+        this.TempGetCount = getCount;
+        //
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");
+        }
+        else {
+            this.onEndAni()
+        }
+        
              
     }
+    TempGetCount: number = 0;
     //No thanks 按钮点击
     onClickNormal() {
         //this.m_GetCoin.zIndex = 10;
         this.m_CanMove = false;
+        this.TempGetCount = 0;
         var getCount = EscapeMng.GetInstance().m_Default_Coin;
         var startPos = cc.find("img_noadscount", this.node);
         //var lab = this.m_GetCoin.getComponent(cc.Label).string = "+" + getCount + "";
@@ -327,9 +359,16 @@ export default class gamewin extends cc.Component {
         winads.interactable = false;
         var next = cc.find("btn_next", this.node).getComponent(cc.Button);
         next.interactable = false;
-        this.onEndAni(getCount);
+        this.TempGetCount = getCount;
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");
+        }
+        else {
+            this.onEndAni();
+        }        
+        //
     }
-    onEndAni(getCount: number) {
+    onEndAni() {
         //var endPos = cc.find("jb", this.node);
         //var func = cc.sequence(cc.scaleTo(1, 1.2, 1.2), cc.delayTime(0.5), cc.moveTo(1, endPos.position.x, endPos.position.y), cc.delayTime(0.8), cc.callFunc(() => {
         //    this.m_GetCoin.getComponent(cc.Label).string = "";
@@ -340,7 +379,7 @@ export default class gamewin extends cc.Component {
         //this.m_GetCoin.runAction(func);  
         this.m_CoinFly.active = true;
         var func = cc.sequence(cc.delayTime(0.5), cc.callFunc(() => {
-            var nowCoin = getCount + EscapeMng.GetInstance().Get_Gold_Coin();
+            var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
             EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
             this.onUpdateCoin();
         }), cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); }))
@@ -373,5 +412,12 @@ export default class gamewin extends cc.Component {
 
     OnGoBack() {
         this.node.setPosition(0, 0);
+    }
+    public static CallJaveClosePanel() {
+        gamewin.getInstance().onEndAni();
+    }
+
+    public static CallJaveChangePanel() {
+        cc.director.loadScene("start");
     }
 }

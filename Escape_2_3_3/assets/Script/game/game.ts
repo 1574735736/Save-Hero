@@ -3911,13 +3911,14 @@ export default class game extends cc.Component
                 this.FD_Success_Next();
             }
             else {
-                let bHadLoadAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
-                if (bHadLoadAd) {
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V",'cc["gameRun"].JavaCall_EnterNextLevel()');
-                }
-                else {
-                    this.FD_Success_Next();
-                }
+                //let bHadLoadAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
+                //if (bHadLoadAd) {
+                //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V",'cc["gameRun"].JavaCall_EnterNextLevel()');
+                //}
+                //else {
+                //    this.FD_Success_Next();
+                //}
+                this.FD_Success_Next();
             }
             
         }
