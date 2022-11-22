@@ -47,7 +47,7 @@ export default class loading extends cc.Component {
         this.updateLock = false;
         this.initClassOnAndroid();
         if (cc.sys.platform === cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.game_open_success);
+            FirebaseReport.reportInformation(FirebaseKey.game_lcon_frequency);//(FirebaseKey.game_open_success);
 
             //jsb.reflection.callStaticMethod("org.cocos2dx.javascript.vpn/VpnManager", "JsCall__requestGetBackGroundConfigOfVpn", "()V");
         }
@@ -95,10 +95,11 @@ export default class loading extends cc.Component {
     }
 
     loadStartScene() {
-        FirebaseReport.reportInformation(FirebaseKey.game_load_success);
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            FirebaseReport.reportInformation(FirebaseKey.game_load_success);
+        }        
         cc.director.loadScene("start");
     }
-
 
     update (dt) {
         if (this.timer >= this.loadingTime) {

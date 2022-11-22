@@ -1,5 +1,6 @@
 import EscapeMng from "../game/EscapeMng";
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 
  
 
@@ -91,8 +92,9 @@ export default class start extends cc.Component {
                return;
            }
 
-          
-
+           if (cc.sys.platform === cc.sys.ANDROID) {
+               FirebaseReport.reportInformation(FirebaseKey.shouye_play);
+           }           
            EscapeMng.GetInstance().m_enter_level = ilevel;
            EscapeMng.GetInstance().m_enter_level_config = pobj;
 
@@ -106,8 +108,10 @@ export default class start extends cc.Component {
         cc.loader.loadRes("prefab/selgk",cc.Prefab,(e,p)=>
         {
             var pnode=  cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode,50);
-
+            self.node.addChild(pnode, 50);
+            if (cc.sys.platform === cc.sys.ANDROID) {
+                FirebaseReport.reportInformation(FirebaseKey.shouye_level);
+            }            
         });
     }
 
@@ -116,7 +120,9 @@ export default class start extends cc.Component {
         cc.loader.loadRes("prefab/SkinView", cc.Prefab, (e, p) => {
             var pnode = cc.instantiate(p as cc.Prefab);
             self.node.addChild(pnode, 50);
-
+            if (cc.sys.platform === cc.sys.ANDROID) {
+                FirebaseReport.reportInformation(FirebaseKey.shouye_skin);
+            }            
         });
     }
 

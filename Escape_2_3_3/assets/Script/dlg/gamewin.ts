@@ -7,7 +7,8 @@
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import EscapeMng from "../game/EscapeMng";
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 
 
 /*
@@ -317,6 +318,12 @@ export default class gamewin extends cc.Component {
             this.m_CurProLable.string = Math.floor(this.m_CurAddPro * 100) + "%";
             if (this.m_CurAddPro >= 1) {
                 this.OnBtnSkin();
+                if (cc.sys.platform === cc.sys.ANDROID) {
+                    var count = EscapeMng.GetInstance().GetSkinOutCount();
+                    count = count + 1;
+                    FirebaseReport.reportInformationWithParam(FirebaseKey.shengli_skin, FirebaseKey.paramCountKey, count);
+                    EscapeMng.GetInstance().SaveSkinOut();
+                }
             }
         }        
     }
@@ -339,10 +346,19 @@ export default class gamewin extends cc.Component {
         var next = cc.find("btn_next", this.node).getComponent(cc.Button);
         next.interactable = false;
         this.TempGetCount = getCount;
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_beishu);
+        }
         //
         var num = EscapeMng.GetInstance().Get_Unlock_level();
         if (cc.sys.platform === cc.sys.ANDROID && num > 1) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");                
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_beishu_2);
+            }            
         }
         else {
             this.onEndAni()
@@ -367,7 +383,15 @@ export default class gamewin extends cc.Component {
         next.interactable = false;
         this.TempGetCount = getCount;
         if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");
+            FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_next);
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveNClosePanel()");
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_next_2);
+            }
+            
         }
         else {
             this.onEndAni();
@@ -419,8 +443,15 @@ export default class gamewin extends cc.Component {
     OnGoBack() {
         this.node.setPosition(0, 0);
     }
+
+    public static CallJaveNClosePanel() {
+        gamewin.getInstance().onEndAni();
+        FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_next_1);
+    }
+
     public static CallJaveClosePanel() {
         gamewin.getInstance().onEndAni();
+        FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_beishu_1);
     }
 
     public static CallJaveChangePanel() {

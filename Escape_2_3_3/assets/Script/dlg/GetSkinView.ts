@@ -1,6 +1,7 @@
 
 const {ccclass, property} = cc._decorator;
 import EscapeMng from "../game/EscapeMng";
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 
 @ccclass
 export default class GetSkinView extends cc.Component {
@@ -28,7 +29,7 @@ export default class GetSkinView extends cc.Component {
 
     start () {
         var btnSkin = cc.find("Frame/btn_next", this.node);
-        btnSkin.on("click", this.OnClose.bind(this));
+        btnSkin.on("click", this.OnClickClose.bind(this));
 
         var anniu = cc.find("Frame/anniu", this.node);
         anniu.on("click", this.OnClickAds.bind(this));
@@ -53,16 +54,43 @@ export default class GetSkinView extends cc.Component {
         heroNode.setPosition(iconPos, 80.788);
     }
 
+    OnClickClose() {
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_skin);
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['getSkinView'].CallJaveNClosePanel()");
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_skin_2);
+            }
+        }
+        else {
+            this.onSaveClose();
+        } 
+    }
 
     OnClose() {
         this.m_plisnter.OnGoBack();
         this.node.destroy();
     }
 
+    public static CallJaveNClosePanel() {
+        FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_skin_1);
+        GetSkinView.getInstance().OnClose();
+    }
+
     OnClickAds() {
 
         if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['getSkinView'].CallJaveClosePanel()");
+            FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skin);
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['getSkinView'].CallJaveClosePanel()");
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skin_2);
+            }            
         }
         else {
             this.onSaveClose();
@@ -76,6 +104,7 @@ export default class GetSkinView extends cc.Component {
     }
 
     public static CallJaveClosePanel() {
+        FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skin_1);
         GetSkinView.getInstance().onSaveClose();
     }
 }

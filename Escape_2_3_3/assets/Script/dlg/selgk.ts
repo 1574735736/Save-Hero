@@ -15,6 +15,12 @@ export default class selgk extends cc.Component {
 
     private static _instance: selgk = null; 
 
+    unLockFrame: cc.SpriteFrame = null;
+    lockFrame: cc.SpriteFrame = null;
+
+    AllLables: cc.Label[] = [];
+    AllImages: cc.Sprite[] = [];
+
     m_i_page_index = 0;
     selectedIndex = 0;
     playerUnlockLevel = 0;
@@ -46,7 +52,11 @@ export default class selgk extends cc.Component {
         for(var ff=1;ff<=15;ff++)
         {
             let ff_node_t =  cc.find("gknode/"+ff+"",this.node);
-            ff_node_t.on("click",this.OnBtnEnter.bind(this,ff));
+            ff_node_t.on("click", this.OnBtnEnter.bind(this, ff));
+            let ff_node_l = cc.find("gknode/" + ff + "/t", this.node).getComponent(cc.Label);
+            let ff_node_s = ff_node_t.getComponent(cc.Sprite);
+            this.AllLables.push(ff_node_l);
+            this.AllImages.push(ff_node_s);
         }
 
         this.node.setScale(0, 0);
@@ -58,6 +68,7 @@ export default class selgk extends cc.Component {
     {   
         this.selectedIndex = iindex;
         let clickLevel = this.m_i_page_index * 15 + iindex;
+        
         if (clickLevel <= this.playerUnlockLevel) {
             this.EnTerSelectedLevel();
         }
@@ -141,40 +152,73 @@ export default class selgk extends cc.Component {
         let playerLevelIndex = this.playerUnlockLevel % 15;
         playerLevelIndex = playerLevelIndex == 0 ? 15 : playerLevelIndex;
 
-        let levelBase = this.m_i_page_index*15;
+        let levelBase = this.m_i_page_index * 15;
+
+        console.log("playerUnlockLevel   ... " + this.playerUnlockLevel);
         for(var ff=1;ff<=15;ff++)
         {
-            let ff_node_t =  cc.find("gknode/"+ff+"/t",this.node);
+            //let ff_node_t =  cc.find("gknode/"+ff+"/t",this.node);
 
             let ipage_gk = levelBase + ff;
-            ff_node_t.getComponent(cc.Label).string = "" + ipage_gk;
-        }
-        let self = this;
-        if (this.playerUnlockLevel > levelBase) {
-            cc.loader.loadRes(unlockUrl, cc.SpriteFrame, function(err, spriteFrame) {
-                for (let i = 1; i <= playerLevelIndex; i++) {
-                    if (levelBase + i <= self.playerUnlockLevel ) {
-                        let ff_node =  cc.find("gknode/"+ i +"", self.node);
-                        ff_node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                    }
-                    else {
-                        break;
-                    }
+            //ff_node_t.getComponent(cc.Label).string = "" + ipage_gk;
+            this.AllLables[ff - 1].string = "" + ipage_gk;
+
+            if (this.playerUnlockLevel >= ipage_gk) {
+               
+                if (this.unLockFrame == null) {
+                    this.unLockFrame = cc.find("gknode/unlock", this.node).getComponent(cc.Sprite).spriteFrame;
                 }
-            });
-        }
-        
-        cc.loader.loadRes(lockUrl, cc.SpriteFrame, function(err, spriteFrame) {
-            for (let i = 15; i >= 1; i--) {
-                if (levelBase + i > self.playerUnlockLevel) {
-                    let ff_node =  cc.find("gknode/"+ i +"", self.node);
-                    ff_node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                }
-                else {
-                    break;
-                }
+                this.AllImages[ff - 1].spriteFrame = this.unLockFrame;
             }
-        });
+            else {
+                if (this.lockFrame == null) {
+                    this.lockFrame = cc.find("gknode/lock", this.node).getComponent(cc.Sprite).spriteFrame;
+                }
+                this.AllImages[ff - 1].spriteFrame = this.lockFrame;
+            }
+        }        
+     
+        //if (this.playerUnlockLevel > levelBase) {
+
+        //    if (this.unLockFrame) {
+        //        for (let i = 1; i <= playerLevelIndex; i++) {
+        //            if (levelBase + i <= self.playerUnlockLevel) {
+        //                let ff_node = cc.find("gknode/" + i + "", self.node);
+        //                ff_node.getComponent(cc.Sprite).spriteFrame = this.unLockFrame;
+        //            }
+        //            else {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    else {
+        //        cc.loader.loadRes(unlockUrl, cc.SpriteFrame, function (err, spriteFrame) {
+        //            for (let i = 1; i <= playerLevelIndex; i++) {
+        //                if (levelBase + i <= self.playerUnlockLevel) {
+        //                    let ff_node = cc.find("gknode/" + i + "", self.node);
+        //                    ff_node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        //                }
+        //                else {
+        //                    break;
+        //                }
+        //            }
+        //            this.unLockFrame = spriteFrame;
+        //        });
+        //    }
+
+        //}
+        
+        //cc.loader.loadRes(lockUrl, cc.SpriteFrame, function(err, spriteFrame) {
+        //    for (let i = 15; i >= 1; i--) {
+        //        if (levelBase + i > self.playerUnlockLevel) {
+        //            let ff_node =  cc.find("gknode/"+ i +"", self.node);
+        //            ff_node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        //        }
+        //        else {
+        //            break;
+        //        }
+        //    }
+        //});
     }
     
     OnBtnLeftPage()

@@ -4,11 +4,10 @@ const { ccclass, property } = cc._decorator;
 import EscapeMng from "../game/EscapeMng";
 import Start from "../load/start";
 import Game from "../game/game";
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 
 @ccclass
-export default class SkinView extends cc.Component {
-   
-
+export default class SkinView extends cc.Component {   
      
     coinCount: cc.Label = null;
     curClick: number = 1;
@@ -88,6 +87,7 @@ export default class SkinView extends cc.Component {
             this.node.destroy();
         }));//.easing(cc.easeQuarticActionOut)
         this.node.runAction(actionScale);
+        FirebaseReport.reportInformation(FirebaseKey.skin_ranbui);
     }
 
     onSetIcon(nodePath: string, iconPath: string) {
@@ -130,13 +130,21 @@ export default class SkinView extends cc.Component {
         EscapeMng.GetInstance().Set_HasSkins(clickID, 0);
         this.OnUpdateMenuStatus();
         this.onUpdateCoin();
+        FirebaseReport.reportInformation(FirebaseKey.skin_goumai);
     }
 
     curClickId: number = 0;
-    OnBtnShowAds(clikID: number) {
+    OnBtnShowAds(clikID: number) {      
         this.curClickId = clikID;
         if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['skinView'].CallJaveGetSkin()");
+            FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['skinView'].CallJaveGetSkin()");
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.skin_ad2_2);
+            }            
         }
         else {
             this.OnChangeAdsShinStatus();
@@ -150,6 +158,9 @@ export default class SkinView extends cc.Component {
 
     public static CallJaveGetSkin() {
         SkinView.getInstance().OnChangeAdsShinStatus();
+        if (cc.sys.platform === cc.sys.ANDROID) {
+            FirebaseReport.reportInformation(FirebaseKey.skin_ad2_1);
+        }
     }
 
     OnUpdateMenuStatus() {

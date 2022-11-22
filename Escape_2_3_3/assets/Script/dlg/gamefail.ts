@@ -1,5 +1,5 @@
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
-
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 
 const {ccclass, property} = cc._decorator;
 
@@ -43,14 +43,12 @@ export default class gamefail extends cc.Component {
         var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1, 1), cc.callFunc(() => {
 
         }));
-
         replay.runAction(pseq);
-
-
     }
     OnBtnExit()
     {
         if (cc.sys.platform === cc.sys.ANDROID) {
+            FirebaseReport.reportInformation(FirebaseKey.shengli_playagain);
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
         }
         else {
@@ -74,7 +72,14 @@ export default class gamefail extends cc.Component {
     OnNextExit() {
 
         if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].RewardedCallBack()");
+            FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip);
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].RewardedCallBack()");
+            }
+            else {
+                FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_2);
+            }
         }
         else {
             this.OnNext();
@@ -87,14 +92,14 @@ export default class gamefail extends cc.Component {
     }
 
     public static RewardedCallBack() {
+        FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_1);
         gamefail.getInstance().OnNext();
     }
    
     setCallBack(plisnter,exitbtn_callback)
     {
         this.m_plisnter = plisnter;
-        this.m_exitbtn_callback = exitbtn_callback;
-        
+        this.m_exitbtn_callback = exitbtn_callback;        
     }
     
     
@@ -104,9 +109,6 @@ export default class gamefail extends cc.Component {
         //levelinfo.getComponent(cc.Label).string = "第 "+ilevel +"关";
 
         //var resurcount =  cc.find("panel/resurcount",this.node);
-        //resurcount.getComponent(cc.Label).string = "共"+init_all_people_count +"人 失败"+total_killed_people_count+"人";
-
-        
-
+        //resurcount.getComponent(cc.Label).string = "共"+init_all_people_count +"人 失败"+total_killed_people_count+"人";        
     }
 }

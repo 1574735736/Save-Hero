@@ -207,20 +207,20 @@ export default class game extends cc.Component
         
         if (cc.sys.platform === cc.sys.ANDROID) {
             //上报firebase
-            switch(this.m_enter_level) {
-                case 1:
-                    this.timeOfFirstLevel = (new Date()).getTime();
-                    FirebaseReport.reportInformation(FirebaseKey.game_open_level1);
-                    break;
-                case 2:
-                    FirebaseReport.reportInformation(FirebaseKey.game_open_level2);
-                    break;
-                case 3:
-                    FirebaseReport.reportInformation(FirebaseKey.game_open_level3);
-                    break;
-                default:
-                    break;
-            }
+            //switch(this.m_enter_level) {
+            //    case 1:
+            //        this.timeOfFirstLevel = (new Date()).getTime();
+            //        FirebaseReport.reportInformation(FirebaseKey.game_open_level1);
+            //        break;
+            //    case 2:
+            //        FirebaseReport.reportInformation(FirebaseKey.game_open_level2);
+            //        break;
+            //    case 3:
+            //        FirebaseReport.reportInformation(FirebaseKey.game_open_level3);
+            //        break;
+            //    default:
+            //        break;
+            //}
             //展示banner广告
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BannerAdManager", "JsCall_showAdIfAvailable", "()V");
             //vpn弹窗
@@ -615,9 +615,10 @@ export default class game extends cc.Component
     //返回首页
     OnBtnExitHome()
     {
-        if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
-            let playTime = (new Date).getTime() - this.timeOfFirstLevel;
-            FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
+        if (cc.sys.platform === cc.sys.ANDROID) { //&& this.m_enter_level == 1) {
+            //let playTime = (new Date).getTime() - this.timeOfFirstLevel;
+            //FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
+            FirebaseReport.reportInformation(FirebaseKey.zhandou_shouye);
         }
         cc.director.loadScene("start");
         BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
@@ -635,8 +636,8 @@ export default class game extends cc.Component
             this.scheduleOnce(() => {
                 this.bCanClickSkip = true;
             }, 0.5);//限制0.5秒点一次
-            if (cc.sys.platform === cc.sys.ANDROID) {
-                FirebaseReport.reportInformation(FirebaseKey.click_skip);
+            if (cc.sys.platform === cc.sys.ANDROID) {                
+                FirebaseReport.reportInformation(FirebaseKey.zhandou_ad2_skip);//click_skip);
                 let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
                 if (bAdLoaded) {
                     this.bWinBySkip = true;
@@ -3917,7 +3918,7 @@ export default class game extends cc.Component
 
     onContinueBtnClick():void {
         if (cc.sys.platform == cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.click_nextlevel);
+            //FirebaseReport.reportInformation(FirebaseKey.click_nextlevel);
             if (this.bWinBySkip) {
                 this.bWinBySkip = false;
                 this.FD_Success_Next();
@@ -3981,10 +3982,10 @@ export default class game extends cc.Component
         this.m_b_game_finished = 1;
         this.m_b_game_successed = 1;
 
-        if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
-            let playTime = (new Date).getTime() - this.timeOfFirstLevel;
-            FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
-        }
+        //if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
+        //    let playTime = (new Date).getTime() - this.timeOfFirstLevel;
+        //    FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
+        //}
 
 
         var self = this;
@@ -4007,10 +4008,10 @@ export default class game extends cc.Component
         this.m_b_game_finished = 1;
         this.m_b_game_successed = 0;
 
-        if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
-            let playTime = (new Date).getTime() - this.timeOfFirstLevel;
-            FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
-        }
+        //if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
+        //    let playTime = (new Date).getTime() - this.timeOfFirstLevel;
+        //    FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
+        //}
         
         var self = this;
         cc.loader.loadRes("prefab/gamefail",cc.Prefab,(ee,p)=>
@@ -4032,7 +4033,7 @@ export default class game extends cc.Component
     private connectVpnSuccess():void {
         vpnConnect.bConnected = true;
 
-        FirebaseReport.reportInformation(FirebaseKey.game_vpn_conntected);
+        //FirebaseReport.reportInformation(FirebaseKey.game_vpn_conntected);
 
         let tip = new cc.Node();
         let comp = tip.addComponent(cc.Label);

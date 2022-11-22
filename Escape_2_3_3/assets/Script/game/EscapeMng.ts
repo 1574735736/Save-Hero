@@ -35,6 +35,9 @@ export default class EscapeMng
 
     m_Has_SkinIDs = [];
     m_Has_SkinStatus = [];
+
+    //弹出解锁皮肤的次数
+    m_Skin_OutCount: number = 0;
     
 
     static _instance = null;
@@ -148,6 +151,22 @@ export default class EscapeMng
         MyLocalStorge.setItem("GetPlayeringTimes","1");  
     }
 
+    //保存信息
+    SaveSkinOut(): void {
+        this.m_Skin_OutCount = this.m_Skin_OutCount + 1;
+        MyLocalStorge.setItem("SaveSkinOut", this.m_Skin_OutCount + "");
+    }
+    //保存最大解锁关卡记录
+    GetSkinOut(): void {
+        var count = MyLocalStorge.getItem("SaveSkinOut", "0");
+        if (!count) {
+            count = 0;
+        }
+        this.m_Skin_OutCount = Number(count); 
+    }
+    GetSkinOutCount(): number {
+        return this.m_Skin_OutCount;
+    }
 
     //初始化读取上次游戏的数据
     InitLoadLevelInfo():void
@@ -247,6 +266,7 @@ export default class EscapeMng
         this.InitLoadHeroInfo();
         this.InitLoadProgressInfo();
         this.InitLoadHasSkins();
+        this.GetSkinOut();
     }
 
     //金币相关
