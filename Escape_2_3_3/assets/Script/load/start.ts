@@ -67,6 +67,7 @@ export default class start extends cc.Component {
         if (cc.sys.platform === cc.sys.ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BannerAdManager", "JsCall_showAdIfAvailable", "()V");
         }
+           
     }
 
     

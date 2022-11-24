@@ -72,7 +72,7 @@ export default class gamewin extends cc.Component {
     }
 
     onLoad () 
-    {
+    {     
         gamewin._instance = this;
         this.node.setScale(0, 0);
         this.node.runAction(cc.scaleTo(0.3, 1, 1));
@@ -99,7 +99,7 @@ export default class gamewin extends cc.Component {
         this.m_NoAdsCoin = cc.find("img_noadscount/txt_noadscount", this.node).getComponent(cc.Label);
         this.m_CurProLable = cc.find("txt_curProgress", this.node).getComponent(cc.Label);
         this.m_GetCoin = cc.find("txt_getCount", this.node);
-        this.m_CoinFly = cc.find("ani_coinfly", this.node);
+        this.m_CoinFly = cc.find("ani_coinF", this.node);
 
         this.m_HeroIconBg = cc.find("img_herobg", this.node).getComponent(cc.Sprite);
         this.m_HeroIcon = cc.find("img_herobg/img_hero", this.node).getComponent(cc.Sprite);
@@ -146,7 +146,7 @@ export default class gamewin extends cc.Component {
     ExitWithMoney( win_money)
     {
        
-        this.node.destroy();
+        //this.node.destroy();
 
         if(this.m_nextbtn_callback )
         {
@@ -156,8 +156,13 @@ export default class gamewin extends cc.Component {
    
     OnBtnExit()
     {
-        this.ExitWithMoney(this.m_win_money);       
-        BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+
+        //var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
+            this.ExitWithMoney(this.m_win_money);
+            BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+        //}));
+        //this.node.runAction(actionScale);
+       
     }
      
     setCallBack(plisnter, nextbtn_callback)
@@ -186,12 +191,12 @@ export default class gamewin extends cc.Component {
 
        // cc.director.loadScene("start");
 
-        if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveChangePanel()");
-        }
-        else {
+        //if (cc.sys.platform === cc.sys.ANDROID) {
+        //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveChangePanel()");
+        //}
+        //else {
             cc.director.loadScene("start");
-        } 
+        //} 
     }
 
     update() {
@@ -353,11 +358,12 @@ export default class gamewin extends cc.Component {
         var num = EscapeMng.GetInstance().Get_Unlock_level();
         if (cc.sys.platform === cc.sys.ANDROID && num > 1) {
             let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
-            if (bAdLoaded) {
+            if (bAdLoaded) {                
                 jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamewin'].CallJaveClosePanel()");                
             }
             else {
                 FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_beishu_2);
+                this.onEndAni()
             }            
         }
         else {
@@ -382,7 +388,8 @@ export default class gamewin extends cc.Component {
         var next = cc.find("btn_next", this.node).getComponent(cc.Button);
         next.interactable = false;
         this.TempGetCount = getCount;
-        if (cc.sys.platform === cc.sys.ANDROID) {
+        var status = EscapeMng.GetInstance().GetIntAdStatus();
+        if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_next);
             let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
             if (bAdLoaded) {
@@ -390,6 +397,7 @@ export default class gamewin extends cc.Component {
             }
             else {
                 FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_next_2);
+                this.onEndAni();
             }
             
         }
@@ -452,6 +460,7 @@ export default class gamewin extends cc.Component {
     public static CallJaveClosePanel() {
         gamewin.getInstance().onEndAni();
         FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_beishu_1);
+        EscapeMng.GetInstance().SetIntAdStatus();
     }
 
     public static CallJaveChangePanel() {

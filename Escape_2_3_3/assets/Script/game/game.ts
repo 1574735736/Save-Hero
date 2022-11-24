@@ -199,6 +199,10 @@ export default class game extends cc.Component
     {
         game._instance = this;
 
+        this.node.opacity = 0;
+        var pseq = cc.sequence(cc.fadeTo(0.3, 255), cc.callFunc(() => {
+        }));
+        this.node.runAction(pseq);
 
         //获取全局单实例中存储的关卡和该关卡的配置信息，保存起来
         this.m_enter_level = EscapeMng.GetInstance().m_enter_level;
@@ -340,7 +344,7 @@ export default class game extends cc.Component
 
         this.m_kill_obj_grapgic =kill_graphic;
        
-        this.scheduleOnce(this.FD_Init_All_Obstacle.bind(this), 0.3);
+        //this.scheduleOnce(this.FD_Init_All_Obstacle.bind(this), 0.1);
 
 
      
@@ -391,7 +395,7 @@ export default class game extends cc.Component
             this.Add_Level_Start_Tip();
         }
 
-       
+        this.FD_Init_All_Obstacle();
         this.scheduleOnce(this.FD_SetBJ_Visible.bind(this),2);
  
     }
@@ -600,12 +604,12 @@ export default class game extends cc.Component
     }
 
     OnReturnHome() {
-        if (cc.sys.platform === cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gameRun'].JavaCallReturnHome()");
-        }
-        else {
+        //if (cc.sys.platform === cc.sys.ANDROID) {
+        //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gameRun'].JavaCallReturnHome()");
+        //}
+        //else {
             this.OnBtnExitHome();
-        }
+        //}
     }
 
     public static JavaCallReturnHome() {
@@ -620,8 +624,14 @@ export default class game extends cc.Component
             //FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
             FirebaseReport.reportInformation(FirebaseKey.zhandou_shouye);
         }
-        cc.director.loadScene("start");
-        BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+
+        var func = (function () {
+            cc.director.loadScene("start");
+            BackGroundSoundUtils.GetInstance().PlayEffect("dianji"); });
+        this.OuGameAni(func);
+
+        //cc.director.loadScene("start");
+        //BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
     }
 
     //跳过关卡
@@ -657,6 +667,7 @@ export default class game extends cc.Component
     }
 
     public static JavaCall_SkipLevel() {
+        EscapeMng.GetInstance().SetIntAdStatus();
         game.getInstance().SkipLevel();
     }
 
@@ -1038,7 +1049,8 @@ export default class game extends cc.Component
 
 
             var peopleinfo2 = new EscapePeople(hh_peopleid,iid);
-            peopleinfo2.Init(pnode2,ff_info);
+            peopleinfo2.Init(pnode2, ff_info);
+            peopleinfo2.SetScale(0.3, EscapeMng.GetInstance().Get_Hero());
  
             this.m_all_outer_waitfor_resure_people_list.push(peopleinfo2);
         }
@@ -3501,7 +3513,7 @@ export default class game extends cc.Component
             src_people_info.Caculate_Set_Pos(rate);
 
             src_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
-
+            src_people_info.Set_Node_Animate("diao", EscapeMng.GetInstance().Get_Hero());
             this.m_rescureing_people_list.push(src_people_info);
         }
 
@@ -3968,14 +3980,26 @@ export default class game extends cc.Component
             EscapeMng.GetInstance().m_enter_level = ilevel;
             EscapeMng.GetInstance().m_enter_level_config = pobj;
             if (isJinru) {
-                cc.director.loadScene("game");
+
+                var func = (function () { cc.director.loadScene("game"); });
+                this.OuGameAni(func);
+                //cc.director.loadScene("game");
             }            
         });
     }
     //营救失败，重新开始
     FD_Failed_Next()
     {
-        cc.director.loadScene("game");
+        //cc.director.loadScene("game");
+        var func = (function () { cc.director.loadScene("game"); });
+        this.OuGameAni(func);
+    }
+
+    OuGameAni(func) {
+        //var pseq = cc.sequence(cc.fadeTo(0.2,0), cc.callFunc(() => {
+            func();
+        //}));
+        //this.node.runAction(pseq);
     }
 
     FD_Success() {

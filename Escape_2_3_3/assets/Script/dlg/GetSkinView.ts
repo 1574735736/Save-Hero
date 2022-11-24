@@ -55,7 +55,8 @@ export default class GetSkinView extends cc.Component {
     }
 
     OnClickClose() {
-        if (cc.sys.platform === cc.sys.ANDROID) {
+        var status = EscapeMng.GetInstance().GetIntAdStatus();
+        if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_skin);
             let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
             if (bAdLoaded) {
@@ -63,6 +64,7 @@ export default class GetSkinView extends cc.Component {
             }
             else {
                 FirebaseReport.reportInformation(FirebaseKey.shengli_ad3_skin_2);
+                this.onSaveClose();
             }
         }
         else {
@@ -100,11 +102,13 @@ export default class GetSkinView extends cc.Component {
 
     onSaveClose() {
         EscapeMng.GetInstance().Set_HasSkins(this.curHeroId, 0);
+        EscapeMng.GetInstance().SetIntAdStatus();
+        EscapeMng.GetInstance().Set_Hero(this.curHeroId);
         this.OnClose();
     }
 
     public static CallJaveClosePanel() {
         FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skin_1);
-        GetSkinView.getInstance().onSaveClose();
+        GetSkinView.getInstance().onSaveClose();        
     }
 }

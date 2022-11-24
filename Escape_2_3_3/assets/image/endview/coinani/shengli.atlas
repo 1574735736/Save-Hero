@@ -1,0 +1,13 @@
+
+shengli.png
+size: 76,85
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jb
+  rotate: false
+  xy: 2, 2
+  size: 72, 81
+  orig: 72, 81
+  offset: 0, 0
+  index: -1

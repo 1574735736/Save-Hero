@@ -32,6 +32,8 @@ export default class loading extends cc.Component {
 
     updateLock = false;
 
+    canBeShow = false;
+
     public static getInstance(): loading {
         if (loading._instance == null) {
             loading._instance = new loading();
@@ -41,7 +43,8 @@ export default class loading extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {      
+
         loading._instance = this;
         this.timer = 0;
         this.updateLock = false;
@@ -76,7 +79,8 @@ export default class loading extends cc.Component {
 
 
     public static JavaCall_OpenAppAdLoadSuccess() {
-        
+
+        loading.getInstance().canBeShow = true;
         if (loading.getInstance().timer < loading.getInstance().loadingTime) {
             //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
         }
@@ -97,7 +101,8 @@ export default class loading extends cc.Component {
     loadStartScene() {
         if (cc.sys.platform === cc.sys.ANDROID) {
             FirebaseReport.reportInformation(FirebaseKey.game_load_success);
-        }        
+        }            
+
         cc.director.loadScene("start");
     }
 
@@ -105,7 +110,7 @@ export default class loading extends cc.Component {
         if (this.timer >= this.loadingTime) {
             if (!this.updateLock) {
                 this.updateLock = true;
-                if (cc.sys.platform === cc.sys.ANDROID) {
+                if (cc.sys.platform === cc.sys.ANDROID && this.canBeShow == true) {
 
                     //let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
                     //if (!isShowAd ||  EscapeMng.GetInstance().GetPlayeringTimes()) {

@@ -36,6 +36,8 @@ export default class EscapeMng
     m_Has_SkinIDs = [];
     m_Has_SkinStatus = [];
 
+    m_LastRewarded = 0;
+
     //弹出解锁皮肤的次数
     m_Skin_OutCount: number = 0;
     
@@ -426,6 +428,23 @@ export default class EscapeMng
     //获取皮肤的数量
     Get_ShinStatusCount(): number {
         return this.m_Has_Skins.length;
+    }
+
+    //激励广告设置时间
+    SetIntAdStatus(): void {
+        const myDate = Date.parse(new Date().toString());
+        this.m_Skin_OutCount = myDate;
+    }
+
+    //判断当前是否能够播放插页广告
+    GetIntAdStatus(): boolean {
+        const myDate = Date.parse(new Date().toString());
+        if (myDate - this.m_Skin_OutCount > 15000) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

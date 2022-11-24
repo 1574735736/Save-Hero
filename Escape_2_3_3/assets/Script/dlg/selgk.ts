@@ -103,6 +103,7 @@ export default class selgk extends cc.Component {
        
     }
     public static JavaCall_EnTerSelectedLevel() {
+        EscapeMng.GetInstance().SetIntAdStatus();
         selgk.getInstance().EnTerSelectedLevel();
     }
 

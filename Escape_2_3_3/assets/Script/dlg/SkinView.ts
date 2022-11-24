@@ -72,6 +72,7 @@ export default class SkinView extends cc.Component {
        
         this.OnUpdateMenuStatus()
     }
+    
 
     // update (dt) {}
 
@@ -111,6 +112,8 @@ export default class SkinView extends cc.Component {
             btBuy.on("click", this.OnBtnBuy.bind(this, i));
             var btAds = Item.getChildByName("btn_ads");
             btAds.on("click", this.OnBtnShowAds.bind(this, i));
+            var btIcon = Item.getChildByName("heroicon");
+            btIcon.on("click", this.OnBtnShowBigHero.bind(this, i));
             
         }
     }
@@ -118,6 +121,11 @@ export default class SkinView extends cc.Component {
     OnBtnAction(clickID: number) {
         EscapeMng.GetInstance().Set_Hero(clickID);
         this.onUpdateTopHero();
+    }
+
+    OnBtnShowBigHero(clickID: number) {
+        this.onSetIcon("top/tophero", "game/heroicon/noside/" + clickID);
+        this.tophero.position = this.iconPos[clickID - 1];
     }
 
     OnBtnBuy(clickID: number) {
@@ -144,6 +152,7 @@ export default class SkinView extends cc.Component {
             }
             else {
                 FirebaseReport.reportInformation(FirebaseKey.skin_ad2_2);
+                this.OnChangeAdsShinStatus();
             }            
         }
         else {
@@ -153,6 +162,7 @@ export default class SkinView extends cc.Component {
 
     OnChangeAdsShinStatus() {
         EscapeMng.GetInstance().Set_HasSkins(this.curClickId, 0);
+        EscapeMng.GetInstance().SetIntAdStatus();
         this.OnUpdateMenuStatus();
     }
 

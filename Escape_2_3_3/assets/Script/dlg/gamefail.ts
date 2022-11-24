@@ -1,6 +1,6 @@
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
-
+import EscapeMng from "../game/EscapeMng";
 const {ccclass, property} = cc._decorator;
 
 /*
@@ -47,9 +47,16 @@ export default class gamefail extends cc.Component {
     }
     OnBtnExit()
     {
-        if (cc.sys.platform === cc.sys.ANDROID) {
+        var status = EscapeMng.GetInstance().GetIntAdStatus();
+        if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportInformation(FirebaseKey.shengli_playagain);
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
+            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
+            if (bAdLoaded) {
+                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
+            }
+            else {
+                this.OnExit();
+            }            
         }
         else {
             this.OnExit();
@@ -57,7 +64,7 @@ export default class gamefail extends cc.Component {
     }
 
     OnExit() {
-        this.node.destroy();
+        //this.node.destroy();
         if (this.m_exitbtn_callback) {
             this.m_exitbtn_callback();
         }
@@ -79,6 +86,7 @@ export default class gamefail extends cc.Component {
             }
             else {
                 FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_2);
+                this.OnNext();
             }
         }
         else {
@@ -94,6 +102,7 @@ export default class gamefail extends cc.Component {
     public static RewardedCallBack() {
         FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_1);
         gamefail.getInstance().OnNext();
+        EscapeMng.GetInstance().SetIntAdStatus();
     }
    
     setCallBack(plisnter,exitbtn_callback)
