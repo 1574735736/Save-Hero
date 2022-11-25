@@ -137,6 +137,13 @@ export default class gamewin extends cc.Component {
             }));
             this.m_BtnNext.runAction(pseq);
         }
+        else {
+            var sprite = cc.find("ani_winads", this.node).getComponent(cc.Sprite);
+            cc.loader.loadRes("temp/btn_nioad", cc.SpriteFrame, (err, sp) => {
+                sprite.spriteFrame = sp as cc.SpriteFrame;
+            })
+        }
+
 
         //let sp = this.answerPanel.getComponent(Sprite);
         //tween(sp.color.a).to(0.5, 255);
