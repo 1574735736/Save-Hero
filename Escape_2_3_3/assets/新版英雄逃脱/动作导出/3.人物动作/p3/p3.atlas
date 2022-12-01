@@ -1,0 +1,55 @@
+
+p3.png
+size: 511,137
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+j
+  rotate: true
+  xy: 212, 3
+  size: 46, 135
+  orig: 46, 135
+  offset: 0, 0
+  index: -1
+j2
+  rotate: true
+  xy: 296, 89
+  size: 46, 135
+  orig: 46, 135
+  offset: 0, 0
+  index: -1
+s
+  rotate: false
+  xy: 296, 53
+  size: 131, 34
+  orig: 131, 34
+  offset: 0, 0
+  index: -1
+s2
+  rotate: true
+  xy: 475, 4
+  size: 131, 34
+  orig: 131, 34
+  offset: 0, 0
+  index: -1
+st
+  rotate: true
+  xy: 349, 11
+  size: 40, 124
+  orig: 40, 124
+  offset: 0, 0
+  index: -1
+t
+  rotate: true
+  xy: 2, 2
+  size: 133, 208
+  orig: 133, 210
+  offset: 0, 0
+  index: -1
+t2
+  rotate: true
+  xy: 212, 51
+  size: 84, 82
+  orig: 84, 82
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,20 @@
+
+zhandou.png
+size: 187,100
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+d2
+  rotate: false
+  xy: 100, 12
+  size: 85, 86
+  orig: 85, 87
+  offset: 0, 1
+  index: -1
+q3
+  rotate: false
+  xy: 2, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1

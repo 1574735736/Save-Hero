@@ -1,0 +1,90 @@
+
+boss3.png
+size: 377,257
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+j
+  rotate: false
+  xy: 168, 8
+  size: 52, 112
+  orig: 52, 112
+  offset: 0, 0
+  index: -1
+j2
+  rotate: true
+  xy: 222, 17
+  size: 66, 104
+  orig: 66, 104
+  offset: 0, 0
+  index: -1
+s
+  rotate: false
+  xy: 2, 71
+  size: 164, 49
+  orig: 164, 49
+  offset: 0, 0
+  index: -1
+s2
+  rotate: false
+  xy: 2, 20
+  size: 164, 49
+  orig: 164, 49
+  offset: 0, 0
+  index: -1
+st
+  rotate: true
+  xy: 2, 122
+  size: 133, 228
+  orig: 133, 228
+  offset: 0, 0
+  index: -1
+t
+  rotate: true
+  xy: 232, 85
+  size: 170, 81
+  orig: 170, 81
+  offset: 0, 0
+  index: -1
+t2
+  rotate: true
+  xy: 315, 114
+  size: 141, 51
+  orig: 141, 52
+  offset: 0, 1
+  index: -1
+ya
+  rotate: false
+  xy: 28, 4
+  size: 84, 14
+  orig: 84, 14
+  offset: 0, 0
+  index: -1
+yj
+  rotate: false
+  xy: 328, 65
+  size: 47, 47
+  orig: 48, 48
+  offset: 1, 0
+  index: -1
+yj2
+  rotate: false
+  xy: 328, 18
+  size: 38, 45
+  orig: 38, 47
+  offset: 0, 1
+  index: -1
+yz
+  rotate: true
+  xy: 114, 8
+  size: 10, 35
+  orig: 10, 35
+  offset: 0, 0
+  index: -1
+yz2
+  rotate: true
+  xy: 2, 2
+  size: 16, 24
+  orig: 17, 24
+  offset: 0, 0
+  index: -1

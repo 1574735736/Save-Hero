@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "cb5ba3b9-5849-44b0-961a-176077435456",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 750,
+  "height": 1334,
+  "platformSettings": {},
+  "subMetas": {
+    "绳索界面切图素材导出 (1)": {
+      "ver": "1.0.4",
+      "uuid": "6500a50d-a9d2-4a3e-89ae-2e169729676e",
+      "rawTextureUuid": "cb5ba3b9-5849-44b0-961a-176077435456",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 750,
+      "height": 1334,
+      "rawWidth": 750,
+      "rawHeight": 1334,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

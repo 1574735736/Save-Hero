@@ -54,6 +54,7 @@ export default class loading extends cc.Component {
 
             //jsb.reflection.callStaticMethod("org.cocos2dx.javascript.vpn/VpnManager", "JsCall__requestGetBackGroundConfigOfVpn", "()V");
         }
+        cc.debug.setDisplayStats(false);
     }
 
     public static JavaCall_UpdateConfigValue(value:number) {

@@ -58,7 +58,7 @@ export default class start extends cc.Component {
 
 
         this.onUpdateCoin();
-        this.onUpdateHero();
+        //this.onUpdateHero();
         BackGroundSoundUtils.GetInstance().PlayMusic("datingbj");
         
     }
