@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "p4",
+    "_name": "p5",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -101,7 +101,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 578.36,
-      "height": 370
+      "height": 344
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -169,7 +169,7 @@
     "_playTimes": 0,
     "_isAniComplete": true,
     "_N$skeletonData": {
-      "__uuid__": "20643752-3a12-4490-9ae0-4acf47a34ce1"
+      "__uuid__": "61f2b420-484d-444c-8c04-899e0a8ceabd"
     },
     "_N$_defaultCacheMode": 0,
     "_N$debugSlots": false,
@@ -185,9 +185,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "5ffd5faa-129c-493c-9e95-3b91f5a95aa5"
+      "__uuid__": "7659a77f-1a69-4393-bf11-5769c7891292"
     },
-    "fileId": "43er5O6rFOzYfR3i7KRejz",
+    "fileId": "6bUhUZaTpCE7wwWj286b5j",
     "sync": false
   },
   {
@@ -196,9 +196,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "5ffd5faa-129c-493c-9e95-3b91f5a95aa5"
+      "__uuid__": "7659a77f-1a69-4393-bf11-5769c7891292"
     },
-    "fileId": "eevY+H/yVKELqLWRCme8Uw",
+    "fileId": "c1E7QHf7dN1JkPRmejXYXW",
     "sync": false
   }
 ]

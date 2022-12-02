@@ -132,13 +132,14 @@ export default class EscapePeople
     //设置缩放比例
     SetScale(s: number, index: number = 1)
     {
-        var wnode = this.m_node.getChildByName("p" + index);//("w");
+        var wnode = this.m_node.getChildByName("p");//("w");
         wnode.scale  = s;
+        
     }
     //设置人骨骼动画显示
     Set_Node_Animate(aniname: string, index: number = 1)
     {
-        var wnode = this.m_node.getChildByName("p" + index);//("w");
+        var wnode = this.m_node.getChildByName("p");//("w");
         var sp_com = wnode.getComponent(sp.Skeleton);
         sp_com.setToSetupPose();
         sp_com.setAnimation(0, "" + aniname, true);     
@@ -151,7 +152,7 @@ export default class EscapePeople
     //或者两点间的距离
     Get_Len(iroleindex:number, first_pt:cc.Vec2,second_pt:cc.Vec2)
     {
-        var distance = Math.sqrt((second_pt.x-first_pt.x)*(second_pt.x-first_pt.x) +   (second_pt.y-first_pt.y)*(second_pt.y-first_pt.y)   );
+        var distance = Math.sqrt((second_pt.x-first_pt.x)*(second_pt.x-first_pt.x) + (second_pt.y-first_pt.y)*(second_pt.y-first_pt.y));
         return distance;
 
     }
@@ -226,7 +227,7 @@ export default class EscapePeople
 
         this.Caculate_Set_Pos(0);
 
-        this.Set_Node_Animate("diao");
+        this.Set_Node_Animate("daiji");
     }
     //当前线段已经移动完成，切换到下一条线段
     On_Change_To_Next_Curve(parentgame,ilefttime)

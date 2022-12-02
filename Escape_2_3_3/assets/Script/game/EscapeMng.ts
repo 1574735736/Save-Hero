@@ -28,7 +28,7 @@ export default class EscapeMng
     m_DefaultBuy_Coin: number = 5000;
 
     //当前皮肤种类数量
-    m_Skins_Count: number = 10;
+    m_Skins_Count: number = 6;
 
     //已经拥有的皮肤
     m_Has_Skins = [];//new List<SkineDataInfo>();

@@ -12,6 +12,7 @@ export default class selgk extends cc.Component {
 
     @property(cc.Node)
     tip_cantShowAd: cc.Node = null;
+    coinCount: cc.Label = null;
 
     private static _instance: selgk = null; 
 
@@ -42,6 +43,8 @@ export default class selgk extends cc.Component {
         var guangbi = this.node.getChildByName("guangbi");
         guangbi.on("click",this.OnBtnExit.bind(this));
 
+        var jinbi = cc.find("jb/Gold", this.node);
+        this.coinCount = jinbi.getComponent(cc.Label)
 
 
         var left = this.node.getChildByName("left");
@@ -63,6 +66,7 @@ export default class selgk extends cc.Component {
         this.node.runAction(cc.scaleTo(0.3, 1, 1));
 
         this.updateSelgk();
+        this.onUpdateCoin();
     }
     OnBtnEnter(iindex)
     {   
@@ -154,28 +158,30 @@ export default class selgk extends cc.Component {
         playerLevelIndex = playerLevelIndex == 0 ? 15 : playerLevelIndex;
 
         let levelBase = this.m_i_page_index * 15;
-
-        console.log("playerUnlockLevel   ... " + this.playerUnlockLevel);
+      
         for(var ff=1;ff<=15;ff++)
         {
             //let ff_node_t =  cc.find("gknode/"+ff+"/t",this.node);
 
             let ipage_gk = levelBase + ff;
             //ff_node_t.getComponent(cc.Label).string = "" + ipage_gk;
-            this.AllLables[ff - 1].string = "" + ipage_gk;
+
+            //this.AllLables[ff - 1].string = "" + ipage_gk;
 
             if (this.playerUnlockLevel >= ipage_gk) {
                
                 if (this.unLockFrame == null) {
-                    this.unLockFrame = cc.find("gknode/unlock", this.node).getComponent(cc.Sprite).spriteFrame;
+                    this.unLockFrame = cc.find("gknode/unlock", this.node).getComponent(cc.Sprite).spriteFrame;                    
                 }
                 this.AllImages[ff - 1].spriteFrame = this.unLockFrame;
+                this.AllLables[ff - 1].string = "" + ipage_gk;                
             }
             else {
                 if (this.lockFrame == null) {
                     this.lockFrame = cc.find("gknode/lock", this.node).getComponent(cc.Sprite).spriteFrame;
                 }
                 this.AllImages[ff - 1].spriteFrame = this.lockFrame;
+                this.AllLables[ff - 1].string = ""                
             }
         }        
      
@@ -240,5 +246,10 @@ export default class selgk extends cc.Component {
         }
         this.m_i_page_index ++;
         this.updateSelgk();
+    }
+
+    onUpdateCoin() {
+        var coin = EscapeMng.GetInstance().Get_Gold_Coin();
+        this.coinCount.string = "" + coin
     }
 }

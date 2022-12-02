@@ -37,12 +37,12 @@ export default class start extends cc.Component {
         EscapeMng.GetInstance().InitLoadLevelInfo();
         EscapeMng.GetInstance().InitAllInfos();
 
-        var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
+        //var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
    
-        var startgame_l = cc.find("btn_startbg/startgame/l",this.node);
-        startgame_l.getComponent(cc.Label).string = "LEVEL "+ilevel;
+        //var startgame_l = cc.find("btn_startbg/startgame/l",this.node);
+        //startgame_l.getComponent(cc.Label).string = "LEVEL "+ilevel;
 
-        var startgame = cc.find("btn_startbg/startgame",this.node);
+        var startgame = cc.find("btn_Start",this.node);
         startgame.on("click", this.OnBtnStartGame.bind(this));
 
         var selgkComp = cc.find("selgk",this.node);
@@ -54,7 +54,7 @@ export default class start extends cc.Component {
         var jinbi = cc.find("jb/Gold", this.node);
         this.coinCount = jinbi.getComponent(cc.Label)
 
-        this.peoplePos = cc.find("people", this.node).position;
+        //this.peoplePos = cc.find("people", this.node).position;
 
 
         this.onUpdateCoin();

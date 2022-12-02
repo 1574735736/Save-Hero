@@ -27,17 +27,25 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class game extends cc.Component 
 {
-    //@property(cc.Prefab)
-    //people_type_1: cc.Prefab = null;
+    @property(cc.Prefab)
+    people_type_1: cc.Prefab = null;
 
-    //@property(cc.Prefab)
-    //people_type_2: cc.Prefab = null;
+    @property(cc.Prefab)
+    people_type_2: cc.Prefab = null;
 
-    //@property(cc.Prefab)
-    //people_type_3: cc.Prefab = null;
+    @property(cc.Prefab)
+    people_type_3: cc.Prefab = null;
 
-    //@property(cc.Prefab)
-    //people_type_4: cc.Prefab = null;
+    @property(cc.Prefab)
+    people_type_4: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    people_type_5: cc.Prefab = null;
+
+
+    @property(cc.Prefab)
+    people_type_6: cc.Prefab = null;
+
 
     @property(cc.Node)
     tip_cantShowAd: cc.Node = null;
@@ -332,8 +340,8 @@ export default class game extends cc.Component
         var backhome = cc.find("backhome",this.node);
         backhome.on("click", this.OnReturnHome.bind(this));
 
-        var btnSkin = cc.find("btn_skin", this.node);
-        btnSkin.on("click", this.OnBtnSkin.bind(this));
+        //var btnSkin = cc.find("btn_skin", this.node);
+        //btnSkin.on("click", this.OnBtnSkin.bind(this));
         
         var btn_skip_level = cc.find("btn_skip_level",this.node);
         btn_skip_level.on("click",this.OnBtnSkipLevel.bind(this));
@@ -853,22 +861,28 @@ export default class game extends cc.Component
     //生成一个这个关卡的人物
     Instace_Level_People(irand_peope_type:number)
     {
-        //if(irand_peope_type == 1)
-        //{
-        //    return cc.instantiate(this.people_type_1);
-        //}
-        //else if(irand_peope_type == 2)
-        //{
-        //    return cc.instantiate(this.people_type_2);
-        //}
-        //else if(irand_peope_type == 3)
-        //{
-        //    return cc.instantiate(this.people_type_3);
-        //}
-        //else if(irand_peope_type == 4)
-        //{
-        //    return cc.instantiate(this.people_type_4);
-        //}
+        if(irand_peope_type == 1)
+        {
+            return cc.instantiate(this.people_type_1);
+        }
+        else if(irand_peope_type == 2)
+        {
+            return cc.instantiate(this.people_type_2);
+        }
+        else if(irand_peope_type == 3)
+        {
+            return cc.instantiate(this.people_type_3);
+        }
+        else if(irand_peope_type == 4)
+        {
+            return cc.instantiate(this.people_type_4);
+        }
+        else if (irand_peope_type == 5) {
+            return cc.instantiate(this.people_type_5);
+        }
+        else if (irand_peope_type == 6) {
+            return cc.instantiate(this.people_type_6);
+        }
 
         //if (this.curPeople_p) {
         //    var curP = cc.instantiate(this.curPeople_p);
@@ -884,14 +898,16 @@ export default class game extends cc.Component
         //    pnode.active = false;
         //});
 
-        var curP = cc.instantiate(this.peoplePre);
+        //var curP = cc.instantiate(this.peoplePre);
        
-        curP.active = true;
-        for (var i = 0; i < curP.childrenCount; i++) {            
-            curP.children[i].active = false;
-        }
-        curP.getChildByName("p" + irand_peope_type).active = true;
-        return curP;
+        //curP.active = true;
+        //for (var i = 0; i < curP.childrenCount; i++) {            
+        //    curP.children[i].active = false;
+        //}
+        //curP.getChildByName("p" + irand_peope_type).active = true;
+        //return curP;
+
+
         //return cc.instantiate(this.peoplePre);
     }
 
@@ -3513,7 +3529,7 @@ export default class game extends cc.Component
             src_people_info.Caculate_Set_Pos(rate);
 
             src_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
-            src_people_info.Set_Node_Animate("diao", EscapeMng.GetInstance().Get_Hero());
+            src_people_info.Set_Node_Animate("huasheng", EscapeMng.GetInstance().Get_Hero());
             this.m_rescureing_people_list.push(src_people_info);
         }
 
@@ -3798,7 +3814,7 @@ export default class game extends cc.Component
 
         first_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
         this.m_rescureing_people_list.push(first_people_info);
-        first_people_info.Set_Node_Animate("diao", EscapeMng.GetInstance().Get_Hero());
+        first_people_info.Set_Node_Animate("huasheng", EscapeMng.GetInstance().Get_Hero());
         this.m_last_add_arch_start_people_resruing_type = first_people_info.Get_Start_Arch_Type_Pos_Index();
 
        
@@ -3869,7 +3885,7 @@ export default class game extends cc.Component
            if(bneedreanim)
            {
                
-               people.Set_Node_Animate("move", EscapeMng.GetInstance().Get_Hero());
+               people.Set_Node_Animate("shengli", EscapeMng.GetInstance().Get_Hero());
            }
 
         }
@@ -4080,45 +4096,16 @@ export default class game extends cc.Component
         }
     }
     //打开皮肤界面
-    OnBtnSkin() {
-        if (this.m_rescureing_people_list.length > 0) {
-            return;
-        }
-        var self = this;
-        cc.loader.loadRes("prefab/SkinView", cc.Prefab, (e, p) => {
-            var pnode = cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode, 50);
+    //OnBtnSkin() {
+    //    if (this.m_rescureing_people_list.length > 0) {
+    //        return;
+    //    }
+    //    var self = this;
+    //    cc.loader.loadRes("prefab/SkinView", cc.Prefab, (e, p) => {
+    //        var pnode = cc.instantiate(p as cc.Prefab);
+    //        self.node.addChild(pnode, 50);
 
-        });
-    }
-    //切换显示的角色
-    onUpdateHero() {
-        var idx = EscapeMng.GetInstance().Get_Hero();
-        for (var ff = 0; ff < this.m_all_start_arch_waitfor_resure_people_list.length; ff++) {
-            var ff_people: EscapePeople = this.m_all_start_arch_waitfor_resure_people_list[ff];
-            for (var i = 0; i < ff_people.m_node.childrenCount; i++) {
-                ff_people.m_node.children[i].active = false;
-            }
-            ff_people.m_node.children[idx - 1].active = true;
-        }
-        this.Change_Start_Arch_Peoples_Anim("daiji")
-        for (var ff = 0; ff < this.m_succesed_people_list.length; ff++) {
-            var people: EscapePeople = this.m_succesed_people_list[ff];
-            for (var i = 0; i < people.m_node.childrenCount; i++) {
-                people.m_node.children[i].active = false;
-            }
-            people.m_node.children[idx - 1].active = true;
-            people.SetScale(0.3, idx);
-            people.Set_Node_Animate("move", idx);
-        }
-
-        //for (var i = 0; i < this.m_rescureing_people_list.length; i++) {
-        //    var people: EscapePeople = this.m_succesed_people_list[ff];
-        //    for (var i = 0; i < people.m_node.childrenCount; i++) {
-        //        people.m_node.children[i].active = false;
-        //    }
-        //    people.m_node.children[idx - 1].active = true;
-        //    people.SetScale(0.15, idx);
-        //}
-    }
+    //    });
+    //}
+ 
 }
