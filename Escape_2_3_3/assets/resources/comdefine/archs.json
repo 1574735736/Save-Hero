@@ -5,9 +5,9 @@
         {
             "desc1":"开始建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
             "type":1,
-            "arch_pic":"game/arch/4", 
-            "arch_size":[260,330],
-            "joint_pic":"game/slop/2",
+            "arch_pic":"game/arch/fangzi", 
+            "arch_size":[260,285],
+            "joint_pic":"game/slop/q1",
             "joint_relative_pos":[110,55],
             "joint_size":[60,60], 
             "people_info_relative_pos":[10,120],
@@ -26,9 +26,9 @@
         {
             "type":2,
             "desc1":"结束建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
-            "arch_pic":"game/arch/3", 
-            "arch_size":[320,315],
-            "joint_pic":"game/slop/1",
+            "arch_pic":"game/arch/fangzi", 
+            "arch_size":[260,285],
+            "joint_pic":"game/slop/q2",
             "joint_pos":[-115, 45],
             "joint_size":[50,50],
             "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
@@ -42,15 +42,15 @@
                 "desc":"解救结束点人物在startx到endx,py位置中",
                 "relative_startx":-80,
                 "relative_endx":80,
-                "relative_y":60
+                "relative_y":0
             }
         },
         {
             "type":3,
             "desc1":"结束建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
-            "arch_pic":"game/arch/3", 
-            "arch_size":[320,315],
-            "joint_pic":"game/slop/1", 
+            "arch_pic":"game/arch/fangzi", 
+            "arch_size":[260,285],
+            "joint_pic":"game/slop/q2", 
             "joint_size":[50,50],
             "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
             "joint_touch_valid_range":60,
@@ -63,15 +63,15 @@
                 "desc":"解救结束点人物在startx到endx,py位置中",
                 "relative_startx":-80,
                 "relative_endx":80,
-                "relative_y":60
+                "relative_y":0
             }
         },
         {
             "desc1":"开始建筑配置,arch_pic代表建筑的图片，arch_pos代表建筑的位置，arch_size代表建筑的尺寸, joint_pic代表初始对外的连接点图片，joint_pos代表初始对外的连接点位置，joint_size代表连接点尺寸",
             "type":4,
-            "arch_pic":"game/arch/4", 
-            "arch_size":[260,330],
-            "joint_pic":"game/slop/2",
+            "arch_pic":"game/arch/fangzi", 
+            "arch_size":[260,285],
+            "joint_pic":"game/slop/q1",
             "people_info_relative_pos":[10,120],
             "joint_relative_pos":[-110,55],
             "joint_size":[60,60], 
@@ -93,7 +93,7 @@
         {
             "desc":"按下鼠标移动的时候的连接点,joint_pic:连接点图片，joint_size：连接点尺寸，joint_radius：连接点半径,joint_touch_valid_range:移动到中途的时候有效区域范围",
             "type":1,
-            "joint_pic":"game/slop/1", 
+            "joint_pic":"game/slop/q2", 
             "joint_size":[50,50],
             "joint_radius":18,
             "joint_touch_valid_range":60

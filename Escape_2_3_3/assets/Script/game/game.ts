@@ -20,6 +20,7 @@ import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 
 import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
 import vpnConnect from "../dlg/vpnConnect";
+import MyLabel from "../utils/MyLabel";
 
 
 const {ccclass, property} = cc._decorator;
@@ -191,6 +192,9 @@ export default class game extends cc.Component
     //营救的间隔时间
     timeInterval: number = 100;
 
+    txtStartCount: cc.Label = null;
+    txtEndCount: cc.Label = null;
+
 
     public static getInstance(): game {
         if (game._instance == null) {
@@ -268,15 +272,25 @@ export default class game extends cc.Component
          
 
         //创建起始的建筑
-        var psrite_arch_start = new MySprite(archstart_info.arch_pic,archstart_info.arch_size[0],archstart_info.arch_size[1]);
-        psrite_arch_start.setPosition(arch_start_pos[0],arch_start_pos[1]); 
+        var psrite_arch_start = new MySprite(archstart_info.arch_pic, archstart_info.arch_size[0], archstart_info.arch_size[1]);//
+        psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1] + archstart_info.joint_relative_pos[1]); 
         this.node.addChild(psrite_arch_start,10);
-
-
+        //创建小木棍
+        var btn_arch_start_gun = new MySprite("game/slop/q4");
+        btn_arch_start_gun.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0], archstart_info.joint_relative_pos[1] + arch_start_pos[1] - 30);
+        this.node.addChild(btn_arch_start_gun, 22);
         //创建起始建筑的连接点
-        var btn_arch_start_joint = new MySprite(archstart_info.joint_pic,archstart_info.joint_size[0],archstart_info.joint_size[1]);
+        var btn_arch_start_joint = new MySprite(archstart_info.joint_pic);//,archstart_info.joint_size[0],archstart_info.joint_size[1]
         btn_arch_start_joint.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0] ,archstart_info.joint_relative_pos[1] + arch_start_pos[1]); 
-        this.node.addChild(btn_arch_start_joint,22);
+        this.node.addChild(btn_arch_start_joint, 22);    
+
+        var startNote = cc.find("txt_startcount", this.node);
+        startNote.setParent(psrite_arch_start);
+        startNote.setPosition(0, 100);
+        this.txtStartCount = startNote.getComponent(cc.Label);
+        this.txtStartCount.string = "";
+
+        
 
         this.m_start_joint_pt = new cc.Vec2(archstart_info.joint_relative_pos[0] + arch_start_pos[0],archstart_info.joint_relative_pos[1] + arch_start_pos[1]);
         this.m_last_moveing_joint_pt = this.m_start_joint_pt;
@@ -293,18 +307,27 @@ export default class game extends cc.Component
          
      
         //创建到达的建筑
-        var psrite_arch_end = new MySprite(archend_info.arch_pic,archend_info.arch_size[0],archend_info.arch_size[1]);
-        psrite_arch_end.setPosition(arch_end_pos[0],arch_end_pos[1]); 
+        var psrite_arch_end = new MySprite(archend_info.arch_pic, archend_info.arch_size[0], archend_info.arch_size[1]); //
+        psrite_arch_end.setPosition(arch_end_pos[0], arch_end_pos[1] + archend_info.joint_relative_pos[1]); 
         this.node.addChild(psrite_arch_end,10);
 
         this.m_end_joint_pt = new cc.Vec2(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1] );
 
-
+        //创建小木棍
+        var btn_arch_end_gun = new MySprite("game/slop/q4");
+        btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
+        this.node.addChild(btn_arch_end_gun, 22);
 
         //创建到达建筑的链接点
-        var btn_arch_end_joint = new MySprite(archend_info.joint_pic,archend_info.joint_size[0],archend_info.joint_size[1]);
+        var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
         btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
-        this.node.addChild(btn_arch_end_joint,22);
+        this.node.addChild(btn_arch_end_joint, 22);
+       
+        var endNote = cc.find("txt_endcount", this.node);
+        endNote.setParent(psrite_arch_end);
+        endNote.setPosition(0, 100);
+        this.txtEndCount = endNote.getComponent(cc.Label);
+        this.txtEndCount.string = "";
 
 
 
@@ -370,7 +393,6 @@ export default class game extends cc.Component
         {
             level_t.getComponent(cc.Label).string = "配置显示";
         }
-       
 
         //每12关切换一个背景图片显示
         var bj_name=  "game/bj/1";
@@ -920,7 +942,7 @@ export default class game extends cc.Component
             var ff_people: EscapePeople = this.m_all_start_arch_waitfor_resure_people_list[ff];
             ff_people.Set_Node_Animate(animname, idx);
 
-            ff_people.SetScale(0.3, idx);
+            ff_people.SetScale(0.24, idx);
         }
 
     }
@@ -1066,7 +1088,7 @@ export default class game extends cc.Component
 
             var peopleinfo2 = new EscapePeople(hh_peopleid,iid);
             peopleinfo2.Init(pnode2, ff_info);
-            peopleinfo2.SetScale(0.3, EscapeMng.GetInstance().Get_Hero());
+            peopleinfo2.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
  
             this.m_all_outer_waitfor_resure_people_list.push(peopleinfo2);
         }
@@ -1087,17 +1109,18 @@ export default class game extends cc.Component
          
      
 
-        //设置开始建筑和结束建筑的人物人数信息节点的坐标
-        var people_info_pos = archend_info.people_info_relative_pos;
-        var countbj = cc.find("countbj",this.node);
-        countbj.setPosition(people_info_pos[0] + arch_end_pos[0],people_info_pos[1] + arch_end_pos[1]);
-        countbj.zIndex = 27;
+        ////设置开始建筑和结束建筑的人物人数信息节点的坐标
+        //var people_info_pos = archend_info.people_info_relative_pos;
+        //var countbj = cc.find("countbj",this.node);
+        //countbj.setPosition(people_info_pos[0] + arch_end_pos[0],people_info_pos[1] + arch_end_pos[1]);
+        ////countbj.setPosition(arch_end_pos[0], arch_end_pos[1] + arch_end_pos[0], people_info_pos[1]);
+        //countbj.zIndex = 27;
  
 
-        var startcountbj_people_info_pos = arch_startinfo.people_info_relative_pos;
-        var startcountbj = cc.find("startcountbj",this.node);
-        startcountbj.setPosition(startcountbj_people_info_pos[0] + arch_start_pos[0],startcountbj_people_info_pos[1] + arch_start_pos[1]);
-        startcountbj.zIndex = 27;
+        //var startcountbj_people_info_pos = arch_startinfo.people_info_relative_pos;
+        //var startcountbj = cc.find("startcountbj",this.node);
+        //startcountbj.setPosition(startcountbj_people_info_pos[0] + arch_start_pos[0],startcountbj_people_info_pos[1] + arch_start_pos[1]);
+        //startcountbj.zIndex = 27;
 
 
 
@@ -1109,13 +1132,20 @@ export default class game extends cc.Component
     //刷新人物数目
     Refresh_People_Rescure_Count_Info()
     {
-        //结束建筑显示营救人数和总共需要营救人数
-        var tlabel = cc.find("countbj/t",this.node);
-        tlabel.getComponent(cc.Label).string = ""+this.m_total_rescured_people_count+"/"+this.m_total_need_rescur_people_count;
+        if (this.txtEndCount) {
+            this.txtEndCount.string = "" + this.m_total_rescured_people_count + "/" + this.m_total_need_rescur_people_count;
+        }
+        if (this.txtStartCount) {
+            this.txtStartCount.string = "" + this.m_all_start_arch_waitfor_resure_people_list.length;
+        }
 
-        //开始建筑显示开始建筑里面剩余人数
-        var startcountbj_tlabel = cc.find("startcountbj/t",this.node);
-        startcountbj_tlabel.getComponent(cc.Label).string = ""+this.m_all_start_arch_waitfor_resure_people_list.length;
+        ////结束建筑显示营救人数和总共需要营救人数
+        //var tlabel = cc.find("countbj/t",this.node);
+        //tlabel.getComponent(cc.Label).string = ""+this.m_total_rescured_people_count+"/"+this.m_total_need_rescur_people_count;
+
+        ////开始建筑显示开始建筑里面剩余人数
+        //var startcountbj_tlabel = cc.find("startcountbj/t",this.node);
+        //startcountbj_tlabel.getComponent(cc.Label).string = ""+this.m_all_start_arch_waitfor_resure_people_list.length;
 
 
     }
@@ -3924,7 +3954,7 @@ export default class game extends cc.Component
         this.m_total_rescured_people_count++;
 
         people.SetPosition(ix, iy);
-        people.SetScale(0.3, EscapeMng.GetInstance().Get_Hero());
+        people.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
 
 
         this.ReOrder_Resuing_Success_People(true);
