@@ -1,7 +1,8 @@
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 import EscapeMng from "../game/EscapeMng";
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
+import SpineManager from "../utils/SpineManager";
 
 /*
 游戏失败弹框
@@ -13,7 +14,7 @@ export default class gamefail extends cc.Component {
     m_plisnter = null;
     m_exitbtn_callback = null;
     m_nextbtn_callback = null;
-
+    m_CurCoin: cc.Label = null;
 
     private static _instance: gamefail = null;
 
@@ -30,21 +31,36 @@ export default class gamefail extends cc.Component {
         gamefail._instance = this;
         //var guangbi = this.node.getChildByName("guangbi");
         //guangbi.on("click",this.OnBtnExit.bind(this));
-
-        var failads = cc.find("ani_failads/btn_fail", this.node);
+        this.m_CurCoin = cc.find("jb/Gold", this.node).getComponent(cc.Label);
+        var failads = cc.find("btn_fail", this.node);
         failads.on("click", this.OnNextExit.bind(this));
 
         var replay = this.node.getChildByName("btn_replay");
         replay.on("click", this.OnBtnExit.bind(this));
+
+        var backHome = this.node.getChildByName("btn_back");
+        backHome.on("click", this.onReturnHome.bind(this));
        
         BackGroundSoundUtils.GetInstance().PlayEffect("fail");
 
-        replay.setScale(0, 0, 0);
-        var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1, 1), cc.callFunc(() => {
+        replay.active = false;
+        this.scheduleOnce(() => {
+            replay.active = true;
+            replay.opacity = 0;
+            var pseq = cc.sequence(cc.fadeTo(0.5, 255), cc.callFunc(() => {
+            }));
+            replay.runAction(pseq);
+        }, 2);
 
-        }));
-        replay.runAction(pseq);
+        this.onUpdateCoin();
+        this.OnUpdateHero();
     }
+
+    onUpdateCoin() {
+        var coin = EscapeMng.GetInstance().Get_Gold_Coin();
+        this.m_CurCoin.string = "" + coin 
+    }
+
     OnBtnExit()
     {
         var status = EscapeMng.GetInstance().GetIntAdStatus();
@@ -119,5 +135,38 @@ export default class gamefail extends cc.Component {
 
         //var resurcount =  cc.find("panel/resurcount",this.node);
         //resurcount.getComponent(cc.Label).string = "共"+init_all_people_count +"人 失败"+total_killed_people_count+"人";        
+    }
+    herPrefab: cc.Node = null;
+    OnUpdateHero() {
+        //var old = cc.find("heroPre", this.node);
+     
+        var heroId = EscapeMng.GetInstance().Get_Hero();
+        var self = this;
+        /* var zIndex = cc.find("tz", this.node).zIndex - 1;*/
+        cc.loader.loadRes("prefab/p" + heroId, cc.Prefab, (err, sp) => {
+            var pnode = cc.instantiate(sp as cc.Prefab);
+            self.node.addChild(pnode, 60);
+            var p = pnode.getChildByName("p");
+            p.setScale(1, 1);
+            pnode.setPosition(0, -300);
+            this.herPrefab = pnode;
+        })
+        this.OnHeroPos();
+    }
+
+    OnHeroPos() {
+        this.scheduleOnce(function () {
+            if (this.herPrefab) {
+                var wnode = this.herPrefab.getChildByName("p");//("w");
+                var sp_com = wnode.getComponent(sp.Skeleton);
+                SpineManager.getInstance().playSpinAnimation(sp_com, "shibai", false, function () {
+                    SpineManager.getInstance().playSpinAnimation(sp_com, "shibai2", true, null);
+                });
+            }
+        }, 0.5);
+    }
+
+    onReturnHome() {      
+        cc.director.loadScene("start");
     }
 }

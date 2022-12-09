@@ -406,6 +406,17 @@ export default class EscapeMng
     
 
     }
+    //是否已经获取到所有的皮肤   true 为已经全部获取
+    Get_IsHasAllSkin(): boolean {
+        for (var i = 1; i <= this.m_Skins_Count; i++) {
+            if (this.Get_SkinStatusHas(i) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+
     //获取皮肤对应的存储状态
     Get_SkinStatusType(id: number): number {
         for (var i = 0; i < this.m_Has_Skins.length; i++) {

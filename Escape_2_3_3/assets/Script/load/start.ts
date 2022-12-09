@@ -1,6 +1,7 @@
 import EscapeMng from "../game/EscapeMng";
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import sdkManager from "../game/SdkManager";
 
  
 
@@ -76,33 +77,34 @@ export default class start extends cc.Component {
     }
     OnBtnStartGame()
     {
-      
-       //读取最新的关卡，加载进入游戏
-       var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
-       EscapeMng.GetInstance().LoadLevelConfig(ilevel,(error,pobj)=>
-       {
-           if(error)
-           {
-               console.log("关卡配置错误");
-               return;
-           }
-
-           if(!pobj)
-           {
-               console.log("关卡配置错误");
-               return;
-           }
-
-           if (cc.sys.platform === cc.sys.ANDROID) {
-               FirebaseReport.reportInformation(FirebaseKey.shouye_play);
-           }           
-           EscapeMng.GetInstance().m_enter_level = ilevel;
-           EscapeMng.GetInstance().m_enter_level_config = pobj;
-
-           cc.director.loadScene("game");
-       });
-       BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+        sdkManager.GetInstance().JavaRewardedAds(FirebaseKey.click_skip, this.OnEnterGame, () => { console.log("ads is faild !!!"); this.OnEnterGame(); })      
     }
+
+    OnEnterGame() {
+        //读取最新的关卡，加载进入游戏
+        var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
+        EscapeMng.GetInstance().LoadLevelConfig(ilevel, (error, pobj) => {
+            if (error) {
+                console.log("关卡配置错误");
+                return;
+            }
+
+            if (!pobj) {
+                console.log("关卡配置错误");
+                return;
+            }
+
+            if (cc.sys.platform === cc.sys.ANDROID) {
+                FirebaseReport.reportInformation(FirebaseKey.shouye_play);
+            }
+            EscapeMng.GetInstance().m_enter_level = ilevel;
+            EscapeMng.GetInstance().m_enter_level_config = pobj;
+
+            cc.director.loadScene("game");
+        });
+        BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+    }
+
     OnBtnSelGK()
     {
         var self = this;

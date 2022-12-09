@@ -1,0 +1,111 @@
+
+胜利界面.png
+size: 812,513
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+VICTORY
+  rotate: true
+  xy: 718, 50
+  size: 229, 47
+  orig: 229, 47
+  offset: 0, 0
+  index: -1
+an1
+  rotate: false
+  xy: 375, 159
+  size: 262, 92
+  orig: 262, 92
+  offset: 0, 0
+  index: -1
+anniu3cankao
+  rotate: false
+  xy: 524, 2
+  size: 152, 155
+  orig: 152, 156
+  offset: 0, 0
+  index: -1
+anniu3cankao2
+  rotate: true
+  xy: 639, 165
+  size: 114, 77
+  orig: 116, 78
+  offset: 1, 0
+  index: -1
+bt
+  rotate: false
+  xy: 2, 3
+  size: 520, 136
+  orig: 520, 136
+  offset: 0, 0
+  index: -1
+g (1)
+  rotate: false
+  xy: 634, 316
+  size: 174, 195
+  orig: 185, 200
+  offset: 6, 4
+  index: -1
+g (2)
+  rotate: false
+  xy: 375, 253
+  size: 257, 258
+  orig: 271, 270
+  offset: 6, 6
+  index: -1
+jinbi
+  rotate: false
+  xy: 767, 217
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+sz+500
+  rotate: false
+  xy: 634, 281
+  size: 107, 33
+  orig: 107, 33
+  offset: 0, 0
+  index: -1
+x2
+  rotate: true
+  xy: 743, 281
+  size: 33, 21
+  orig: 33, 21
+  offset: 0, 0
+  index: -1
+x3
+  rotate: false
+  xy: 767, 148
+  size: 32, 21
+  orig: 32, 21
+  offset: 0, 0
+  index: -1
+x4
+  rotate: false
+  xy: 767, 194
+  size: 34, 21
+  orig: 34, 21
+  offset: 0, 0
+  index: -1
+x5
+  rotate: false
+  xy: 767, 171
+  size: 33, 21
+  orig: 33, 21
+  offset: 0, 0
+  index: -1
+zp1
+  rotate: false
+  xy: 767, 262
+  size: 42, 52
+  orig: 42, 52
+  offset: 0, 0
+  index: -1
+zp2
+  rotate: false
+  xy: 2, 141
+  size: 371, 370
+  orig: 371, 372
+  offset: 0, 1
+  index: -1

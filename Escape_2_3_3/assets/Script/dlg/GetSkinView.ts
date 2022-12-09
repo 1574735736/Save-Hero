@@ -2,6 +2,7 @@
 const {ccclass, property} = cc._decorator;
 import EscapeMng from "../game/EscapeMng";
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import SpineManager from "../utils/SpineManager";
 
 @ccclass
 export default class GetSkinView extends cc.Component {
@@ -31,27 +32,37 @@ export default class GetSkinView extends cc.Component {
         var btnSkin = cc.find("Frame/btn_next", this.node);
         btnSkin.on("click", this.OnClickClose.bind(this));
 
-        var anniu = cc.find("Frame/anniu", this.node);
+        var anniu = cc.find("Frame/btn_ads", this.node);
         anniu.on("click", this.OnClickAds.bind(this));
 
         var m_BtnNext = cc.find("Frame/btn_next", this.node);
-        m_BtnNext.setScale(0, 0, 0);
-        var pseq = cc.sequence(cc.delayTime(3), cc.scaleTo(0.5, 1, 1), cc.callFunc(() => {
+        var m_Light = cc.find("Frame/img_light", this.node);
+       
+        m_BtnNext.active = false
+        this.scheduleOnce(() => {
+            m_BtnNext.active = true;
+            m_BtnNext.opacity = 0;
+            var pseq = cc.sequence(cc.fadeTo(0.5, 255), cc.callFunc(() => {
+            }));
+            m_BtnNext.runAction(pseq);
+        }, 2);
 
-        }));
-        m_BtnNext.runAction(pseq);
+        var que = cc.repeatForever(cc.rotateBy(3, 360));
+        m_Light.runAction(que);
     }
 
-    onInitView(lisnter, iconID, iconPos) {
+    onInitView(lisnter, iconID) {
         this.m_plisnter = lisnter;
-
-        var heroNode = cc.find("Frame/img_herobg", this.node);
-        this.curHeroId = iconID;//EscapeMng.GetInstance().Get_NoHasHero();
-        var iconPath = "game/heroicon/side/" + this.curHeroId;
-        cc.loader.loadRes(iconPath, cc.SpriteFrame, (err, sp) => {
-            heroNode.getComponent(cc.Sprite).spriteFrame = sp as cc.SpriteFrame;
+        this.curHeroId = iconID;
+        var self = this;
+        cc.loader.loadRes("prefab/p" + iconID, cc.Prefab, (err, sp) => {
+            var pnode = cc.instantiate(sp as cc.Prefab);
+            self.node.addChild(pnode, 60);
+            var p = pnode.getChildByName("p");
+            p.setScale(1, 1);
+            pnode.setPosition(0, -100);
         })
-        heroNode.setPosition(iconPos, 80.788);
+      
     }
 
     OnClickClose() {

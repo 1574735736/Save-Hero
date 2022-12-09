@@ -74,7 +74,7 @@ export default class loading extends cc.Component {
         cc["gamefail"] = gamefail;
         cc["gamewin"] = gamewin;
         cc["getSkinView"] = getSkinView;
-        cc["sdkManagerView"] = sdkManager;
+        cc["sdkManager"] = sdkManager;
         cc["skinView"] = skinView;
     }
 

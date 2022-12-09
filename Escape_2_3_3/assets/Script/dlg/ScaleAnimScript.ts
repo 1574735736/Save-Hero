@@ -15,7 +15,9 @@ export default class ScaleAnimScript extends cc.Component {
     
     private minScale:number;
     /**缩放比例 */
-    private scaleProportion:number = 0.85;
+    private scaleProportion: number = 0.85;
+    @property(Number)
+    public actionTime: number = 0.3;
 
     onLoad () {
         this.initScaleX = 1;//this.target.scaleX;
@@ -26,8 +28,8 @@ export default class ScaleAnimScript extends cc.Component {
 
     private changeScale():void {
         cc.tween(this.node)
-            .to(0.3, {scale: this.minScale})
-            .to(0.3, {scale: this.initScaleX})
+            .to(this.actionTime, {scale: this.minScale})
+            .to(this.actionTime, {scale: this.initScaleX})
             .call(() => {
                 this.changeScale();
             })

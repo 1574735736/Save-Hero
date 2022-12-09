@@ -4059,17 +4059,24 @@ export default class game extends cc.Component
 
 
         var self = this;
-        cc.loader.loadRes("prefab/gamewin",cc.Prefab,(ee,p)=>
-        {
-            var pnode:cc.Node =  cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode,80);
+        //cc.loader.loadRes("prefab/gamewin",cc.Prefab,(ee,p)=>
+        //{
+        //    var pnode:cc.Node =  cc.instantiate(p as cc.Prefab);
+        //    self.node.addChild(pnode,80);
 
-            var gamewin = pnode.getComponent("gamewin");
-            gamewin.setCallBack(this,this.onContinueBtnClick.bind(this));
+        //    var gamewin = pnode.getComponent("gamewin");
+        //    gamewin.setCallBack(this,this.onContinueBtnClick.bind(this));
 
 
-            gamewin.SetInitInfo(self.m_enter_level,this.m_init_all_people_count,self.m_total_killed_people_count,self.m_total_rescured_people_count,self.m_total_need_rescur_people_count);
+        //    gamewin.SetInitInfo(self.m_enter_level,this.m_init_all_people_count,self.m_total_killed_people_count,self.m_total_rescured_people_count,self.m_total_need_rescur_people_count);
 
+        //});
+
+        cc.loader.loadRes("prefab/GameEndWin", cc.Prefab, (err, p) => {
+            var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
+            self.node.addChild(pnode, 80);
+            var gamewin = pnode.getComponent("GameEndWin");
+            gamewin.setCallBack(this, this.onContinueBtnClick.bind(this));
         });
     }
     //营救失败，弹框显示
