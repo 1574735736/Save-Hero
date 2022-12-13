@@ -21,6 +21,7 @@ import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
 import vpnConnect from "../dlg/vpnConnect";
 import MyLabel from "../utils/MyLabel";
+import sdkManager from "../game/SdkManager";
 
 
 const {ccclass, property} = cc._decorator;
@@ -51,8 +52,8 @@ export default class game extends cc.Component
     @property(cc.Node)
     tip_cantShowAd: cc.Node = null;
 
-    @property(cc.Prefab)
-    peoplePre: cc.Prefab = null;
+    //@property(cc.Prefab)
+    //peoplePre: cc.Prefab = null;
 
     curPeople_p = null;
 
@@ -128,7 +129,7 @@ export default class game extends cc.Component
 
     //在各个障碍物的点上的小人，每个单独一个定义
     //[obstcleinfo,point,itype,peopleh]
-    m_all_obstcle_point_people_list = [];
+   // m_all_obstcle_point_people_list = []; 无用
 
     //所有在开始建筑正在等待解救的小人
     m_all_start_arch_waitfor_resure_people_list = [];
@@ -676,24 +677,29 @@ export default class game extends cc.Component
             this.scheduleOnce(() => {
                 this.bCanClickSkip = true;
             }, 0.5);//限制0.5秒点一次
-            if (cc.sys.platform === cc.sys.ANDROID) {                
+            //if (cc.sys.platform === cc.sys.ANDROID) {
                 FirebaseReport.reportInformation(FirebaseKey.zhandou_ad2_skip);//click_skip);
-                let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
-                if (bAdLoaded) {
-                    this.bWinBySkip = true;
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V",'cc["gameRun"].JavaCall_SkipLevel()');
-                }
-                else {
-                    this.tip_cantShowAd.active = true;
-                    this.scheduleOnce(() => {
-                        this.tip_cantShowAd.active = false;
-                    }, 0.5);
-                }
-            }
-            else {
-                this.SkipLevel();
-            }
+            //    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+            //    if (bAdLoaded) {
+            //        this.bWinBySkip = true;
+            //        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V",'cc["gameRun"].JavaCall_SkipLevel()');
+            //    }
+            //    else {
+            //        this.TipActionShow();
+            //    }
+            //}
+            //else {
+            //    this.SkipLevel();
+            //}
+            sdkManager.GetInstance().JavaRewardedAds(FirebaseKey.zhandou_ad2_skip,()=>{this.SkipLevel();} ,()=>{this.TipActionShow();} );
         }
+    }
+
+    TipActionShow() {
+        this.tip_cantShowAd.active = true;
+        this.scheduleOnce(() => {
+            this.tip_cantShowAd.active = false;
+        }, 0.5);
     }
 
     public static JavaCall_SkipLevel() {
@@ -1081,7 +1087,7 @@ export default class game extends cc.Component
             pnode2 = this.Instace_Level_People(hh_peopleid);
             
             this.node.addChild(pnode2,28);
-            pnode2.setPosition(hh_pos[0],hh_pos[1]);
+            pnode2.setPosition(hh_pos[0],hh_pos[1] + 5);
             pnode2.angle = hh_rotation;
 
 
@@ -3180,10 +3186,7 @@ export default class game extends cc.Component
 
         }else
         {
-
-           
-
-
+          
             this.Check_Remvove_Middle_Center_Prev_Pt(valid_pos);
 
 
@@ -3216,7 +3219,7 @@ export default class game extends cc.Component
 
         this.m_b_in_rescureing = false;
         this.m_last_rescure_tick = 0;
-
+         
         if(!this.m_b_start_drag)
         {
             return;
@@ -3335,12 +3338,12 @@ export default class game extends cc.Component
             ff_obj.RedrawGrahics();
         }
         var rescuinglist=  this.m_rescureing_people_list.slice(0);
-     
-        for(var ff=0;ff<rescuinglist.length;ff++)
-        {
-            var ff_people_info:EscapePeople = rescuinglist[ff];
-            ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
-        }
+        //绘制碰撞盒
+        //for(var ff=0;ff<rescuinglist.length;ff++)
+        //{
+        //    var ff_people_info:EscapePeople = rescuinglist[ff];
+        //    ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
+        //}
 
         var bulletlist =  this.m_all_bullet_obj_list.slice(0);
         for(var ff=0;ff<bulletlist.length;ff++)
@@ -3559,7 +3562,7 @@ export default class game extends cc.Component
             src_people_info.Caculate_Set_Pos(rate);
 
             src_people_info.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());//0.15
-            src_people_info.Set_Node_Animate("huasheng", EscapeMng.GetInstance().Get_Hero());
+            //src_people_info.Set_Node_Animate("huasheng", EscapeMng.GetInstance().Get_Hero());
             this.m_rescureing_people_list.push(src_people_info);
         }
 

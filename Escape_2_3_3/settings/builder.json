@@ -21,7 +21,7 @@
   "zipCompressJs": true,
   "fb-instant-games": {},
   "android": {
-    "packageName": "com.heroescape.legends"
+    "packageName": "com.herowars.ropepuzzle"
   },
   "ios": {
     "packageName": "org.cocos2d.demo"

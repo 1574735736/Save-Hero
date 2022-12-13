@@ -1,0 +1,2 @@
+原名称  com.heroescape.legends
+名称2.0  com.herowars.ropepuzzle

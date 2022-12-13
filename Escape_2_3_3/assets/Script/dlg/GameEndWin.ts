@@ -5,40 +5,46 @@ import EscapeMng from "../game/EscapeMng";
 const { ccclass, property } = cc._decorator;
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 import SpineManager from "../utils/SpineManager";
-
+import sdkManager from "../game/SdkManager";
 @ccclass
 export default class GameEndWin extends cc.Component {
 
     m_plisnter = null;
     m_nextbtn_callback = null;
 
-    m_BtnNext: cc.Node = null; //ÏÂÒ»¹Ø
-    m_CurCoin: cc.Label = null; //µ±Ç°µÄ½ð±Ò
-    m_AdCoin: cc.Label = null; //¿´¹ã¸æÄÜµÃµ½µÄ½ð±Ò
-    m_BtnAds: cc.Node = null;//¿´¹ã¸æµÄ°´Å¥
+    m_BtnNext: cc.Node = null; //ï¿½ï¿½Ò»ï¿½ï¿½
+    m_CurCoin: cc.Label = null; //ï¿½ï¿½Ç°ï¿½Ä½ï¿½ï¿½
+    //m_AdCoin: cc.Label = null; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÜµÃµï¿½ï¿½Ä½ï¿½ï¿½
+    m_BtnAds: cc.Node = null;//ï¿½ï¿½ï¿½ï¿½ï¿½Ä°ï¿½Å¥
     m_Row: cc.Node = null;
-    m_CoinFly: cc.Node = null;//·ÉÐÐµÄ½ð±Ò
-    m_SkinSlider: cc.Sprite = null;//°×É«ÕÚÕÖ
-    m_SkinProgress: cc.Label = null;//Æ¤·ô½âËø½ø¶È
+    m_CoinFly: cc.Node = null;//ï¿½ï¿½ï¿½ÐµÄ½ï¿½ï¿½
+    m_SkinSlider: cc.Sprite = null;//ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
+    m_SkinProgress: cc.Label = null;//Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     //m_RowSkeleton: sp.Skeleton = null;
 
-    m_MainRow: cc.Node = null;
-    m_MainPointer: cc.Node = null;
+    //m_MainRow: cc.Node = null;
+    //m_MainPointer: cc.Node = null;
     m_NoAds: cc.Node = null;
     m_RowSpeed: number = 2;
     m_RowCurAng: number = 0;
-    TempGetCount: number = 0;//»ñÈ¡µ½µÄ½ð±Ò
-    m_CurMul: number = 0;//µ±Ç°×ªµ½µÄ±¶ÊýÎ»ÖÃ
+    TempGetCount: number = 0;//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ä½ï¿½ï¿½
+    m_CurMul: number = 0;//ï¿½ï¿½Ç°×ªï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Î»ï¿½ï¿½
     stopRotation: boolean = false;
     canAddProgress: boolean = false;
 
+    ani_zhuanPan: sp.Skeleton = null;
+    ani_reward: sp.Skeleton = null;
+
+    startRowTimer: number = 0; //å¼€å§‹æ—‹è½¬æ—¶çš„æ—¶é—´æˆ³ï¼›
+    rowMilTimer: number = 667; //æ—‹è½¬ä¸€åœˆæ‰€æœ‰çš„æ—¶é—´ï¼›
+
     // onLoad () {}
-    m_Muls: number[] = [3, 2, 4, 2, 3, 2, 4, 5];//[5, 4, 2, 3, 2, 4, 2, 3];
+    m_Muls: number[] = [2, 3, 2, 4, 2, 3, 5, 4];//[3, 2, 4, 2, 3, 2, 4, 5];//[5, 4, 2, 3, 2, 4, 2, 3];
 
 
     start() {
         this.m_CurCoin = cc.find("jb/Gold", this.node).getComponent(cc.Label);
-        this.m_AdCoin = cc.find("btn_ads/txt_adCoin", this.node).getComponent(cc.Label);
+        //this.m_AdCoin = cc.find("btn_ads/txt_adCoin", this.node).getComponent(cc.Label);
 
         this.m_BtnNext = cc.find("btn_noads", this.node);
         this.m_BtnNext.on("click", this.OnClickNoAds.bind(this));
@@ -54,13 +60,16 @@ export default class GameEndWin extends cc.Component {
 
         this.m_Row = cc.find("row", this.node);
 
-        this.m_MainRow = cc.find("img_row", this.node);
-        this.m_MainPointer = cc.find("pointer", this.node);
+        //this.m_MainRow = cc.find("img_row", this.node);
+        //this.m_MainPointer = cc.find("pointer", this.node);
 
         this.m_CoinFly = cc.find("ani_coinfly", this.node);
         this.m_SkinSlider = cc.find("btn_skin/img_slider", this.node).getComponent(cc.Sprite);
         this.m_SkinProgress = cc.find("btn_skin/img_top/txt_progress", this.node).getComponent(cc.Label);
         this.m_NoAds = cc.find("btn_noads", this.node);
+
+        this.ani_zhuanPan = cc.find("ani_zhuanpan", this.node).getComponent(sp.Skeleton);
+        this.ani_reward = cc.find("ani_reward", this.node).getComponent(sp.Skeleton);
 
         this.onUpdateCoin();
         this.onTitleAction();
@@ -68,6 +77,18 @@ export default class GameEndWin extends cc.Component {
         this.OnNoAdsAction();
         this.OnFistOneAction();
         this.OnUpdateHero();
+        this.onUpdateSpin();
+
+        
+    }
+
+
+    onUpdateSpin() {
+        SpineManager.getInstance().playSpinAnimation(this.ani_zhuanPan, "xuanzhuan", true, () => {
+            this.startRowTimer = new Date().getTime();
+        }, () => {
+            this.startRowTimer = new Date().getTime();            
+        });
     }
 
     // update (dt) {}
@@ -107,34 +128,34 @@ export default class GameEndWin extends cc.Component {
     }
 
     update(dt: number) {
-        this.onUpdateRotate();
+        //this.onUpdateRotate();
         this.onUpdateSkinPro(dt);
     }
     
-    onUpdateRotate() {
-        //var que = cc.repeatForever(cc.rotateBy(10 / this.m_RowSpeed, 360));
-        //this.m_MainRow.runAction(que);
-        //var que2 = cc.repeatForever(cc.rotateBy(10 / this.m_RowSpeed, -360));
-        //this.m_MainPointer.runAction(que2);
-        //var que = new cc.Quat(0, 0, 10)
-        //this.m_MainRow.setRotation(que);
-        if (this.stopRotation) {
-            return;
-        }
-        this.m_RowCurAng += this.m_RowSpeed;
-        this.m_MainRow.rotation = this.m_RowCurAng;
-        this.m_MainPointer.rotation = this.m_RowCurAng * -1;
-        if (this.m_RowCurAng >= 360) {
-            this.m_RowCurAng = 0;
-        }
+    //onUpdateRotate() {
+    //    //var que = cc.repeatForever(cc.rotateBy(10 / this.m_RowSpeed, 360));
+    //    //this.m_MainRow.runAction(que);
+    //    //var que2 = cc.repeatForever(cc.rotateBy(10 / this.m_RowSpeed, -360));
+    //    //this.m_MainPointer.runAction(que2);
+    //    //var que = new cc.Quat(0, 0, 10)
+    //    //this.m_MainRow.setRotation(que);
+    //    if (this.stopRotation) {
+    //        return;
+    //    }
+    //    this.m_RowCurAng += this.m_RowSpeed;
+    //    this.m_MainRow.rotation = this.m_RowCurAng;
+    //    this.m_MainPointer.rotation = this.m_RowCurAng * -1;
+    //    if (this.m_RowCurAng >= 360) {
+    //        this.m_RowCurAng = 0;
+    //    }
 
-        this.m_CurMul = (Math.floor(this.m_RowCurAng * 2 / 45) % this.m_Muls.length);
-        if (this.m_Muls[this.m_CurMul]) {
-            this.m_AdCoin.string = String(this.m_Muls[this.m_CurMul] * 100);
-        }
+    //    this.m_CurMul = (Math.floor(this.m_RowCurAng * 2 / 45) % this.m_Muls.length);
+    //    if (this.m_Muls[this.m_CurMul]) {
+    //        this.m_AdCoin.string = String(this.m_Muls[this.m_CurMul] * 100);
+    //    }
         
 
-    }
+    //}
     curProgress: number = 0;
     nextID: number = 0;
     m_CurAddPro: number = 0;
@@ -202,14 +223,25 @@ export default class GameEndWin extends cc.Component {
     }
 
     OnClickAds() {
+       
         if (this.stopRotation) {
             return;
         }
-        this.TempGetCount = EscapeMng.GetInstance().m_Default_Coin;
         this.stopRotation = true;
+
+        this.ani_zhuanPan.timeScale = 0;
+        var endTimer = new Date().getTime();
+        var tmp = endTimer - this.startRowTimer;
+        var index = Math.floor(tmp / this.rowMilTimer  * 8); 
+
+        if (this.m_Muls[index]) {
+            this.TempGetCount = this.m_Muls[index] * EscapeMng.GetInstance().m_Default_Coin;
+        }
+
+       
         var num = EscapeMng.GetInstance().Get_Unlock_level();
         if (cc.sys.platform === cc.sys.ANDROID && num > 1) {
-
+            sdkManager.GetInstance().JavaRewardedAds("shengli_ad2_beishu",()=>{this.OnEndAni();} ,()=>{this.OnEndAni();} );
         }
         else {
             this.OnEndAni();
@@ -220,14 +252,13 @@ export default class GameEndWin extends cc.Component {
         if (this.stopRotation) {
             return;
         }
-        if (this.m_Muls[this.m_CurMul]) {
-            this.TempGetCount = this.m_Muls[this.m_CurMul] * EscapeMng.GetInstance().m_Default_Coin;
-        }
+        this.ani_zhuanPan.timeScale = 0;
+        this.TempGetCount = EscapeMng.GetInstance().m_Default_Coin;
         this.stopRotation = true;
 
         var status = EscapeMng.GetInstance().GetIntAdStatus();
         if (cc.sys.platform === cc.sys.ANDROID && status == true) {
-
+            sdkManager.GetInstance().JavaInterstitialAds("shengli_ad3_next", ()=>{this.OnEndAni();} ,()=>{this.OnEndAni();} );
         }
         else {
             this.OnEndAni();
@@ -235,13 +266,32 @@ export default class GameEndWin extends cc.Component {
     }
 
     OnEndAni() {
-        this.m_CoinFly.active = true;
-        var func = cc.sequence(cc.delayTime(0.5), cc.callFunc(() => {
-            var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
-            EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
-            this.onUpdateCoin();
-        }), cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); }))
+        //this.m_CoinFly.active = true;
+        //var func = cc.sequence(cc.delayTime(0.5), cc.callFunc(() => {
+        //    var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
+        //    EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
+        //    this.onUpdateCoin();
+        //}), cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); }))
+        //this.node.runAction(func);
+           
+        var func = cc.sequence(
+            cc.delayTime(0.5),
+            cc.callFunc(() => {
+                this.ani_reward.node.active = true;    
+                SpineManager.getInstance().playSpinAnimation(this.ani_reward, "" + this.TempGetCount, false);
+            }),
+            cc.delayTime(1.5),
+            cc.callFunc(() => {
+                console.log("old   " + EscapeMng.GetInstance().Get_Gold_Coin());
+                var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
+                EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
+                this.onUpdateCoin();
+            })
+            , cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); })
+        );
         this.node.runAction(func);
+
+        
     }
 
     OnBtnSkin() {
@@ -249,6 +299,7 @@ export default class GameEndWin extends cc.Component {
             return;
         }
         var status = EscapeMng.GetInstance().Get_SkinStatusType(this.nextID);
+        console.log("status     : " + status);
         if (status == 0) {
             return;
         }

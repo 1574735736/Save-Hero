@@ -27,7 +27,7 @@ export default class loading extends cc.Component {
     private static _instance: loading = null; 
 
 
-    loadingTime = 1000;//8000;//5秒
+    loadingTime = 8000;//5秒
     timer = 0;
 
     updateLock = false;
@@ -115,12 +115,15 @@ export default class loading extends cc.Component {
 
                     //let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
                     //if (!isShowAd ||  EscapeMng.GetInstance().GetPlayeringTimes()) {
-                    if (EscapeMng.GetInstance().GetPlayeringTimes()) { 
-                        this.loadStartScene();
-                    }
-                    else {
-                        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
-                    }
+
+                    //if (EscapeMng.GetInstance().GetPlayeringTimes()) {
+                    //    this.loadStartScene();
+                    //}
+                    //else {
+
+                    //}
+
+                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
                     //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
                 }
                 else {

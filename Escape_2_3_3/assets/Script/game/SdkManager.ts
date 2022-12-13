@@ -24,44 +24,45 @@ export default class SdkManager{
     callBackFail: Function = null;
 
 
-    //²åÒ³¹ã¸æ
+    //ï¿½ï¿½Ò³ï¿½ï¿½ï¿½
     public JavaInterstitialAds(order: string, callSuccess: Function = null, callFail: Function = null) {
         this.callBackSuccess = callSuccess;
         this.callBackFail = callFail;
-        if (cc.sys.platform == cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;Ljava/lang/String;)V", 'cc["sdkManager"].JavaCall_AdLoadSuccess()', order);
-        }
-        else {
+        //if (cc.sys.platform == cc.sys.ANDROID) {
+        //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;Ljava/lang/String;)V", 'cc["sdkManager"].JavaCall_AdLoadSuccess()', order);
+        //}
+        //else {
             if (this.callBackSuccess) {
                 this.callBackSuccess();
             }
-        }   
+        //}   
     }
 
 
-    //¼¤Àø¹ã¸æ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public JavaRewardedAds(order: string, callSuccess: Function = null, callFail: Function = null) {
         this.callBackSuccess = callSuccess;
         this.callBackFail = callFail;
-        if (cc.sys.platform == cc.sys.ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", 'cc["sdkManager"].JavaCall_AdLoadSuccess()', 'cc["sdkManager"].JavaCall_AdLoadFail()', order, "");
-        }
-        else {
+        //if (cc.sys.platform == cc.sys.ANDROID) {
+        //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", 'cc["sdkManager"].JavaCall_AdLoadSuccess()', 'cc["sdkManager"].JavaCall_AdLoadFail()', order, "");
+        //}
+        //else {
             if (this.callBackSuccess) {
                 this.callBackSuccess();
             }
-        }  
+        //}  
 
     }
 
 
-    public static JavaCall_AdLoadSuccess() {
+    public static JavaCall_AdLoadSuccess(): void  {
         if (SdkManager.GetInstance().callBackSuccess) {
             SdkManager.GetInstance().callBackSuccess();
         }
     }
 
-    public static JavaCall_AdLoadFail() {
+    public static JavaCall_AdLoadFail(): void {
+        cc.log("***************************** fail")
         if (SdkManager.GetInstance().callBackFail) {
             SdkManager.GetInstance().callBackFail();
         }

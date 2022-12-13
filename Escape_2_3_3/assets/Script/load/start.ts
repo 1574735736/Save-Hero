@@ -74,13 +74,13 @@ export default class start extends cc.Component {
     
     public static JavaCall_StartGame():void {
         start.getInstance().OnBtnStartGame();
-    }
-    OnBtnStartGame()
-    {
-        sdkManager.GetInstance().JavaRewardedAds(FirebaseKey.click_skip, this.OnEnterGame, () => { console.log("ads is faild !!!"); this.OnEnterGame(); })      
+    }    
+
+    OnStartAction() {
+        sdkManager.GetInstance().JavaRewardedAds("", this.OnBtnStartGame, this.OnBtnStartGame);
     }
 
-    OnEnterGame() {
+    OnBtnStartGame() {
         //读取最新的关卡，加载进入游戏
         var ilevel = EscapeMng.GetInstance().Get_Last_Enter_Level();
         EscapeMng.GetInstance().LoadLevelConfig(ilevel, (error, pobj) => {

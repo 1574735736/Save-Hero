@@ -3,7 +3,7 @@ import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 import EscapeMng from "../game/EscapeMng";
 const { ccclass, property } = cc._decorator;
 import SpineManager from "../utils/SpineManager";
-
+import sdkManager from "../game/SdkManager";
 /*
 游戏失败弹框
 
@@ -66,17 +66,18 @@ export default class gamefail extends cc.Component {
         var status = EscapeMng.GetInstance().GetIntAdStatus();
         if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportInformation(FirebaseKey.shengli_playagain);
-            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
-            if (bAdLoaded) {
-                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
-            }
-            else {
-                this.OnExit();
-            }            
+            //let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_hadLoadedAd", "()Z");
+            //if (bAdLoaded) {
+            //    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].InterstitialCallBack()");
+            //}
+            //else {
+            //    this.OnExit();
+            //}  
+            sdkManager.GetInstance().JavaInterstitialAds("shengli_playagain", ()=>{this.OnExit();} , ()=>{this.OnExit();})
         }
         else {
             this.OnExit();
-        }            
+        }        
     }
 
     OnExit() {
@@ -94,20 +95,22 @@ export default class gamefail extends cc.Component {
 
     OnNextExit() {
 
-        if (cc.sys.platform === cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip);
-            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
-            if (bAdLoaded) {
-                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].RewardedCallBack()");
-            }
-            else {
-                FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_2);
-                this.OnNext();
-            }
-        }
-        else {
-            this.OnNext();
-        }      
+        //if (cc.sys.platform === cc.sys.ANDROID) {
+        //    FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip);
+        //    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+        //    if (bAdLoaded) {
+        //        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['gamefail'].RewardedCallBack()");
+        //    }
+        //    else {
+        //        FirebaseReport.reportInformation(FirebaseKey.shengli_ad2_skip_2);
+        //        this.OnNext();
+        //    }
+        //}
+        //else {
+        //    this.OnNext();
+        //}  
+
+        sdkManager.GetInstance().JavaRewardedAds("shengli_ad2_skip", () => { this.OnNext(); } , null);
     }
 
     OnNext() {

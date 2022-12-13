@@ -1,6 +1,7 @@
 import EscapeMng from "../game/EscapeMng";
 
-import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
+import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import sdkManager from "../game/SdkManager";
 
  
  
@@ -82,23 +83,24 @@ export default class selgk extends cc.Component {
                 this.scheduleOnce(() => {
                     this.bCanClickNextLevel = true;
                 }, 0.5);//限制0.5秒点一次
-                if (cc.sys.platform === cc.sys.ANDROID) {
-                    FirebaseReport.reportInformation(FirebaseKey.click_unlocklevel);
-                    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
-                    if (bAdLoaded) {
-                        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V","cc['selgk'].JavaCall_EnTerSelectedLevel()");
-                    }
-                    else {
-                        this.tip_cantShowAd.active = true;
-                        this.scheduleOnce(() => {
-                            this.tip_cantShowAd.active = false;
-                        }, 0.5);
-                    }
+                //if (cc.sys.platform === cc.sys.ANDROID) {
+                //    FirebaseReport.reportInformation(FirebaseKey.click_unlocklevel);
+                //    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+                //    if (bAdLoaded) {
+                //        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V","cc['selgk'].JavaCall_EnTerSelectedLevel()");
+                //    }
+                //    else {
+                //        this.OnTipAction();
+                //    }
                     
-                }
-                else {
-                    this.EnTerSelectedLevel();
-                }
+                //}
+                //else {
+                //    this.EnTerSelectedLevel();
+                //}
+                sdkManager.GetInstance().JavaRewardedAds(FirebaseKey.click_unlocklevel, () => {
+                    EscapeMng.GetInstance().SetIntAdStatus();
+                    selgk.getInstance().EnTerSelectedLevel();
+                },()=>{this.OnTipAction();} );
             }
         }
         else {
@@ -109,6 +111,13 @@ export default class selgk extends cc.Component {
     public static JavaCall_EnTerSelectedLevel() {
         EscapeMng.GetInstance().SetIntAdStatus();
         selgk.getInstance().EnTerSelectedLevel();
+    }
+
+    OnTipAction() {
+        this.tip_cantShowAd.active = true;
+        this.scheduleOnce(() => {
+            this.tip_cantShowAd.active = false;
+        }, 0.5);
     }
 
     EnTerSelectedLevel() {

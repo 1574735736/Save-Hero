@@ -5,6 +5,7 @@ import EscapeMng from "../game/EscapeMng";
 //import Start from "../load/start";
 //import Game from "../game/game";
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import sdkManager from "../game/SdkManager";
 
 @ccclass
 export default class SkinView extends cc.Component {   
@@ -152,20 +153,22 @@ export default class SkinView extends cc.Component {
     
     OnBtnShowAds(clikID: number) {      
         this.OnUpdateFrame(clikID);
-        if (cc.sys.platform === cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
-            let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
-            if (bAdLoaded) {
-                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['skinView'].CallJaveGetSkin()");
-            }
-            else {
-                FirebaseReport.reportInformation(FirebaseKey.skin_ad2_2);
-                this.OnChangeAdsShinStatus();
-            }            
-        }
-        else {
-            this.OnChangeAdsShinStatus();
-        }       
+        //if (cc.sys.platform === cc.sys.ANDROID) {
+        //    FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
+        //    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
+        //    if (bAdLoaded) {
+        //        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['skinView'].CallJaveGetSkin()");
+        //    }
+        //    else {
+        //        FirebaseReport.reportInformation(FirebaseKey.skin_ad2_2);
+        //        this.OnChangeAdsShinStatus();
+        //    }
+        //}
+        //else {
+        //    this.OnChangeAdsShinStatus();
+        //} 
+        FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
+        sdkManager.GetInstance().JavaRewardedAds("skin_ad2",()=>{this.OnChangeAdsShinStatus();} , ()=>{this.OnChangeAdsShinStatus();})
     }
 
     OnChangeAdsShinStatus() {
@@ -211,14 +214,14 @@ export default class SkinView extends cc.Component {
             
             if (EscapeMng.GetInstance().Get_SkinStatusHas(i + 1)) {
                 var curTable: number = EscapeMng.GetInstance().Get_SkinStatusType(i + 1);
-                if (curHiroId == i + 1) { //µ±Ç°Ê¹ÓÃµÄ½ÇÉ«
+                if (curHiroId == i + 1) { //ï¿½ï¿½Ç°Ê¹ï¿½ÃµÄ½ï¿½É«
                     //this.m_HeroNote[i].getChildByName("frame2").active = true;
                 }
                 else {
-                    if (curTable == 1) {//¹ã¸æÎ´½âËø
+                    if (curTable == 1) {//ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½
                         this.m_HeroNote[i].getChildByName("btn_ads").active = true;
                     }
-                    else {//¹ã¸æÒÑ½âËø
+                    else {//ï¿½ï¿½ï¿½ï¿½Ñ½ï¿½ï¿½ï¿½
                         this.m_HeroNote[i].getChildByName("btn_use").active = true;
                     }
                 }

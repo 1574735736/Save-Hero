@@ -1,0 +1,83 @@
+
+sz.png
+size: 375,539
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+100
+  rotate: false
+  xy: 223, 5
+  size: 103, 48
+  orig: 103, 48
+  offset: 0, 0
+  index: -1
+150
+  rotate: true
+  xy: 253, 58
+  size: 103, 48
+  orig: 103, 48
+  offset: 0, 0
+  index: -1
+200
+  rotate: true
+  xy: 203, 55
+  size: 106, 48
+  orig: 106, 48
+  offset: 0, 0
+  index: -1
+250
+  rotate: true
+  xy: 53, 54
+  size: 107, 48
+  orig: 107, 48
+  offset: 0, 0
+  index: -1
+300
+  rotate: true
+  xy: 103, 54
+  size: 107, 48
+  orig: 107, 48
+  offset: 0, 0
+  index: -1
+350
+  rotate: false
+  xy: 114, 4
+  size: 107, 48
+  orig: 107, 48
+  offset: 0, 0
+  index: -1
+400
+  rotate: false
+  xy: 2, 2
+  size: 110, 48
+  orig: 110, 48
+  offset: 0, 0
+  index: -1
+450
+  rotate: true
+  xy: 2, 52
+  size: 109, 49
+  orig: 109, 49
+  offset: 0, 0
+  index: -1
+500
+  rotate: true
+  xy: 153, 54
+  size: 107, 48
+  orig: 107, 48
+  offset: 0, 0
+  index: -1
+g2
+  rotate: false
+  xy: 2, 163
+  size: 371, 374
+  orig: 371, 376
+  offset: 0, 1
+  index: -1
+jb
+  rotate: false
+  xy: 303, 91
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1

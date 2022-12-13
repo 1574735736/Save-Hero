@@ -27,8 +27,8 @@ export default class EscapePeople
     m_in_role_curve_eplse_dt:number = 0;
 
     //由于人物本身大小尺寸不一样，所以显示的时候实际会在逻辑点的基础上加上xy的偏移，使得显示人的感觉更加切合实际
-    m_x_pos_add = -20;
-    m_y_pos_add = -20;
+    m_x_pos_add =0;
+    m_y_pos_add = -60;
 
     //人移动速度
     m_sepeed:number = 500;
@@ -79,7 +79,7 @@ export default class EscapePeople
     //绘制自身的点，正式上线不用
     Draw_Pt_List(transfer_pt_list,grphic:cc.Graphics)
     {
-/*
+
          for(var ff=0;ff<transfer_pt_list.length;ff++)
          {
              var ff_pt = transfer_pt_list[ff];
@@ -95,7 +95,7 @@ export default class EscapePeople
 
         grphic.lineTo(firstpt.x,firstpt.y);
         grphic.stroke();
-        */
+        
      }
      //绘制自身的点，正式上线不用
     RedrawValidPoloyRegin(grphic:cc.Graphics)
@@ -110,7 +110,7 @@ export default class EscapePeople
             
         }
         var valid_w = this.m_info.valid_w;
-        var valid_h = this.m_info.valid_h;
+        var valid_h = this.m_info.valid_h + 30;
         
         var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
          
@@ -126,7 +126,7 @@ export default class EscapePeople
     //获得自身的包围盒点列表,用于与其他物体碰撞检测
     Get_Valid_Bound_Poly_Pt_List():cc.Vec2[]
     {
-        var polplist = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(this.m_node.getPosition(),this.m_info.valid_w,this.m_info.valid_h,this.m_node.angle);
+        var polplist = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(this.m_node.getPosition(),this.m_info.valid_w,this.m_info.valid_h + 20,this.m_node.angle);
         return polplist;
     }
     //设置缩放比例
@@ -227,7 +227,7 @@ export default class EscapePeople
 
         this.Caculate_Set_Pos(0);
 
-        this.Set_Node_Animate("daiji");
+        this.Set_Node_Animate("huasheng");
     }
     //当前线段已经移动完成，切换到下一条线段
     On_Change_To_Next_Curve(parentgame,ilefttime)

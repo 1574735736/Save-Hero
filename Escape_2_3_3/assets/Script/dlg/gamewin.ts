@@ -9,7 +9,7 @@ import EscapeMng from "../game/EscapeMng";
 
 const { ccclass, property } = cc._decorator;
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
-
+import sdkManager from "../game/SdkManager";
 
 /*
 游戏胜利弹框

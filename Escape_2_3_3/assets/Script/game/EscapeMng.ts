@@ -185,7 +185,7 @@ export default class EscapeMng
         if (!unlockLevel) {
             unlockLevel = 1;
         }
-        this.m_unlock_level = Number(unlockLevel);
+        this.m_unlock_level =Number(unlockLevel);
 
     }
     //保存信息
