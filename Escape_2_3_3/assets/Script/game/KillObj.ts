@@ -107,9 +107,9 @@ export default class KillObj
              var pnode=  cc.instantiate(pp as cc.Prefab);
              parentnode.addChild(pnode,55);
              pnode.setPosition(pos);
-         })
+         })         
+    }
 
-     }
      //有配置boombinfo信息，为炸弹
      CanBoomb()
      {

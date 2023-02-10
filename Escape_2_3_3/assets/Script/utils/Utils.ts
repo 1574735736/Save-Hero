@@ -109,4 +109,10 @@ export default class Utils
 
         return false;
     }
+
+    static GetRandomNum(Min, Max): number {
+        var Range = Max - Min;
+        var Rand = Math.random();
+        return (Min + Math.round(Rand * Range));
+    }
 }

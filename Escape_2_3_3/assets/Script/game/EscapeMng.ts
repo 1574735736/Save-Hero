@@ -179,7 +179,7 @@ export default class EscapeMng
             iprevlevel = 1;
         }
 
-        this.m_last_enter_level = Number(iprevlevel); 
+        this.m_last_enter_level = 1; // Number(iprevlevel); 
 
         let unlockLevel = MyLocalStorge.getItem("espace_unlock_level","");
         if (!unlockLevel) {
@@ -196,6 +196,18 @@ export default class EscapeMng
     //保存最大解锁关卡记录
     SavaUnlocklevelInfo(): void {
         MyLocalStorge.setItem("espace_unlock_level", this.m_unlock_level);  
+    }
+
+    //获取对应的Boss配置信息
+    Find_Detail_BossInfo_By_TypeID(typeid: number) {
+        var archtypes = this.m_config_archs_info.bossobjs;
+        for (var i = 0; i < archtypes.length; i++) {
+            var ff_arch_info = archtypes[i];
+            if (ff_arch_info.type == typeid) {
+                return ff_arch_info;
+            }
+        }
+        return null;
     }
 
     //获得配置在archs.json文件里面的建筑信息archtypes节点下
@@ -400,11 +412,8 @@ export default class EscapeMng
             addSkine.id = id;
             addSkine.type = type;
             this.m_Has_Skins.push(addSkine);
-        }
-       
-        cc.sys.localStorage.setItem('hasskins', JSON.stringify(this.m_Has_Skins));
-    
-
+        }       
+        cc.sys.localStorage.setItem('hasskins', JSON.stringify(this.m_Has_Skins));    
     }
     //是否已经获取到所有的皮肤   true 为已经全部获取
     Get_IsHasAllSkin(): boolean {

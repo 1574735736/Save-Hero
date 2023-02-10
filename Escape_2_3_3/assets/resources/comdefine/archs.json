@@ -34,15 +34,19 @@
             "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
             "joint_touch_valid_range":60,
             "joint_relative_pos":[-115, 45],
+
+            "endRoll_relative_pos":[240,-420],
+
             "joint_radius":18,
             "desc3":"用户数目信息位置",
             "people_info_relative_pos":[10,200],
             "arch_success_people_pos":
             {
                 "desc":"解救结束点人物在startx到endx,py位置中",
-                "relative_startx":-80,
-                "relative_endx":80,
-                "relative_y":0
+                "relative_startx":-180,
+                "relative_endx":-20,
+                "relative_y":0,
+                "stay_y":-460
             }
         },
         {
@@ -55,6 +59,9 @@
             "desc2":"joint_touch_valid_range代表连接点终点有效区域范围，周边多少像素内按下为有效开始拖动绳子，joint_radius：代表最终连接点的半径",
             "joint_touch_valid_range":60,
             "joint_relative_pos":[115, 45],
+
+            "endRoll_relative_pos":[240,-420],
+
             "joint_radius":18,
             "desc3":"用户数目信息位置",
             "people_info_relative_pos":[-50,220],
@@ -63,7 +70,8 @@
                 "desc":"解救结束点人物在startx到endx,py位置中",
                 "relative_startx":-80,
                 "relative_endx":80,
-                "relative_y":0
+                "relative_y":0,
+                "stay_y":-460
             }
         },
         {
@@ -464,5 +472,50 @@
             "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)" 
 
         }  
+    ],
+    "bossobjs":
+    [
+        {
+            "type":1,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss1"
+        },
+        {
+            "type":2,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss2"
+        },
+        {
+            "type":3,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss3"
+        },
+        {
+            "type":4,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss4"
+        },
+        {
+            "type":5,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss5"
+        },
+        {
+            "type":6,
+            "valid_w":100,
+            "valid_h":150,
+            "obj_pos":[-200,-480],
+            "obj_res":"prefab/boss6"
+        }
     ]
 }

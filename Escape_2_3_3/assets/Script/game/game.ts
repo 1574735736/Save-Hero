@@ -22,6 +22,7 @@ import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
 import vpnConnect from "../dlg/vpnConnect";
 import MyLabel from "../utils/MyLabel";
 import sdkManager from "../game/SdkManager";
+import EscapeBoss from "./EscapeBoss";
 
 
 const {ccclass, property} = cc._decorator;
@@ -137,6 +138,9 @@ export default class game extends cc.Component
     //在开始建筑以外的外面的小人
     m_all_outer_waitfor_resure_people_list = [];
 
+    //boss 的数据
+    m_boss_info = null;
+
 
     //正在解救人的列表，正在绳子上移动到终点去的人列表
     m_rescureing_people_list = [];
@@ -164,6 +168,9 @@ export default class game extends cc.Component
     //游戏成功和游戏结束标记
     m_b_game_finished = 0;
     m_b_game_successed = 0;
+    m_b_boss_start = 0;//开始Boss战
+    m_b_boss_end = 0;//Boss战结束
+
 
 
     //killobj绘制的graphic
@@ -254,15 +261,8 @@ export default class game extends cc.Component
             //     }
             // }
         }
-
-
-        console.log("game.onLoad()");
-        
-
+      
         EscapeMng.GetInstance().m_last_enter_level = this.m_enter_level;
-
-
-
 
         //获得开始建筑的配置信息
         var archstart_config_info = this.m_enter_level_config.archstart;
@@ -289,9 +289,7 @@ export default class game extends cc.Component
         startNote.setParent(psrite_arch_start);
         startNote.setPosition(0, 100);
         this.txtStartCount = startNote.getComponent(cc.Label);
-        this.txtStartCount.string = "";
-
-        
+        this.txtStartCount.string = "";        
 
         this.m_start_joint_pt = new cc.Vec2(archstart_info.joint_relative_pos[0] + arch_start_pos[0],archstart_info.joint_relative_pos[1] + arch_start_pos[1]);
         this.m_last_moveing_joint_pt = this.m_start_joint_pt;
@@ -308,38 +306,41 @@ export default class game extends cc.Component
          
      
         //创建到达的建筑
-        var psrite_arch_end = new MySprite(archend_info.arch_pic, archend_info.arch_size[0], archend_info.arch_size[1]); //
-        psrite_arch_end.setPosition(arch_end_pos[0], arch_end_pos[1] + archend_info.joint_relative_pos[1]); 
-        this.node.addChild(psrite_arch_end,10);
+        //var psrite_arch_end = new MySprite(archend_info.arch_pic, archend_info.arch_size[0], archend_info.arch_size[1]); //
+        //psrite_arch_end.setPosition(arch_end_pos[0], arch_end_pos[1] + archend_info.joint_relative_pos[1]);
+        //this.node.addChild(psrite_arch_end,10);
 
-        this.m_end_joint_pt = new cc.Vec2(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1] );
+        //this.m_end_joint_pt = new cc.Vec2(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1] );
+        this.m_end_joint_pt = new cc.Vec2(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1]);
 
         //创建小木棍
         var btn_arch_end_gun = new MySprite("game/slop/q4");
-        btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
+        //btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
+        btn_arch_end_gun.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1] - 30);
+
         this.node.addChild(btn_arch_end_gun, 22);
 
         //创建到达建筑的链接点
         var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
-        btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
+        //btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
+        btn_arch_end_joint.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1]);
         this.node.addChild(btn_arch_end_joint, 22);
        
         var endNote = cc.find("txt_endcount", this.node);
-        endNote.setParent(psrite_arch_end);
+        //endNote.setParent(psrite_arch_end);
+
+        endNote.setParent(btn_arch_end_gun);
+
         endNote.setPosition(0, 100);
         this.txtEndCount = endNote.getComponent(cc.Label);
         this.txtEndCount.string = "";
 
-
-
         var btn_addbianji = cc.find("addbianji",this.node);
         btn_addbianji.on("click",this.OnBtnAddBJ.bind(this));
         
-
         this.m_rope_graphic_node = cc.find("rope_graphic",this.node);
         this.m_rope_graphic_com = this.m_rope_graphic_node.getComponent("RopeGraphic");
         this.m_rope_graphic_node.zIndex = 15;
-
 
         //移动的圈圈信息
         var touchmovejoint = this.Get_Touch_Move_Joint_Info();
@@ -351,15 +352,11 @@ export default class game extends cc.Component
         var obstcle_graphic = cc.find("obstcle_graphic",this.node);
         this.m_obstacle_graphic_com = obstcle_graphic.getComponent("ObstcleGraphic");
         obstcle_graphic.zIndex = 14;
-
-
          
         //移动的时候跟随的圈
         this.m_move_joint_node=   new MySprite(touchmovejoint.joint_pic,touchmovejoint.joint_size[0],touchmovejoint.joint_size[1]);
         this.node.addChild(this.m_move_joint_node,25);
         this.m_move_joint_node.active = false;
-
-
 
         var backhome = cc.find("backhome",this.node);
         backhome.on("click", this.OnReturnHome.bind(this));
@@ -488,8 +485,8 @@ export default class game extends cc.Component
       
         var end_pos = this.m_enter_level_config.archend.arch_pos;
         var archEnd_info = this.Get_Arch_End_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archend.typeid);
-        var endX = end_pos[0] + archEnd_info.joint_relative_pos[0];
-        var endY = end_pos[1] + archEnd_info.joint_relative_pos[1];
+        var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
+        var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
       
 
         var row = cc.find("guide/guide_row", this.node);
@@ -561,8 +558,8 @@ export default class game extends cc.Component
 
         var end_pos = this.m_enter_level_config.archend.arch_pos;
         var archEnd_info = this.Get_Arch_End_Info();
-        var endX = end_pos[0] + archEnd_info.joint_relative_pos[0];
-        var endY = end_pos[1] + archEnd_info.joint_relative_pos[1];
+        var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
+        var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
 
         var row = cc.find("guide/guide_row", this.node);
         row.active = true;        
@@ -746,10 +743,7 @@ export default class game extends cc.Component
             var obj_pic = ff_kill_info.obj_pic;
             var anchropt = ff_kill_info.anchropt;
             var obj_pic_size = ff_kill_info.obj_pic_size;
-
            
-
-
             if(bgraphic)
             {
                 continue;
@@ -954,7 +948,26 @@ export default class game extends cc.Component
     }
 
 
-    
+    //初始化Boss
+    Init_Boss() {
+        var boss_config_info = this.m_enter_level_config.bossobjs;
+        if (!boss_config_info) {
+            return;
+        }
+        var boss_info = EscapeMng.GetInstance().Find_Detail_BossInfo_By_TypeID(boss_config_info.typeid);
+
+        var self = this;
+        cc.loader.loadRes(boss_info.obj_res, cc.Prefab, (e, p) => {
+            var pnode = cc.instantiate(p as cc.Prefab);
+            self.node.addChild(pnode, 30);
+            pnode.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1]);
+            var escapeBoss = new EscapeBoss();
+            escapeBoss.Init(pnode, boss_info);
+            this.m_boss_info = escapeBoss;
+            escapeBoss.SetText(this.m_total_need_rescur_people_count);
+        });
+
+    }
 
     //初始化所有逃生的小人
     Init_All_Peoples()
@@ -1139,7 +1152,8 @@ export default class game extends cc.Component
     Refresh_People_Rescure_Count_Info()
     {
         if (this.txtEndCount) {
-            this.txtEndCount.string = "" + this.m_total_rescured_people_count + "/" + this.m_total_need_rescur_people_count;
+           // this.txtEndCount.string = "" + this.m_total_rescured_people_count + "/" + this.m_total_need_rescur_people_count;
+            this.txtEndCount.string = "" + this.m_total_rescured_people_count;
         }
         if (this.txtStartCount) {
             this.txtStartCount.string = "" + this.m_all_start_arch_waitfor_resure_people_list.length;
@@ -1160,6 +1174,9 @@ export default class game extends cc.Component
     {
         this.Init_All_Peoples();
         this.Init_All_Kill_Objs();
+        this.Init_Boss();
+
+
 
         var objlist = this.m_enter_level_config.obstacle.objlist;
         if(!objlist)
@@ -3337,13 +3354,16 @@ export default class game extends cc.Component
             ff_obj.Update_Move_Tick(dt);
             ff_obj.RedrawGrahics();
         }
-        var rescuinglist=  this.m_rescureing_people_list.slice(0);
-        //绘制碰撞盒
+        var rescuinglist = this.m_rescureing_people_list.slice(0);
+
+        //绘制小人碰撞盒
         //for(var ff=0;ff<rescuinglist.length;ff++)
         //{
         //    var ff_people_info:EscapePeople = rescuinglist[ff];
         //    ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
         //}
+
+        //this.m_boss_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
 
         var bulletlist =  this.m_all_bullet_obj_list.slice(0);
         for(var ff=0;ff<bulletlist.length;ff++)
@@ -3616,6 +3636,15 @@ export default class game extends cc.Component
             ff_people_info.Update_Tick(dt,this);
         }
 
+        if (this.m_b_boss_start == 1 && this.m_b_boss_end == 0) {
+            
+            for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
+                var speed: number = Utils.GetRandomNum(-1, -3);
+                ff_people_info.Move_X(speed);
+            }
+        }
+
 
         //判断小人是不是碰到炸弹，killobj等杀死
         this.Check_Kill_Escape_People();
@@ -3863,15 +3892,15 @@ export default class game extends cc.Component
 
         var arch_end_pos = this.m_enter_level_config.archend.arch_pos;
 
-        var startx = arch_success_people_pos.relative_startx + arch_end_pos[0];
-        var endx = arch_success_people_pos.relative_endx + arch_end_pos[0];
+        var startx = arch_success_people_pos.relative_startx + arch_end_info.endRoll_relative_pos[0]; //arch_end_pos[0];
+        var endx = arch_success_people_pos.relative_endx + arch_end_info.endRoll_relative_pos[0];//arch_end_pos[0];
 
 
         var ix1 = startx + (endx-startx)/4;
         var ix2 = startx + (endx-startx)*3/4;
 
  
-        var iy = arch_success_people_pos.relative_y +arch_end_pos[1];
+        var iy = arch_success_people_pos.stay_y;//arch_success_people_pos.relative_y +arch_end_pos[1];
 
         
 
@@ -3946,23 +3975,18 @@ export default class game extends cc.Component
 
         var arch_end_pos = this.m_enter_level_config.archend.arch_pos;
 
-        var startx = arch_success_people_pos.relative_startx + arch_end_pos[0];
-        var endx = arch_success_people_pos.relative_endx + arch_end_pos[0];
-
-
+        var startx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_startx;//arch_success_people_pos.relative_startx + arch_end_pos[0];
+        var endx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_endx;//arch_success_people_pos.relative_endx + arch_end_pos[0];
 
         var ix = startx + (endx - startx)*this.m_succesed_people_list.length/this.m_total_need_rescur_people_count;
-        var iy = arch_success_people_pos.relative_y +arch_end_pos[1];
+        var iy = arch_success_people_pos.stay_y;//arch_success_people_pos.relative_y +arch_end_pos[1];
 
         this.m_total_rescured_people_count++;
 
         people.SetPosition(ix, iy);
         people.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
 
-
         this.ReOrder_Resuing_Success_People(true);
-
-
          
         this.Refresh_People_Rescure_Count_Info();
 
@@ -4055,32 +4079,24 @@ export default class game extends cc.Component
         this.m_b_game_finished = 1;
         this.m_b_game_successed = 1;
 
-        //if (cc.sys.platform === cc.sys.ANDROID && this.m_enter_level == 1) {
-        //    let playTime = (new Date).getTime() - this.timeOfFirstLevel;
-        //    FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
-        //}
 
-
-        var self = this;
-        //cc.loader.loadRes("prefab/gamewin",cc.Prefab,(ee,p)=>
-        //{
-        //    var pnode:cc.Node =  cc.instantiate(p as cc.Prefab);
-        //    self.node.addChild(pnode,80);
-
-        //    var gamewin = pnode.getComponent("gamewin");
-        //    gamewin.setCallBack(this,this.onContinueBtnClick.bind(this));
-
-
-        //    gamewin.SetInitInfo(self.m_enter_level,this.m_init_all_people_count,self.m_total_killed_people_count,self.m_total_rescured_people_count,self.m_total_need_rescur_people_count);
-
+        //var self = this;
+        //cc.loader.loadRes("prefab/GameEndWin", cc.Prefab, (err, p) => {
+        //    var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
+        //    self.node.addChild(pnode, 80);
+        //    var gamewin = pnode.getComponent("GameEndWin");
+        //    gamewin.setCallBack(this, this.onContinueBtnClick.bind(this));
         //});
 
-        cc.loader.loadRes("prefab/GameEndWin", cc.Prefab, (err, p) => {
-            var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode, 80);
-            var gamewin = pnode.getComponent("GameEndWin");
-            gamewin.setCallBack(this, this.onContinueBtnClick.bind(this));
-        });
+        this.m_boss_info.Set_Node_Animate("daiji2"); 
+
+        for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+            var people: EscapePeople = this.m_succesed_people_list[i];
+            people.Set_Node_Animate("benpao");
+        }
+        this.m_b_boss_start = 1;
+
+
     }
     //营救失败，弹框显示
     FD_Fail_Dlg()

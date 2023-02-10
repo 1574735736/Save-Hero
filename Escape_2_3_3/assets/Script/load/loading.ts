@@ -27,7 +27,7 @@ export default class loading extends cc.Component {
     private static _instance: loading = null; 
 
 
-    loadingTime = 8000;//5秒
+    loadingTime = 1000;//8000;//5秒
     timer = 0;
 
     updateLock = false;
@@ -54,7 +54,8 @@ export default class loading extends cc.Component {
 
             //jsb.reflection.callStaticMethod("org.cocos2dx.javascript.vpn/VpnManager", "JsCall__requestGetBackGroundConfigOfVpn", "()V");
         }
-        cc.debug.setDisplayStats(false);
+
+        //cc.debug.setDisplayStats(false);
     }
 
     public static JavaCall_UpdateConfigValue(value:number) {

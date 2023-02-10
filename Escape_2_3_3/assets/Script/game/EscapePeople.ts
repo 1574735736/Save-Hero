@@ -154,13 +154,11 @@ export default class EscapePeople
     {
         var distance = Math.sqrt((second_pt.x-first_pt.x)*(second_pt.x-first_pt.x) + (second_pt.y-first_pt.y)*(second_pt.y-first_pt.y));
         return distance;
-
     }
 
     //设置人物坐标
     SetPosition(ix:number,iy:number)
-    {
-        
+    {        
         this.m_node.setPosition(ix,iy);
     }
     //设置人物在当前绳子线段两点间移动的比例，比如两点a,b相距100米，rate，0.3,那么移动到a到b过去30米的样子
@@ -222,7 +220,7 @@ export default class EscapePeople
             var iall_len = this.Get_Len(ff,first_pt,second_pt);
             var iall_use_sec  = iall_len/this.m_sepeed;
 
-            this.m_all_curve_info_list.push({"len":iall_len,"allsec":iall_use_sec})
+            this.m_all_curve_info_list.push({"len":iall_len,"allsec":iall_use_sec});
         }
 
         this.Caculate_Set_Pos(0);
@@ -252,6 +250,10 @@ export default class EscapePeople
 
     }
 
+    //控制角色向左奔跑
+    Update_Run(dt: number, parentgame) {
+
+    }
     //在每帧中移动，计算移动路径
     Update_Tick(dt:number,parentgame)
     {
