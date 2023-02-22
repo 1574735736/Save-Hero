@@ -1,54 +1,54 @@
 
 p1.png
-size: 383,177
+size: 256,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 j
-  rotate: false
-  xy: 161, 40
+  rotate: 270
+  xy: 26, 107
   size: 46, 135
   orig: 46, 135
   offset: 0, 0
   index: -1
 j2
-  rotate: false
-  xy: 209, 40
+  rotate: true
+  xy: 2, 64
   size: 46, 135
   orig: 46, 135
   offset: 0, 0
   index: -1
 s
   rotate: false
-  xy: 161, 4
+  xy: 2, 3
   size: 131, 34
   orig: 131, 34
   offset: 0, 0
   index: -1
 s2
-  rotate: true
-  xy: 343, 2
+  rotate: false
+  xy: 2, 40
   size: 131, 34
   orig: 131, 34
   offset: 0, 0
   index: -1
 st
-  rotate: true
-  xy: 257, 135
+  rotate: 270
+  xy: 31, 149
   size: 40, 124
   orig: 40, 124
   offset: 0, 0
   index: -1
 t
   rotate: false
-  xy: 2, 13
+  xy: 2, 272
   size: 157, 162
   orig: 157, 162
   offset: 0, 0
   index: -1
 t2
   rotate: false
-  xy: 257, 51
+  xy: 2, 188
   size: 84, 82
   orig: 84, 82
   offset: 0, 0

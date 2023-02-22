@@ -176,16 +176,16 @@ export default class EscapeMng
         var iprevlevel = MyLocalStorge.getItem("espace_save_level","");
         if(!iprevlevel)
         {
-            iprevlevel = 1;
+            iprevlevel = 1; 
         }
 
-        this.m_last_enter_level = 1; // Number(iprevlevel); 
+        this.m_last_enter_level = Number(iprevlevel); 
 
         let unlockLevel = MyLocalStorge.getItem("espace_unlock_level","");
         if (!unlockLevel) {
             unlockLevel = 1;
         }
-        this.m_unlock_level =Number(unlockLevel);
+        this.m_unlock_level = Number(unlockLevel);
 
     }
     //保存信息

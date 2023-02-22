@@ -40,13 +40,13 @@
             {
                   
                 "typeid":1,
-                "obj_pos":[-240,-410] 
+                "obj_pos":[-240,-240] 
                 
             } ,
             {
                   
                 "typeid":1,
-                "obj_pos":[240,-400] 
+                "obj_pos":[240,-240] 
                 
             }  
         ]
@@ -69,7 +69,7 @@
             {
                   
                 "typeid":2,
-                "initpos":[ 0,120],
+                "initpos":[ 0,150],
                 "initrotation":0,
                 "rotate":
                 {
@@ -80,7 +80,7 @@
             {
                   
                 "typeid":2,
-                "initpos":[0, -80],
+                "initpos":[0, -20],
                 "initrotation":0,
                 "rotate":
                 {
@@ -91,7 +91,7 @@
             {
                   
                 "typeid":2,
-                "initpos":[0, -280],
+                "initpos":[0, -190],
                 "initrotation":0,
                 "rotate":
                 {
@@ -101,5 +101,10 @@
             }  
         ]
 
+    }
+    ,
+    "bossobjs":
+    {
+        "typeid":3
     }
 }

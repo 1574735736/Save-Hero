@@ -64,14 +64,9 @@
             {
                   
                 "typeid":7,
-                "initpos":[-110, 0],
+                "initpos":[-110, -10],
                 "initrotation":0 
-                , 
-                "move":{
-                   "movespeed":40,
-                   "movestart":[-110, -20],
-                   "moveend":[ -110, 20]
-               }
+              
                 
                 
             } ,
@@ -80,25 +75,15 @@
                 "typeid":7,
                 "initpos":[110, 250],
                 "initrotation":180
-                , 
-                "move":{
-                   "movespeed":40,
-                   "movestart":[110, 230],
-                   "moveend":[ 110, 270]
-               }
+               
                 
             } ,
             {
                   
                 "typeid":7,
-                "initpos":[60, -200],
+                "initpos":[60, -210],
                 "initrotation":180
-                , 
-                "move":{
-                   "movespeed":40,
-                   "movestart":[60, -180],
-                   "moveend":[ 60, -220]
-               }
+               
                 
             } 
 
@@ -109,5 +94,10 @@
 
         ]
 
+    }
+    ,
+    "bossobjs":
+    {
+        "typeid":2
     }
 }

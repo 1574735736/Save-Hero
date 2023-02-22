@@ -17,7 +17,7 @@
                 "relative_startx":-80,
                 "relative_endx":80,
                 "relative_y":20, 
-                "valid_w":40,
+                "valid_w":30,
                 "valid_h":60,
                 "valid_center_releative_pos":[0,30],
                 "people_id_list":[1,2]
@@ -35,7 +35,7 @@
             "joint_touch_valid_range":60,
             "joint_relative_pos":[-115, 45],
 
-            "endRoll_relative_pos":[240,-420],
+            "endRoll_relative_pos":[240,-480],
 
             "joint_radius":18,
             "desc3":"用户数目信息位置",
@@ -46,7 +46,7 @@
                 "relative_startx":-180,
                 "relative_endx":-20,
                 "relative_y":0,
-                "stay_y":-460
+                "stay_y":-500
             }
         },
         {
@@ -60,7 +60,7 @@
             "joint_touch_valid_range":60,
             "joint_relative_pos":[115, 45],
 
-            "endRoll_relative_pos":[240,-420],
+            "endRoll_relative_pos":[240,-480],
 
             "joint_radius":18,
             "desc3":"用户数目信息位置",
@@ -71,7 +71,7 @@
                 "relative_startx":-80,
                 "relative_endx":80,
                 "relative_y":0,
-                "stay_y":-460
+                "stay_y":-500
             }
         },
         {
@@ -352,13 +352,13 @@
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,0],
                     "src_offset_pos":[62,0],
-                    "color":[247,247,247]
+                    "color":[247,0,0]
                 },
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,0],
                     "src_offset_pos":[-62,0],
-                    "color":[247,247,247]
+                    "color":[247,0,0]
                 }
             ]
             
@@ -376,7 +376,7 @@
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,3],
                     "src_offset_pos":[46,3],
-                    "color":[247,247,247]
+                    "color":[247,0,0]
                 } 
             ]
             
@@ -418,9 +418,7 @@
                 "valid_radius":70,
                 "valid_w":150,
                 "valid_h":150
-            }
-            
-
+            }          
         },
         {
             "type":10,
@@ -454,9 +452,7 @@
                 "valid_radius":30,
                 "valid_w":60,
                 "valid_h":60
-            }
-            
-
+            }            
         } ,
         {
             "type":12,
@@ -477,44 +473,44 @@
     [
         {
             "type":1,
-            "valid_w":100,
+            "valid_w":200,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss1"
         },
         {
             "type":2,
-            "valid_w":100,
+            "valid_w":125,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss2"
         },
         {
             "type":3,
-            "valid_w":100,
+            "valid_w":80,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss3"
         },
         {
             "type":4,
             "valid_w":100,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss4"
         },
         {
             "type":5,
-            "valid_w":100,
+            "valid_w":130,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss5"
         },
         {
             "type":6,
-            "valid_w":100,
+            "valid_w":130,
             "valid_h":150,
-            "obj_pos":[-200,-480],
+            "obj_pos":[-200,-520],
             "obj_res":"prefab/boss6"
         }
     ]

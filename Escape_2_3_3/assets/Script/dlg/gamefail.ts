@@ -24,7 +24,7 @@ export default class gamefail extends cc.Component {
         }
         return gamefail._instance;
     }
-
+    stopRotation: boolean = false;
 
     onLoad () 
     {
@@ -63,6 +63,11 @@ export default class gamefail extends cc.Component {
 
     OnBtnExit()
     {
+        if (this.stopRotation) {
+            return;
+        }
+        this.stopRotation = true;
+
         var status = EscapeMng.GetInstance().GetIntAdStatus();
         if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportInformation(FirebaseKey.shengli_playagain);
@@ -108,7 +113,12 @@ export default class gamefail extends cc.Component {
         //}
         //else {
         //    this.OnNext();
-        //}  
+        //}
+
+        if (this.stopRotation) {
+            return;
+        }
+        this.stopRotation = true;
 
         sdkManager.GetInstance().JavaRewardedAds("shengli_ad2_skip", () => { this.OnNext(); } , null);
     }

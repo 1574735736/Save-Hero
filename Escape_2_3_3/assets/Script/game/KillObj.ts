@@ -266,7 +266,7 @@ export default class KillObj
 
             var rotate_info = this.m_kill_obj_src_info.rotate;
 
-            var  rotateing_rate = rotate_info.rotateing_rate;
+            var rotateing_rate = rotate_info.rotateing_rate;
             
 
             var  rotate_from = rotate_info.rotate_from;
@@ -383,7 +383,7 @@ export default class KillObj
             var rotateinfo = this.m_kill_obj_src_info.rotate;
 
 
-            var  rotateing_rate = rotateinfo.rotateing_rate;
+            var rotateing_rate = rotateinfo.rotateing_rate; //30;//
             
 
             var  rotate_from = rotateinfo.rotate_from;
@@ -658,49 +658,49 @@ export default class KillObj
          }
 
 
-         /*
-         var killinfo = this.m_kill_obj_com_define_info.killinfo;
+         
+         //var killinfo = this.m_kill_obj_com_define_info.killinfo;
 
-         var valid_killtype = killinfo.valid_killtype;
-         var valid_radius = killinfo.valid_radius;
-         var valid_w = killinfo.valid_w;
-         var valid_h = killinfo.valid_h;
+         //var valid_killtype = killinfo.valid_killtype;
+         //var valid_radius = killinfo.valid_radius;
+         //var valid_w = killinfo.valid_w;
+         //var valid_h = killinfo.valid_h;
 
-         var pos = this.m_node.getPosition();
+         //var pos = this.m_node.getPosition();
 
-         if(valid_killtype == 1)
-         {
-            var rc = this.m_node.getBoundingBox();
-            this.m_gragphic.moveTo(rc.xMin,rc.yMax);
-            this.m_gragphic.lineTo(rc.xMax,rc.yMax);
-            this.m_gragphic.lineTo(rc.xMax,rc.yMin);
-            this.m_gragphic.lineTo(rc.xMin,rc.yMin);
-            this.m_gragphic.lineTo(rc.xMin,rc.yMax);
+         //if(valid_killtype == 1)
+         //{
+         //   var rc = this.m_node.getBoundingBox();
+         //   this.m_gragphic.moveTo(rc.xMin,rc.yMax);
+         //   this.m_gragphic.lineTo(rc.xMax,rc.yMax);
+         //   this.m_gragphic.lineTo(rc.xMax,rc.yMin);
+         //   this.m_gragphic.lineTo(rc.xMin,rc.yMin);
+         //   this.m_gragphic.lineTo(rc.xMin,rc.yMax);
  
 
-         }
-         else if(valid_killtype == 2)
-         {
+         //}
+         //else if(valid_killtype == 2)
+         //{
 
-            this.m_gragphic.circle(pos.x,pos.y,valid_radius);
-         }
-         else if(valid_killtype == 3)
-         {
+         //   this.m_gragphic.circle(pos.x,pos.y,valid_radius);
+         //}
+         //else if(valid_killtype == 3)
+         //{
           
            
-            var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
+         //   var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
          
       
-            this.Draw_Pt_List(people_poly_pt_list);
+         //   this.Draw_Pt_List(people_poly_pt_list);
 
       
   
 
-         }
+         //}
 
-         this.m_gragphic.stroke();
+         //this.m_gragphic.stroke();
 
-         */
+         
      }
      //判断射线类型的物体，对应的射线是否能与这个多边形相交，相交的话就是可以杀死这个小人了
      Check_FireLine_Can_Kill_People( people_poly_pt_list:cc.Vec2[]):boolean

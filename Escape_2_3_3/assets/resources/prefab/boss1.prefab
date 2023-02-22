@@ -115,15 +115,15 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        11.365,
+        0,
         1.386,
         0,
         0,
         0,
         0,
         1,
-        0.8,
-        0.8,
+        0.45,
+        0.45,
         1
       ]
     },
@@ -172,7 +172,7 @@
     "_playTimes": 0,
     "_isAniComplete": true,
     "_N$skeletonData": {
-      "__uuid__": "766bc49f-544e-4916-9057-fe2cf4d334be"
+      "__uuid__": "119cf927-d09d-4b09-a745-b32a6e1f2ea1"
     },
     "_N$_defaultCacheMode": 0,
     "_N$debugSlots": false,
@@ -232,8 +232,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -21.476,
-        421.128,
+        -74.895,
+        86.737,
         0,
         0,
         0,

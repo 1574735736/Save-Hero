@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "cb5ba3b9-5849-44b0-961a-176077435456",
+  "uuid": "ed2c8447-f494-4d3f-a272-612db0109e82",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -11,10 +11,10 @@
   "height": 1334,
   "platformSettings": {},
   "subMetas": {
-    "绳索界面切图素材导出 (1)": {
+    "mainbg": {
       "ver": "1.0.4",
-      "uuid": "6500a50d-a9d2-4a3e-89ae-2e169729676e",
-      "rawTextureUuid": "cb5ba3b9-5849-44b0-961a-176077435456",
+      "uuid": "b2a8480a-f4af-4564-b038-c774d7a49d12",
+      "rawTextureUuid": "ed2c8447-f494-4d3f-a272-612db0109e82",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

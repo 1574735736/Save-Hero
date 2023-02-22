@@ -3,7 +3,6 @@ class FirebaseReport {
 
     public static reportInformation(reportkey:string):void {
         if (cc.sys.platform == cc.sys.ANDROID) {
-            console.log("通知java ：" + reportkey);
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/FirebaseAnalyticsManager", "JsCall_reportInformation", "(Ljava/lang/String;)V", reportkey);
         }
     }
@@ -13,6 +12,105 @@ class FirebaseReport {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/FirebaseAnalyticsManager", "JsCall_reportInformation", "(Ljava/lang/String;Ljava/lang/String;I)V", reportkey, paramKey, paramValue);
         }
     }
+
+
+    public static reportKeys(reportkey: FireKeys, level: number = 0): void {
+        if (cc.sys.platform != cc.sys.ANDROID) {
+            return;
+        }
+        var reportStr = "";
+        if (cc.sys.platform == cc.sys.ANDROID) {
+            switch (reportkey) {
+                case FireKeys.game_Start:
+                    for (var i = 0; i < FirebaseKey.game_Start.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.game_Start[i]);
+                    }
+                    break;
+                case FireKeys.game_ToMain:
+                    for (var i = 0; i < FirebaseKey.game_ToMain.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.game_ToMain[i]);
+                    }
+                    break;
+                case FireKeys.game_Level:
+                    for (var i = 0; i < FirebaseKey.game_Level.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.game_Level[i]);
+                    }
+                    break;
+                case FireKeys.game_Play:
+                    for (var i = 0; i < FirebaseKey.game_Play.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.game_Play[i]);
+                    }
+                    break;
+                case FireKeys.game_Skin:
+                    for (var i = 0; i < FirebaseKey.game_Skin.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.game_Skin[i]);
+                    }
+                    break;
+                case FireKeys.skin_Ad2:
+                    for (var i = 0; i < FirebaseKey.skin_Ad2.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.skin_Ad2[i]);
+                    }
+                    break;
+                case FireKeys.skin_Goumai:
+                    for (var i = 0; i < FirebaseKey.skin_Goumai.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.skin_Goumai[i]);
+                    }
+                    break;
+                case FireKeys.skin_BackMain:
+                    for (var i = 0; i < FirebaseKey.skin_BackMain.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.skin_BackMain[i]);
+                    }
+                    break;
+                case FireKeys.fight_BackMain:
+                    for (var i = 0; i < FirebaseKey.fight_BackMain.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.fight_BackMain[i]);
+                    }
+                    break;
+                case FireKeys.fight_SkipLv:
+                    for (var i = 0; i < FirebaseKey.fight_SkipLv.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.fight_SkipLv[i]);
+                    }
+                    break;
+                case FireKeys.win_Beishu:
+                    for (var i = 0; i < FirebaseKey.win_Beishu.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.win_Beishu[i]);
+                    }
+                    break;
+                case FireKeys.win_NoThanks:
+                    for (var i = 0; i < FirebaseKey.win_NoThanks.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.win_NoThanks[i]);
+                    }
+                    break;
+                case FireKeys.win_ClickSkin:
+                    for (var i = 0; i < FirebaseKey.win_ClickSkin.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.win_ClickSkin[i]);
+                    }
+                    break;
+                case FireKeys.win_GetSkin:
+                    for (var i = 0; i < FirebaseKey.win_GetSkin.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.win_GetSkin[i]);
+                    }
+                    break;
+                case FireKeys.win_SkinNo:
+                    for (var i = 0; i < FirebaseKey.win_SkinNo.length; i++) {
+                        FirebaseReport.reportInformation(FirebaseKey.win_SkinNo[i]);
+                    }
+                    break;
+                case FireKeys.level_GoIn:
+                    for (var i = 0; i < FirebaseKey.level_GoIn.length; i++) {
+                        if (level != 0) {
+                            FirebaseReport.reportInformation(FirebaseKey.level_GoIn[i] + level);
+                        }
+                        else {
+                            FirebaseReport.reportInformation(FirebaseKey.level_GoIn[i]);
+                        }                        
+                    }
+                    break;
+                default:
+            }            
+        }
+    }
+
 }
  class FirebaseKey {
     static game_open_success = "game_open_success";
@@ -94,8 +192,45 @@ class FirebaseReport {
      //点击”重玩“按钮
      static shengli_playagain = "shengli_playagain";
 
+    
+
+     static game_Start: string[] = ["game_lcon"];               //点击APPicon，应用启动次数
+     static game_ToMain: string[] = ["game_zhujiemlan"];        //游戏加载成功，到达主界面
+     static game_Level: string[] = ["shouye_level"];            //主界面点击关卡“LEVEL”选择按钮
+     static game_Play: string[] = ["shouye_statrt"];            //主界面点击开始游戏“STATRT”按钮
+     static game_Skin: string[] = ["shouye_skin"];              //主界面点击皮肤“SKIN”按钮
+     static skin_Ad2: string[] = ["skin_ad2"];                  //点击“激励视频获得皮肤”按钮
+     static skin_Goumai: string[] = ["skin_goumai"];            //点击金币购买皮肤按钮
+     static skin_BackMain: string[] = ["skin_ranbui"];          //点击返回上级界面
+     static fight_BackMain: string[] = ["zhandou_Home"];        //点击返回主界面按钮“Home”按钮次数
+     static fight_SkipLv: string[] = ["zhandou_ad2_skip"];      //点击看激励视频跳过本关“SKIP“按钮次数
+     static win_Beishu: string[] = ["shengli_ad2_beishu"];      //点击“激励视频抽倍数”按钮次数
+     static win_NoThanks: string[] = ["shengli_ad3_next"];      //点击进入“No thanks!”按钮次数
+     static win_ClickSkin: string[] = ["shengli_skin"];         //当胜利界面皮肤进度达到100%，主动弹出小窗口获得皮肤界面的次数
+     static win_GetSkin: string[] = ["shengli_ad2_skin"];       //皮肤小窗口，点击”看激励视频获得皮肤“按钮
+     static win_SkinNo: string[] = ["shengli_ad3_skin"];        //皮肤小窗口，点击”No thanks!“按钮
+     static level_GoIn: string[] = ["level-"];                  //进入第n关的次数
 
 
 }
 
-export {FirebaseReport, FirebaseKey}
+enum FireKeys {
+    game_Start,
+    game_ToMain,
+    game_Level,
+    game_Play,
+    game_Skin,
+    skin_Ad2,
+    skin_Goumai,
+    skin_BackMain,
+    fight_BackMain,
+    fight_SkipLv,
+    win_Beishu,
+    win_NoThanks,
+    win_ClickSkin,
+    win_GetSkin,
+    win_SkinNo,
+    level_GoIn,
+}
+
+export { FirebaseReport, FirebaseKey, FireKeys }

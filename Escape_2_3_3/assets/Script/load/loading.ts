@@ -7,7 +7,7 @@
 
 import selgk from "../dlg/selgk";
 import game from "../game/game";
-import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
+import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import start from "./start";
 import gamefail from "../dlg/gamefail";
 import gamewin from "../dlg/gamewin";
@@ -27,7 +27,7 @@ export default class loading extends cc.Component {
     private static _instance: loading = null; 
 
 
-    loadingTime = 1000;//8000;//5秒
+    loadingTime = 1000;//5秒
     timer = 0;
 
     updateLock = false;
@@ -50,7 +50,9 @@ export default class loading extends cc.Component {
         this.updateLock = false;
         this.initClassOnAndroid();
         if (cc.sys.platform === cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.game_lcon_frequency);//(FirebaseKey.game_open_success);
+            FirebaseReport.reportKeys(FireKeys.game_Start);
+            //FirebaseReport.reportInformation(FirebaseKey.game_lcon_frequency);
+            //(FirebaseKey.game_open_success);
 
             //jsb.reflection.callStaticMethod("org.cocos2dx.javascript.vpn/VpnManager", "JsCall__requestGetBackGroundConfigOfVpn", "()V");
         }
@@ -102,39 +104,41 @@ export default class loading extends cc.Component {
 
     loadStartScene() {
         if (cc.sys.platform === cc.sys.ANDROID) {
-            FirebaseReport.reportInformation(FirebaseKey.game_load_success);
+            //FirebaseReport.reportInformation(FirebaseKey.game_load_success);
+            FirebaseReport.reportKeys(FireKeys.game_ToMain);
         }            
 
         cc.director.loadScene("start");
     }
 
     update (dt) {
-        if (this.timer >= this.loadingTime) {
-            if (!this.updateLock) {
-                this.updateLock = true;
-                if (cc.sys.platform === cc.sys.ANDROID && this.canBeShow == true) {
-
-                    //let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
-                    //if (!isShowAd ||  EscapeMng.GetInstance().GetPlayeringTimes()) {
-
-                    //if (EscapeMng.GetInstance().GetPlayeringTimes()) {
-                    //    this.loadStartScene();
-                    //}
-                    //else {
-
-                    //}
-
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
-                    //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
-                }
-                else {
-                    this.loadStartScene();
-                }
-            }
+        if (this.timer >= this.loadingTime) {            
+            this.loadStartScene();
         }
         else {
             this.timer += dt*1000;
             this.progress.progress = Math.round(this.timer / this.loadingTime * 100) / 100;
+            if (this.timer >= this.loadingTime * 0.5) {
+                if (!this.updateLock) {
+                    this.updateLock = true;
+                    if (cc.sys.platform === cc.sys.ANDROID && this.canBeShow == true) {
+
+                        //let isShowAd = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_isShow", "()Z");
+                        //if (!isShowAd ||  EscapeMng.GetInstance().GetPlayeringTimes()) {
+
+                        //if (EscapeMng.GetInstance().GetPlayeringTimes()) {
+                        //    this.loadStartScene();
+                        //}
+                        //else {
+
+                        //}
+
+                        //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppOpenAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
+                        //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/InterstitialAdManager", "JsCall_showAdIfAvailable", "(Ljava/lang/String;)V", "cc['loading'].JavaCall_loadStartScene()");
+                        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AdManage", "showOpenAd", "()V");
+                    }
+                }
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 import EscapeMng from "../game/EscapeMng";
 
 const { ccclass, property } = cc._decorator;
-import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import SpineManager from "../utils/SpineManager";
 import sdkManager from "../game/SdkManager";
 @ccclass
@@ -238,6 +238,7 @@ export default class GameEndWin extends cc.Component {
             this.TempGetCount = this.m_Muls[index] * EscapeMng.GetInstance().m_Default_Coin;
         }
 
+        FirebaseReport.reportKeys(FireKeys.win_Beishu);
        
         var num = EscapeMng.GetInstance().Get_Unlock_level();
         if (cc.sys.platform === cc.sys.ANDROID && num > 1) {
@@ -257,6 +258,9 @@ export default class GameEndWin extends cc.Component {
         this.stopRotation = true;
 
         var status = EscapeMng.GetInstance().GetIntAdStatus();
+
+        FirebaseReport.reportKeys(FireKeys.win_NoThanks);
+
         if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             sdkManager.GetInstance().JavaInterstitialAds("shengli_ad3_next", ()=>{this.OnEndAni();} ,()=>{this.OnEndAni();} );
         }
@@ -303,6 +307,9 @@ export default class GameEndWin extends cc.Component {
         if (status == 0) {
             return;
         }
+
+        FirebaseReport.reportKeys(FireKeys.win_ClickSkin);
+
         var self = this;
         cc.loader.loadRes("prefab/getSkinView", cc.Prefab, (e, p) => {
             var pnode = cc.instantiate(p as cc.Prefab);
@@ -363,7 +370,7 @@ export default class GameEndWin extends cc.Component {
             if (this.herPrefab) {
                 var wnode = this.herPrefab.getChildByName("p");//("w");
                 var sp_com = wnode.getComponent(sp.Skeleton);
-                SpineManager.getInstance().playSpinAnimation(sp_com, "shengli2", true, null);
+                SpineManager.getInstance().playSpinAnimation(sp_com, "shengli", true, null);
             }   
         }, 0.5);            
     }

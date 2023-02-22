@@ -13,7 +13,13 @@ export default class EscapeBoss {
 
     m_txtBlood: cc.Label = null;
     m_spCom: sp.Skeleton = null;
-  
+
+    m_blood: number = 0;
+
+
+    isDeath: boolean = false;
+
+
     Init(pnode: cc.Node, pinfo) {
         this.m_node = pnode;
         this.m_info = pinfo;
@@ -74,8 +80,14 @@ export default class EscapeBoss {
 
     }
 
+    FateAttack() {
+        this.Set_Node_Animate("gongji", 2, () => {
+            this.Set_Node_Animate("gongji2");
+        });
+    }
+
     //设置人骨骼动画显示
-    Set_Node_Animate(aniname: string, index: number = 1) {
+    Set_Node_Animate(aniname: string, index: number = 1, callBack: Function = null) {
         if (this.m_spCom) {
             this.m_spCom.setToSetupPose();
             this.m_spCom.setAnimation(0, "" + aniname, true);
@@ -84,7 +96,16 @@ export default class EscapeBoss {
         var wnode = this.m_node.getChildByName("b");
         this.m_spCom = wnode.getComponent(sp.Skeleton);
         this.m_spCom.setToSetupPose();
+
+        this.m_spCom.loop = index == 1 ? true : false;
+
+        if (callBack) {
+            this.m_spCom.setCompleteListener(callBack);
+        } 
+
         this.m_spCom.setAnimation(0, "" + aniname, true);
+
+      
   
     }
 
@@ -98,5 +119,19 @@ export default class EscapeBoss {
         this.m_txtBlood = wnode.getComponent(cc.Label);
         this.m_txtBlood.string = "" + blood;       
     }
-    
+
+
+    //判断是否与多边形相交
+    CanKillPeopleInRC(people_poly_pt_list: cc.Vec2[]) {
+        var selfrc: cc.Rect = this.GetBoundRC();
+
+        if (cc.Intersection.rectPolygon(selfrc, people_poly_pt_list)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
 }

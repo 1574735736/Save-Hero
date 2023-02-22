@@ -28,10 +28,17 @@ export default class EscapePeople
 
     //由于人物本身大小尺寸不一样，所以显示的时候实际会在逻辑点的基础上加上xy的偏移，使得显示人的感觉更加切合实际
     m_x_pos_add =0;
-    m_y_pos_add = -60;
+    m_y_pos_add = -50;
 
     //人移动速度
-    m_sepeed:number = 500;
+    m_sepeed: number = 500;
+
+
+    m_JumpSpeed: number = 0;
+    m_JumpForwoard: number = 1;
+
+    m_JumpStartX: number = 0;
+    m_JumpEndX: number = 0;
 
     //人在开始建筑的时候，分组序号，开始建筑人分成六组显示
     m_start_arch_people_type_index:number =  0;
@@ -51,6 +58,28 @@ export default class EscapePeople
     {
         this.m_start_arch_people_type_index = i;
     }
+
+    InitJump(speed: number, forward: number, startX: number, endX: number) {
+        this.m_JumpSpeed = speed;
+        this.m_JumpForwoard = forward;
+        this.m_JumpStartX = startX;
+        this.m_JumpEndX = endX;
+        
+    }
+
+    JumpMove() {
+
+        if (this.m_node.getPosition().x < this.m_JumpStartX) {
+            this.m_JumpForwoard = 1;
+        }
+        else if (this.m_node.getPosition().x > this.m_JumpEndX) {
+            this.m_JumpForwoard = -1;
+        }
+
+        var speed =  this.m_JumpSpeed *  this.m_JumpForwoard;
+        this.Move_X(speed);
+    }
+
     //x方向移动
     Move_X(imovex:number)
     {
@@ -73,9 +102,16 @@ export default class EscapePeople
                 pnode.destroy();
             })));
             this.m_node = null;
-        }
-        
+        }        
     }
+
+    FateDeath() {
+        this.Set_Node_Animate("gongji", 2, () => {
+            this.m_node.destroy();
+            this.m_node = null;
+        });
+    }
+
     //绘制自身的点，正式上线不用
     Draw_Pt_List(transfer_pt_list,grphic:cc.Graphics)
     {
@@ -109,7 +145,7 @@ export default class EscapePeople
             pos.y += valid_center_releative_pos[1];
             
         }
-        var valid_w = this.m_info.valid_w;
+        var valid_w = this.m_info.valid_w ;
         var valid_h = this.m_info.valid_h + 30;
         
         var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
@@ -137,13 +173,21 @@ export default class EscapePeople
         
     }
     //设置人骨骼动画显示
-    Set_Node_Animate(aniname: string, index: number = 1)
+    Set_Node_Animate(aniname: string, index: number = 1, endCallBack: Function = null)
     {
         var wnode = this.m_node.getChildByName("p");//("w");
         var sp_com = wnode.getComponent(sp.Skeleton);
         sp_com.setToSetupPose();
-        sp_com.setAnimation(0, "" + aniname, true);     
+        sp_com.loop = index == 1 ? true : false;
+        sp_com.setAnimation(0, "" + aniname, true);   
+
+        if (endCallBack) {
+            sp_com.setCompleteListener(endCallBack);
+        }  
     }
+
+   
+
     Init(pnode:cc.Node, pinfo)
     {
         this.m_node=  pnode;

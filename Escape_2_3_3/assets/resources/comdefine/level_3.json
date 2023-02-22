@@ -17,7 +17,7 @@
     {
         "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
         "need_resure_min_people_count":20,
-        "arch_start_people_count":20 
+        "arch_start_people_count":25
     }
     ,
     "obstacle":
@@ -43,5 +43,10 @@
     {
          
 
+    }
+    ,
+    "bossobjs":
+    {
+        "typeid":3
     }
 }

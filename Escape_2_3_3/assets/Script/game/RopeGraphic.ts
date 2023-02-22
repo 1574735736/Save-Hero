@@ -721,7 +721,7 @@ export default class RopeGraphic extends cc.Component {
         {
             this.graphics.strokeColor = cc.color(0,255,0)
         }
-        else{
+        else {
             this.graphics.strokeColor = cc.color(255,215,0);
         }
        

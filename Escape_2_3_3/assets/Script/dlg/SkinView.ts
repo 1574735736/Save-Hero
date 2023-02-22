@@ -4,7 +4,7 @@ const { ccclass, property } = cc._decorator;
 import EscapeMng from "../game/EscapeMng";
 //import Start from "../load/start";
 //import Game from "../game/game";
-import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
+import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import sdkManager from "../game/SdkManager";
 
 @ccclass
@@ -81,7 +81,8 @@ export default class SkinView extends cc.Component {
             this.node.destroy();
         }));//.easing(cc.easeQuarticActionOut)
         this.node.runAction(actionScale);
-        FirebaseReport.reportInformation(FirebaseKey.skin_ranbui);
+        //FirebaseReport.reportInformation(FirebaseKey.skin_ranbui);
+        FirebaseReport.reportKeys(FireKeys.skin_BackMain);
     }
 
     onSetIcon(nodePath: string, iconPath: string) {
@@ -136,6 +137,7 @@ export default class SkinView extends cc.Component {
     }
 
     OnBtnBuy(clickID: number) {
+        FirebaseReport.reportKeys(FireKeys.skin_Goumai);
         this.OnUpdateFrame(clickID);
         var coin = EscapeMng.GetInstance().Get_Gold_Coin()
         if (coin < EscapeMng.GetInstance().m_DefaultBuy_Coin) {
@@ -167,7 +169,8 @@ export default class SkinView extends cc.Component {
         //else {
         //    this.OnChangeAdsShinStatus();
         //} 
-        FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
+        FirebaseReport.reportKeys(FireKeys.skin_Ad2);
+        //FirebaseReport.reportInformation(FirebaseKey.skin_ad2);
         sdkManager.GetInstance().JavaRewardedAds("skin_ad2",()=>{this.OnChangeAdsShinStatus();} , ()=>{this.OnChangeAdsShinStatus();})
     }
 

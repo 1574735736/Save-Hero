@@ -18,11 +18,12 @@ import ObstacleOBJ from "./ObstacleOBJ";
 import EscapeCacu from "../utils/EscapeCacu";
 import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 
-import {FirebaseReport, FirebaseKey} from "../utils/FirebaseReport";
+import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import vpnConnect from "../dlg/vpnConnect";
 import MyLabel from "../utils/MyLabel";
 import sdkManager from "../game/SdkManager";
 import EscapeBoss from "./EscapeBoss";
+import SpineManager from "../utils/SpineManager";
 
 
 const {ccclass, property} = cc._decorator;
@@ -52,6 +53,9 @@ export default class game extends cc.Component
 
     @property(cc.Node)
     tip_cantShowAd: cc.Node = null;
+
+    @property(cc.Node)
+    m_MainCamera: cc.Node = null;
 
     //@property(cc.Prefab)
     //peoplePre: cc.Prefab = null;
@@ -120,7 +124,8 @@ export default class game extends cc.Component
     m_init_all_people_count :number= 0;
 
     //总共营救了的人数
-    m_total_rescured_people_count:number=  0;
+    m_total_rescured_people_count: number = 0;
+    m_fate_people_count: number = 0;  //最后进行战斗的人数
 
     //总共需要营救的人数
     m_total_need_rescur_people_count:number=  0;
@@ -203,6 +208,8 @@ export default class game extends cc.Component
     txtStartCount: cc.Label = null;
     txtEndCount: cc.Label = null;
 
+    m_caidai: cc.Node = null;
+
 
     public static getInstance(): game {
         if (game._instance == null) {
@@ -228,7 +235,9 @@ export default class game extends cc.Component
         this.m_enter_level = EscapeMng.GetInstance().m_enter_level;
         this.m_enter_level_config = EscapeMng.GetInstance().m_enter_level_config;
         //this.InitPeoples();
-        
+
+        FirebaseReport.reportKeys(FireKeys.level_GoIn, this.m_enter_level);
+
         if (cc.sys.platform === cc.sys.ANDROID) {
             //上报firebase
             //switch(this.m_enter_level) {
@@ -392,25 +401,25 @@ export default class game extends cc.Component
             level_t.getComponent(cc.Label).string = "配置显示";
         }
 
-        //每12关切换一个背景图片显示
-        var bj_name=  "game/bj/1";
+        //每12关切换一个背景图片显示    //暂时取消
+        //var bj_name=  "game/bj/1";
 
-        var i_picindex= Math.floor((this.m_enter_level-1)/12) + 1;
-        if(i_picindex >= 5)
-        {
-            i_picindex=  5;
-        }
-        bj_name=  "game/bj/"+i_picindex;
+        //var i_picindex= Math.floor((this.m_enter_level-1)/12) + 1;
+        //if(i_picindex >= 5)
+        //{
+        //    i_picindex=  5;
+        //}
+        //bj_name=  "game/bj/"+i_picindex;
 
 
-        var bj_node =  cc.find("bj",this.node);
-        bj_node.active = false;
+        //var bj_node =  cc.find("bj",this.node);
+        //bj_node.active = false;
       
-        Utils.ShowNodePic(bj_node,bj_name,{cx:1080,cy:2340},()=>
-        {
-            bj_node.active = true;
+        //Utils.ShowNodePic(bj_node,bj_name,{cx:1080,cy:2340},()=>
+        //{
+        //    bj_node.active = true;
 
-        })
+        //})
      
       
         //结束圈的信息
@@ -424,7 +433,9 @@ export default class game extends cc.Component
         }
 
         this.FD_Init_All_Obstacle();
-        this.scheduleOnce(this.FD_SetBJ_Visible.bind(this),2);
+        this.scheduleOnce(this.FD_SetBJ_Visible.bind(this), 2);
+
+        this.m_caidai = cc.find("ani_caidai", this.node);
  
     }
     //设置背景显示
@@ -650,7 +661,10 @@ export default class game extends cc.Component
         if (cc.sys.platform === cc.sys.ANDROID) { //&& this.m_enter_level == 1) {
             //let playTime = (new Date).getTime() - this.timeOfFirstLevel;
             //FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
-            FirebaseReport.reportInformation(FirebaseKey.zhandou_shouye);
+
+            //FirebaseReport.reportInformation(FirebaseKey.zhandou_shouye);
+
+            FirebaseReport.reportKeys(FireKeys.fight_BackMain)
         }
 
         var func = (function () {
@@ -674,8 +688,10 @@ export default class game extends cc.Component
             this.scheduleOnce(() => {
                 this.bCanClickSkip = true;
             }, 0.5);//限制0.5秒点一次
+
+            FirebaseReport.reportKeys(FireKeys.fight_SkipLv)
             //if (cc.sys.platform === cc.sys.ANDROID) {
-                FirebaseReport.reportInformation(FirebaseKey.zhandou_ad2_skip);//click_skip);
+               // FirebaseReport.reportInformation(FirebaseKey.zhandou_ad2_skip);//click_skip);
             //    let bAdLoaded = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/RewardedAdManager", "JsCall_hadLoadedAd", "()Z");
             //    if (bAdLoaded) {
             //        this.bWinBySkip = true;
@@ -705,7 +721,8 @@ export default class game extends cc.Component
     }
 
     SkipLevel() {
-        this.scheduleOnce(this.FD_Success.bind(this),0.1);
+        //this.scheduleOnce(this.FD_Success.bind(this),0.1);
+        this.scheduleOnce(this.FD_GameWin.bind(this), 0.1);  
         BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
     }
     //初始化生成所有的killobj
@@ -753,7 +770,17 @@ export default class game extends cc.Component
             ps.setPosition(initpos[0],initpos[1]);
             ps.angle =  initrotation;
 
-            kill_sp_node.addChild(ps,10);
+            kill_sp_node.addChild(ps, 10);
+
+            console.log("ff_kill_info.type    " + ff_kill_info.type);
+
+            //if (ff_kill_info.type == 1) {
+            //    var size = obj_pic_size[0] * (136 / 110);
+            //    var pz: MySprite = new MySprite("game/obstacle/dj", size, size);
+            //    pz.setParent(ps)
+            //    pz.setPosition(0, 12.5);
+            //}
+
 
             var new_killobj = new KillObj(this,ff+1);
             new_killobj.Init(bgraphic,ps,ff_obj_src_info,ff_kill_info,kill_graphic);
@@ -933,6 +960,8 @@ export default class game extends cc.Component
         //return cc.instantiate(this.peoplePre);
     }
 
+   
+
     //将开始建筑的人物动画播放anim的动画
     Change_Start_Arch_Peoples_Anim(animname:string)
     {
@@ -940,11 +969,17 @@ export default class game extends cc.Component
         for(var ff=0;ff<this.m_all_start_arch_waitfor_resure_people_list.length;ff++)
         {
             var ff_people: EscapePeople = this.m_all_start_arch_waitfor_resure_people_list[ff];
-            ff_people.Set_Node_Animate(animname, idx);
+            //var time = Utils.GetRandomNum(1, 5) * 0.1;
+           
+            //ff_people.Set_Node_Animate(animname); 
 
             ff_people.SetScale(0.24, idx);
         }
 
+    }
+
+    PlayStartJumpAni(animname:string,ff_people: EscapePeople, time: number) {
+        this.scheduleOnce(function () { ff_people.Set_Node_Animate(animname); }, time);
     }
 
 
@@ -964,6 +999,7 @@ export default class game extends cc.Component
             var escapeBoss = new EscapeBoss();
             escapeBoss.Init(pnode, boss_info);
             this.m_boss_info = escapeBoss;
+            this.m_boss_info.m_blood = this.m_total_need_rescur_people_count;
             escapeBoss.SetText(this.m_total_need_rescur_people_count);
         });
 
@@ -972,7 +1008,6 @@ export default class game extends cc.Component
     //初始化所有逃生的小人
     Init_All_Peoples()
     {
- 
 
         var iid = 0;
 
@@ -995,27 +1030,34 @@ export default class game extends cc.Component
         var endx = arch_start_pos[0] + relative_endx;
  
 
-
         //将人物分成几组，每组 per_arr_people_count人,相同组的人距离很近，这样方便显示
         var per_arr_people_count = Math.floor(count/this.m_split_people_arr_count);
         if(per_arr_people_count == 0)
         {
             per_arr_people_count = 1;
         }
-      
-        
+
+        console.log("per_arr_people_count       :" + per_arr_people_count);
+
+        var inArrIdx = 0;
+        var ry: number = 0;
 
         for(var hh=0;hh<count;hh++)
         {
-            //分配在第几组
-            var igroupindex =  Math.floor(hh/per_arr_people_count) + 1;
 
-            if(igroupindex > this.m_split_people_arr_count)
-            {
-                igroupindex = this.m_split_people_arr_count;
-            }
-            //该组x起始坐标
-            var igroup_start_x = startx + (endx-startx)*igroupindex/(this.m_split_people_arr_count+1);
+            var igroupindex = Math.floor(hh / this.m_split_people_arr_count);
+
+            var igroup_start_x = Utils.GetRandomNum(startx, endx);//startx + (endx - startx) * Math.floor(hh % this.m_split_people_arr_count); 
+
+            ////分配在第几组
+            //var igroupindex =  Math.floor(hh/per_arr_people_count) + 1;
+
+            //if(igroupindex > this.m_split_people_arr_count)
+            //{
+            //    igroupindex = this.m_split_people_arr_count;
+            //}
+            ////该组x起始坐标
+            ////var igroup_start_x = startx + (endx-startx)*igroupindex/(this.m_split_people_arr_count+1);
 
 
             var people_id_list = ff_info.people_id_list;
@@ -1025,41 +1067,60 @@ export default class game extends cc.Component
 
             var pnode:cc.Node = this.Instace_Level_People(irand_peope_type);
 
-          
-
             this.node.addChild(pnode,28);
-
-
-
-            
+            pnode.setSiblingIndex(1);
 
             var peopleinfo = new EscapePeople(irand_peope_type,iid);
-            peopleinfo.Init(pnode,ff_info);
+            peopleinfo.Init(pnode, ff_info);
 
-
-            var in_group_index = hh - igroupindex*this.m_split_people_arr_count;
+            var speed = Utils.GetRandomNum(1, 3) * 0.2;
+            var forward = Utils.GetRandomNum(1, 2);
             
-            var icc = in_group_index;
-            if(icc >= this.m_people_union_show_count)
-            {
-                icc = this.m_people_union_show_count;
-            }
-            var ix = igroup_start_x - icc*1;
+            forward = forward == 1 ? 1 : -1;
 
-               
-            pnode.setPosition(ix,realy);
+            /*console.log("forward  : " + forward);*/
+
+            peopleinfo.InitJump(speed, forward, startx, endx)
+            pnode.setPosition(igroup_start_x, realy);
+           
+            //pnode.setPosition(igroup_start_x, realy + igroupindex * 20);
+
+            this.PlayStartJumpAni("tiao", peopleinfo, speed);
+
+            //var in_group_index = hh - igroupindex * this.m_split_people_arr_count;
+
+            
+            //var icc = in_group_index;
+            //if(icc >= this.m_people_union_show_count)
+            //{
+            //    icc = this.m_people_union_show_count;
+            //}
+            //var ix = igroup_start_x - icc*1;
+
+            //var hindex = Math.floor(hh / this.m_split_people_arr_count);
+
+            //var iy = realy + igroupindex * 50;
+            //pnode.setPosition(ix, iy);
+    
+            //if (igroupindex == inArrIdx) {
+            //    ry = ry + 20;
+            //}
+            //else {
+            //    inArrIdx = igroupindex;
+            //    ry = 0;
+            //}
+            //var iy = realy + ry;
+            //pnode.setPosition(ix, iy);
+
+            //pnode.setPosition(ix,realy);
             peopleinfo.Set_Start_Arch_Type_Pos_Index(igroupindex);
             
-
             this.m_all_start_arch_waitfor_resure_people_list.push(peopleinfo);
-
-
 
         }
 
         //设置开始建筑所有人物动画
-        this.Change_Start_Arch_Peoples_Anim("daiji")//("move5");
-
+        this.Change_Start_Arch_Peoples_Anim("tiao");//("daiji")//("move5");
 
         //在开始点的地方小人数目
         this.m_start_arch_people_count = iid;
@@ -3636,21 +3697,69 @@ export default class game extends cc.Component
             ff_people_info.Update_Tick(dt,this);
         }
 
-        if (this.m_b_boss_start == 1 && this.m_b_boss_end == 0) {
-            
-            for (var i = 0; i < this.m_succesed_people_list.length; i++) {
-                var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
-                var speed: number = Utils.GetRandomNum(-1, -3);
-                ff_people_info.Move_X(speed);
+        //小人向怪物进行攻击
+        this.UpdateFloorMove();
+
+        if (this.m_all_start_arch_waitfor_resure_people_list.length > 0) {
+            for (var i = 0; i < this.m_all_start_arch_waitfor_resure_people_list.length; i++) {
+                var ff_people_info: EscapePeople = this.m_all_start_arch_waitfor_resure_people_list[i];
+                ff_people_info.JumpMove();
             }
         }
-
 
         //判断小人是不是碰到炸弹，killobj等杀死
         this.Check_Kill_Escape_People();
         //删除掉所有作废的子弹
         this.Check_Remove_UnValid_Bullet();
  
+    }
+    //更新地面小人攻击向Boss
+    UpdateFloorMove() {
+        if (this.m_b_boss_start == 1 && this.m_b_boss_end == 0) {
+
+            for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
+                var speed: number = Utils.GetRandomNum(-1, -3);
+                ff_people_info.Move_X(speed);
+
+                if (this.m_boss_info.m_blood > 0) {
+
+                    var pos = this.m_boss_info.m_node.getPosition();
+
+                    var valid_w = this.m_boss_info.m_info.valid_w;
+                    var valid_h = this.m_boss_info.m_info.valid_h;
+
+                    var people_poly_pt_list: cc.Vec2[] = ff_people_info.Get_Valid_Bound_Poly_Pt_List();
+
+                    var kill_poly_pt_list: cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_boss_info.m_node.angle);
+                    var bin = cc.Intersection.polygonPolygon(people_poly_pt_list, kill_poly_pt_list);
+
+                    if (bin) {
+                        this.m_boss_info.m_blood--;
+                        this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
+                        this.m_boss_info.SetText(this.m_boss_info.m_blood);
+                        ff_people_info.FateDeath();
+                        this.m_succesed_people_list.splice(i, 1);
+                        this.m_total_rescured_people_count--;
+                        this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;
+                        this.Refresh_People_Rescure_Count_Info();
+                    }
+                }
+            }
+            if (this.m_boss_info.m_blood <= 0) {
+                this.m_b_boss_end = 1;
+                this.FD_GameWin();
+                for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                    var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
+                    ff_people_info.Set_Node_Animate("shengli");
+                }
+            }
+            if (this.m_boss_info.m_blood > 0 && this.m_total_rescured_people_count <= 0) {
+                this.m_b_boss_end = 1;
+                this.FD_GameFail();
+            }
+        }
+
     }
 
     //判断营救是否结束了
@@ -3666,7 +3775,7 @@ export default class game extends cc.Component
             return;
         }
 
-        if(this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count)
+        if (this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count && this.m_all_start_arch_waitfor_resure_people_list.length == 0)
         {
             if(!this.m_b_game_finished)
             {
@@ -3903,18 +4012,12 @@ export default class game extends cc.Component
         var iy = arch_success_people_pos.stay_y;//arch_success_people_pos.relative_y +arch_end_pos[1];
 
         
-
-
         //将人物分成几组，每组 per_arr_people_count人
         var per_arr_people_count = Math.floor(this.m_succesed_people_list.length/this.m_split_people_arr_count);
         if(per_arr_people_count == 0)
         {
             per_arr_people_count = 1;
-        }
-      
-        
- 
-          
+        }      
 
         for(var ff=0;ff<this.m_succesed_people_list.length;ff++)
         {
@@ -3941,13 +4044,15 @@ export default class game extends cc.Component
 
 
             
-            people.SetPosition(ix,iy); 
+            people.SetPosition(ix, iy); 
+
+            //var posX: number = Utils.GetRandomNum(endx, startx);
+            //people.SetPosition(posX, iy); 
            
 
            if(bneedreanim)
-           {
-               
-               people.Set_Node_Animate("shengli", EscapeMng.GetInstance().Get_Hero());
+           {               
+               people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
            }
 
         }
@@ -3983,14 +4088,21 @@ export default class game extends cc.Component
 
         this.m_total_rescured_people_count++;
 
-        people.SetPosition(ix, iy);
+        //people.SetPosition(ix, iy);
         people.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
+        var posX: number = Utils.GetRandomNum(endx, startx);
+        var posY: number = Utils.GetRandomNum(iy + 20, iy - 20);
+        people.SetPosition(posX, posY);
 
-        this.ReOrder_Resuing_Success_People(true);
+        //this.ReOrder_Resuing_Success_People(true);
+
+        people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
          
         this.Refresh_People_Rescure_Count_Info();
 
-        if(this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0)
+        if (this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0
+            && this.m_all_start_arch_waitfor_resure_people_list.length == 0
+        )
         {
             if(!this.m_b_game_finished)
             {
@@ -4079,7 +4191,6 @@ export default class game extends cc.Component
         this.m_b_game_finished = 1;
         this.m_b_game_successed = 1;
 
-
         //var self = this;
         //cc.loader.loadRes("prefab/GameEndWin", cc.Prefab, (err, p) => {
         //    var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
@@ -4088,16 +4199,64 @@ export default class game extends cc.Component
         //    gamewin.setCallBack(this, this.onContinueBtnClick.bind(this));
         //});
 
-        this.m_boss_info.Set_Node_Animate("daiji2"); 
+        //this.m_boss_info.Set_Node_Animate("daiji2");
 
-        for (var i = 0; i < this.m_succesed_people_list.length; i++) {
-            var people: EscapePeople = this.m_succesed_people_list[i];
-            people.Set_Node_Animate("benpao");
+        var guide = cc.find("guide", this.node);
+        guide.active = false;
+         
+        //this.scheduleOnce(function () {
+        //    this.m_boss_info.Set_Node_Animate("gongji", 2, () => { this.m_boss_info.Set_Node_Animate("gongji2")});
+        //}, 2);
+        this.GameEndDown();
+        //var archEnd_info = this.Get_Arch_End_Info();    
+        //this.m_boss_info.Set_Node_Animate("gongji", 2, () => { this.m_boss_info.Set_Node_Animate("gongji2") }); 
+    }
+
+    GameEndDown() {
+        if (this.m_succesed_people_list.length > 0) {
+            var srcpos = this.txtEndCount.node.getPosition().y;
+            var endX = this.m_boss_info.m_node.getPosition().x;//archEnd_info.endRoll_relative_pos[0];
+            var action = cc.moveTo(2, endX - 100, srcpos);
+            var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {
+                if (this.m_succesed_people_list.length > 0) {
+                    this.txtEndCount.node.runAction(action);
+                    this.m_boss_info.FateAttack();
+                }
+                this.m_b_boss_start = 1;
+                for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                    var people: EscapePeople = this.m_succesed_people_list[i];
+                    people.Set_Node_Animate("benpao");
+                }
+            }))
+
+            this.m_boss_info.m_node.runAction(seq);
         }
-        this.m_b_boss_start = 1;
+        else {
+            this.m_b_boss_start = 1;
+        }
+      
+    }
 
+    FD_GameWin() {
+
+        this.m_boss_info.Set_Node_Animate("siwang", 2);
+        this.m_caidai.active = true;
+        var sk = this.m_caidai.getComponent(sp.Skeleton);
+        SpineManager.getInstance().playSpinAnimation(sk, "caidai", false);
+        this.scheduleOnce(function () {
+            var self = this;
+            cc.loader.loadRes("prefab/GameEndWin", cc.Prefab, (err, p) => {
+                var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
+                self.node.addChild(pnode, 80);
+                var gamewin = pnode.getComponent("GameEndWin");
+                gamewin.setCallBack(this, this.onContinueBtnClick.bind(this));
+            });
+        }, 1.8);
+
+     
 
     }
+
     //营救失败，弹框显示
     FD_Fail_Dlg()
     {
@@ -4108,19 +4267,43 @@ export default class game extends cc.Component
         //    let playTime = (new Date).getTime() - this.timeOfFirstLevel;
         //    FirebaseReport.reportInformationWithParam(FirebaseKey.game_Level1_time, FirebaseKey.paramDurationKey, playTime);
         //}
-        
-        var self = this;
-        cc.loader.loadRes("prefab/gamefail",cc.Prefab,(ee,p)=>
-        {
-            var pnode:cc.Node =  cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode,80);
 
-            var gamefail = pnode.getComponent("gamefail");
-            gamefail.setCallBack(this,this.FD_Failed_Next.bind(this));
-            gamefail.SetInitInfo(self.m_enter_level,this.m_init_all_people_count,self.m_total_killed_people_count,self.m_total_rescured_people_count,self.m_total_need_rescur_people_count);
+        //var guide = cc.find("guide", this.node);
+        //guide.active = false;
+        //for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+        //    var people: EscapePeople = this.m_succesed_people_list[i];
+        //    people.Set_Node_Animate("benpao");
+        //}
+        //this.m_b_boss_start = 1;
+        //this.m_boss_info.FateAttack();
+        //if (this.m_succesed_people_list.length > 0) {
+        //    var srcpos = this.txtEndCount.node.getPosition().y;
+        //    var endX = this.m_boss_info.m_node.getPosition().x;
+        //    var action = cc.moveTo(2, endX - 100, srcpos);
+        //    this.txtEndCount.node.runAction(action);
+        //}
 
-        });
+        this.GameEndDown();
     }
+
+    FD_GameFail() {
+
+        this.scheduleOnce(function () {
+            var self = this;
+            cc.loader.loadRes("prefab/gamefail", cc.Prefab, (ee, p) => {
+                var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
+                self.node.addChild(pnode, 80);
+
+                var gamefail = pnode.getComponent("gamefail");
+                gamefail.setCallBack(this, this.FD_Failed_Next.bind(this));
+                gamefail.SetInitInfo(self.m_enter_level, this.m_init_all_people_count, self.m_total_killed_people_count, self.m_total_rescured_people_count, self.m_total_need_rescur_people_count);
+
+            });
+        }, 1.8);
+
+     
+    }
+
     //vpn连接成功回调
     public static JavaCall_ConnectVpnSuccess(): void {
         game.getInstance().connectVpnSuccess();
