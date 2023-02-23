@@ -105,6 +105,8 @@ export default class EscapePeople
         }        
     }
 
+
+
     FateDeath() {
         this.Set_Node_Animate("gongji", 2, () => {
             this.m_node.destroy();
@@ -165,6 +167,11 @@ export default class EscapePeople
         var polplist = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(this.m_node.getPosition(),this.m_info.valid_w,this.m_info.valid_h + 20,this.m_node.angle);
         return polplist;
     }
+
+    TurnScale() {
+        this.m_node.setScale(-1, 1);
+    }
+
     //设置缩放比例
     SetScale(s: number, index: number = 1)
     {

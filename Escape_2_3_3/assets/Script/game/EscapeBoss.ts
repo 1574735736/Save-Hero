@@ -40,6 +40,10 @@ export default class EscapeBoss {
         return rc;
     }
 
+    TurnScale() {
+        this.m_node.setScale(-1, 1);
+    }
+
     ////绘制自身的点，正式上线不用
     //RedrawValidPoloyRegin(grphic: cc.Graphics) {
     //    var pos = this.m_node.getPosition();
@@ -86,11 +90,23 @@ export default class EscapeBoss {
         });
     }
 
+
+    FateDeath() {
+        this.Set_Node_Animate("siwang", 2, () => {
+            this.m_node.destroy();
+            this.m_node = null;
+        });
+    }
+
     //设置人骨骼动画显示
     Set_Node_Animate(aniname: string, index: number = 1, callBack: Function = null) {
         if (this.m_spCom) {
             this.m_spCom.setToSetupPose();
+            this.m_spCom.loop = index == 1 ? true : false;
             this.m_spCom.setAnimation(0, "" + aniname, true);
+            if (callBack) {
+                this.m_spCom.setCompleteListener(callBack);
+            } 
             return;
         }
         var wnode = this.m_node.getChildByName("b");

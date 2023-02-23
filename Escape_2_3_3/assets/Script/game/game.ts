@@ -57,6 +57,9 @@ export default class game extends cc.Component
     @property(cc.Node)
     m_MainCamera: cc.Node = null;
 
+    @property(cc.Node)
+    m_node: cc.Node = null;
+
     //@property(cc.Prefab)
     //peoplePre: cc.Prefab = null;
 
@@ -436,8 +439,27 @@ export default class game extends cc.Component
         this.scheduleOnce(this.FD_SetBJ_Visible.bind(this), 2);
 
         this.m_caidai = cc.find("ani_caidai", this.node);
+
+        this.MoveCamera();
  
     }
+
+    MoveCamera() {
+        this.m_MainCamera.setPosition(750, 0, 0);
+        //this.scheduleOnce(function () {
+        //    //cc.tween(this.m_MainCamera).by(0.5, { position: cc.v3(0, 0, 0) }).start();
+        //    this.m_MainCamera.runAction(cc.moveTo(1.5, 0, 0)); 
+        //}, 2);    
+
+        var func = cc.sequence(cc.delayTime(2), cc.moveTo(1.5, 0, 0));
+        this.m_MainCamera.runAction(func);
+    }
+
+    EndMoveCamera() {
+        this.m_MainCamera.runAction(cc.moveTo(4, 750, 0));
+    }
+
+
     //设置背景显示
     FD_SetBJ_Visible()
     {
@@ -3719,7 +3741,7 @@ export default class game extends cc.Component
 
             for (var i = 0; i < this.m_succesed_people_list.length; i++) {
                 var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
-                var speed: number = Utils.GetRandomNum(-1, -3);
+                var speed: number = Utils.GetRandomNum(1, 3);
                 ff_people_info.Move_X(speed);
 
                 if (this.m_boss_info.m_blood > 0) {
@@ -4051,10 +4073,10 @@ export default class game extends cc.Component
            
 
            if(bneedreanim)
-           {               
+           {
+               people.TurnScale();
                people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
            }
-
         }
     }
     //当小人成功到达终点建筑，营救成功时
@@ -4095,7 +4117,7 @@ export default class game extends cc.Component
         people.SetPosition(posX, posY);
 
         //this.ReOrder_Resuing_Success_People(true);
-
+        people.TurnScale();
         people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
          
         this.Refresh_People_Rescure_Count_Info();
@@ -4216,20 +4238,23 @@ export default class game extends cc.Component
         if (this.m_succesed_people_list.length > 0) {
             var srcpos = this.txtEndCount.node.getPosition().y;
             var endX = this.m_boss_info.m_node.getPosition().x;//archEnd_info.endRoll_relative_pos[0];
-            var action = cc.moveTo(2, endX - 100, srcpos);
-            var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {
-                if (this.m_succesed_people_list.length > 0) {
-                    this.txtEndCount.node.runAction(action);
-                    this.m_boss_info.FateAttack();
-                }
-                this.m_b_boss_start = 1;
-                for (var i = 0; i < this.m_succesed_people_list.length; i++) {
-                    var people: EscapePeople = this.m_succesed_people_list[i];
-                    people.Set_Node_Animate("benpao");
-                }
-            }))
+            var action = cc.moveTo(4, endX - 500, srcpos);
 
-            this.m_boss_info.m_node.runAction(seq);
+            //var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {                
+            //}))
+            //this.m_boss_info.m_node.runAction(seq);
+
+            if (this.m_succesed_people_list.length > 0) {
+                this.txtEndCount.node.runAction(action);
+                this.EndMoveCamera();
+                this.m_boss_info.FateAttack();
+            }
+            this.m_b_boss_start = 1;
+            for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                var people: EscapePeople = this.m_succesed_people_list[i];
+                people.TurnScale();
+                people.Set_Node_Animate("benpao");
+            }
         }
         else {
             this.m_b_boss_start = 1;
@@ -4239,7 +4264,7 @@ export default class game extends cc.Component
 
     FD_GameWin() {
 
-        this.m_boss_info.Set_Node_Animate("siwang", 2);
+        this.m_boss_info.FateDeath();//Set_Node_Animate("siwang", 2);
         this.m_caidai.active = true;
         var sk = this.m_caidai.getComponent(sp.Skeleton);
         SpineManager.getInstance().playSpinAnimation(sk, "caidai", false);
@@ -4293,7 +4318,6 @@ export default class game extends cc.Component
             cc.loader.loadRes("prefab/gamefail", cc.Prefab, (ee, p) => {
                 var pnode: cc.Node = cc.instantiate(p as cc.Prefab);
                 self.node.addChild(pnode, 80);
-
                 var gamefail = pnode.getComponent("gamefail");
                 gamefail.setCallBack(this, this.FD_Failed_Next.bind(this));
                 gamefail.SetInitInfo(self.m_enter_level, this.m_init_all_people_count, self.m_total_killed_people_count, self.m_total_rescured_people_count, self.m_total_need_rescur_people_count);
