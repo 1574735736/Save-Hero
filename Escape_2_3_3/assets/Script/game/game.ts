@@ -795,6 +795,10 @@ export default class game extends cc.Component
             var obj_pic = ff_kill_info.obj_pic;
             var anchropt = ff_kill_info.anchropt;
             var obj_pic_size = ff_kill_info.obj_pic_size;
+
+            if (ff_obj_src_info.obj_pic_size) {
+                obj_pic_size = ff_obj_src_info.obj_pic_size;
+            }
            
             if(bgraphic)
             {
@@ -820,7 +824,9 @@ export default class game extends cc.Component
             var new_killobj = new KillObj(this,ff+1);
             new_killobj.Init(bgraphic,ps,ff_obj_src_info,ff_kill_info,kill_graphic);
 
-           
+            if (ff_obj_src_info.color) {
+                ps.color = cc.color(ff_obj_src_info.color[0], ff_obj_src_info.color[1], ff_obj_src_info.color[2]);
+            }
 
             this.m_all_kill_obj_list.push(new_killobj);
         }
@@ -1295,7 +1301,16 @@ export default class game extends cc.Component
             var ff_info = EscapeMng.GetInstance().Find_Obstacle_Detail_Info_By_TypeID(ff_typeid);
 
             var obj_pic = ff_info.obj_pic;
+
+
+
             var obj_pic_size = ff_info.obj_pic_size;
+
+            if (ff_src_info.obj_pic_size) {
+                obj_pic_size = ff_src_info.obj_pic_size;
+            }
+
+          
           
             var obj_type = ff_info.obj_type;
 
@@ -1308,22 +1323,29 @@ export default class game extends cc.Component
                 obj_node.setPosition(obj_pos[0], obj_pos[1]);
                 this.m_node.addChild(obj_node, 11);
 
+                var obj_valid_size = ff_info.obj_valid_size;
+                if (ff_src_info.obj_valid_size) {
+                    obj_valid_size = ff_src_info.obj_valid_size;
+                }
 
 
         
                 var leftpt = new cc.Vec2(ff_info.obj_valid_relative_left_pt[0] + obj_pos[0],ff_info.obj_valid_relative_left_pt[1] + obj_pos[1]);
-                var obj_valid_sizew = new WSize(ff_info.obj_valid_size[0],ff_info.obj_valid_size[1]);
+                var obj_valid_sizew = new WSize(obj_valid_size[0],obj_valid_size[1]);
     
                // this.m_obstacle_graphic_com.AddRect(leftpt,obj_valid_sizew);
-    
-    
+
+
                 //1：矩形，2：圆形
                 //this.m_all_obstacle_info_list.push([1,leftpt,obj_valid_sizew]);
-
+             
+               
 
 
                 var obj_info  = new ObstacleOBJ(obsid);
-                obj_info.Init(obj_node,obstacle_gragphic,1,leftpt,obj_valid_sizew);
+                obj_info.Init(obj_node, obstacle_gragphic, 1, leftpt, obj_valid_sizew);
+
+                
 
                 this.m_all_obstacle_obj_list.push(obj_info);
 
@@ -1336,6 +1358,9 @@ export default class game extends cc.Component
 
                 var centerpt = new cc.Vec2(ff_info.obj_valid_relative_center_pt[0]+ obj_pos[0],ff_info.obj_valid_relative_center_pt[1]+ obj_pos[1]);
                 var radius = ff_info.obj_radius;
+                if (ff_src_info.obj_radius) {
+                    radius = ff_src_info.obj_radius;
+                }
               
                 //this.m_obstacle_graphic_com.AddCirCle(centerpt,radius);
     
@@ -1346,7 +1371,11 @@ export default class game extends cc.Component
  
                  this.m_all_obstacle_obj_list.push(obj_info);
  
+            }
 
+            if (ff_src_info.color) {
+                var curColor = cc.color(ff_src_info.color[0], ff_src_info.color[1], ff_src_info.color[2]);
+                obj_node.color = curColor;
             }
          
         }
