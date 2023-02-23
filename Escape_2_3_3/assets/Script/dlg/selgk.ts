@@ -2,6 +2,7 @@ import EscapeMng from "../game/EscapeMng";
 
 import { FirebaseReport, FirebaseKey } from "../utils/FirebaseReport";
 import sdkManager from "../game/SdkManager";
+import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 
  
  
@@ -153,6 +154,7 @@ export default class selgk extends cc.Component {
 
     OnBtnExit()
     {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
             this.node.destroy();
         }));
@@ -239,6 +241,7 @@ export default class selgk extends cc.Component {
     
     OnBtnLeftPage()
     {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         if(this.m_i_page_index <= 0)
         {
             return;
@@ -249,6 +252,7 @@ export default class selgk extends cc.Component {
     }
     OnBtnRightPage()
     {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         if(this.m_i_page_index  >= 3)
         {
             return;

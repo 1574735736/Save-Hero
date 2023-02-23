@@ -119,6 +119,7 @@ export default class GameEndWin extends cc.Component {
         if (this.stopRotation) {
             return;
         }
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.m_plisnter.FD_Success_Next(false);
         var getCount = EscapeMng.GetInstance().m_Default_Coin;
         var nowCoin = getCount + EscapeMng.GetInstance().Get_Gold_Coin()
@@ -229,6 +230,8 @@ export default class GameEndWin extends cc.Component {
         }
         this.stopRotation = true;
 
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
+
         this.ani_zhuanPan.timeScale = 0;
         var endTimer = new Date().getTime();
         var tmp = endTimer - this.startRowTimer;
@@ -253,6 +256,8 @@ export default class GameEndWin extends cc.Component {
         if (this.stopRotation) {
             return;
         }
+
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.ani_zhuanPan.timeScale = 0;
         this.TempGetCount = EscapeMng.GetInstance().m_Default_Coin;
         this.stopRotation = true;
@@ -281,12 +286,13 @@ export default class GameEndWin extends cc.Component {
         var func = cc.sequence(
             cc.delayTime(0.5),
             cc.callFunc(() => {
+                BackGroundSoundUtils.GetInstance().PlayEffect("success_coin");
                 this.ani_reward.node.active = true;    
                 SpineManager.getInstance().playSpinAnimation(this.ani_reward, "" + this.TempGetCount, false);
             }),
             cc.delayTime(1.5),
             cc.callFunc(() => {
-                console.log("old   " + EscapeMng.GetInstance().Get_Gold_Coin());
+                console.log("old   " + EscapeMng.GetInstance().Get_Gold_Coin());    
                 var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
                 EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
                 this.onUpdateCoin();

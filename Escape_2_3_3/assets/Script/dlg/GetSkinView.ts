@@ -4,6 +4,7 @@ import EscapeMng from "../game/EscapeMng";
 import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import SpineManager from "../utils/SpineManager";
 import sdkManager from "../game/SdkManager";
+import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 
 @ccclass
 export default class GetSkinView extends cc.Component {
@@ -67,6 +68,7 @@ export default class GetSkinView extends cc.Component {
     }
 
     OnClickClose() {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         var status = EscapeMng.GetInstance().GetIntAdStatus();
         if (cc.sys.platform === cc.sys.ANDROID && status == true) {
             FirebaseReport.reportKeys(FireKeys.win_SkinNo);
@@ -117,6 +119,7 @@ export default class GetSkinView extends cc.Component {
         //    this.onSaveClose();
 
         //}
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         FirebaseReport.reportKeys(FireKeys.win_GetSkin);
 
         sdkManager.GetInstance().JavaRewardedAds("shengli_ad2_skin",()=>{this.onSaveClose();} , null);

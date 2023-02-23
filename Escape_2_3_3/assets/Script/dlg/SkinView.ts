@@ -6,6 +6,7 @@ import EscapeMng from "../game/EscapeMng";
 //import Game from "../game/game";
 import { FirebaseReport, FirebaseKey, FireKeys } from "../utils/FirebaseReport";
 import sdkManager from "../game/SdkManager";
+import BackGroundSoundUtils from "../utils/BackGroundSoundUtils";
 
 @ccclass
 export default class SkinView extends cc.Component {   
@@ -73,10 +74,11 @@ export default class SkinView extends cc.Component {
         //if (cc.director.getScene().name == "start") {
         //    Start.getInstance().onUpdateHero();
         //    Start.getInstance().onUpdateCoin();
-        //}        
+        //}
         //else if (cc.director.getScene().name == "game") {
         //    Game.getInstance().onUpdateHero();
         //}
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
             this.node.destroy();
         }));//.easing(cc.easeQuarticActionOut)
@@ -118,6 +120,7 @@ export default class SkinView extends cc.Component {
     }
 
     OnBtnAction(clickID: number) {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.OnUpdateFrame(clickID);
         EscapeMng.GetInstance().Set_Hero(clickID);
         //this.onUpdateTopHero();
@@ -125,6 +128,7 @@ export default class SkinView extends cc.Component {
     }
 
     OnBtnShowBigHero(clickID: number) {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.OnUpdateFrame(clickID);
         if (EscapeMng.GetInstance().Get_SkinStatusHas(clickID)) {
             var curTable: number = EscapeMng.GetInstance().Get_SkinStatusType(clickID);
@@ -137,6 +141,7 @@ export default class SkinView extends cc.Component {
     }
 
     OnBtnBuy(clickID: number) {
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         FirebaseReport.reportKeys(FireKeys.skin_Goumai);
         this.OnUpdateFrame(clickID);
         var coin = EscapeMng.GetInstance().Get_Gold_Coin()
@@ -153,7 +158,8 @@ export default class SkinView extends cc.Component {
     }
 
     
-    OnBtnShowAds(clikID: number) {      
+    OnBtnShowAds(clikID: number) { 
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.OnUpdateFrame(clikID);
         //if (cc.sys.platform === cc.sys.ANDROID) {
         //    FirebaseReport.reportInformation(FirebaseKey.skin_ad2);

@@ -66,6 +66,7 @@ export default class gamefail extends cc.Component {
         if (this.stopRotation) {
             return;
         }
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         this.stopRotation = true;
 
         var status = EscapeMng.GetInstance().GetIntAdStatus();
@@ -114,7 +115,7 @@ export default class gamefail extends cc.Component {
         //else {
         //    this.OnNext();
         //}
-
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         if (this.stopRotation) {
             return;
         }
@@ -180,6 +181,7 @@ export default class gamefail extends cc.Component {
     }
 
     onReturnHome() {      
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
         cc.director.loadScene("start");
     }
 }

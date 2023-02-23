@@ -60,7 +60,7 @@ export default class start extends cc.Component {
 
         this.onUpdateCoin();
         //this.onUpdateHero();
-        BackGroundSoundUtils.GetInstance().PlayMusic("datingbj");     
+        BackGroundSoundUtils.GetInstance().PlayMusic("mainbg");     
         
     }
 
@@ -103,7 +103,8 @@ export default class start extends cc.Component {
 
             cc.director.loadScene("game");
         });
-        BackGroundSoundUtils.GetInstance().PlayEffect("dianji");
+
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");//("dianji");
     }
 
     OnBtnSelGK()
@@ -118,6 +119,7 @@ export default class start extends cc.Component {
                // FirebaseReport.reportInformation(FirebaseKey.shouye_level);
             }            
         });
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
     }
 
     OnBtnSkin() {
@@ -130,6 +132,7 @@ export default class start extends cc.Component {
                 //FirebaseReport.reportInformation(FirebaseKey.shouye_skin);
             }            
         });
+        BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
     }
 
     onUpdateCoin() {

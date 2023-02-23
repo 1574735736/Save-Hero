@@ -213,6 +213,10 @@ export default class game extends cc.Component
 
     m_caidai: cc.Node = null;
 
+    m_panel: string = "panel_main/"
+
+    m_CanMoveBg: boolean = false;
+
 
     public static getInstance(): game {
         if (game._instance == null) {
@@ -286,18 +290,18 @@ export default class game extends cc.Component
 
         //创建起始的建筑
         var psrite_arch_start = new MySprite(archstart_info.arch_pic, archstart_info.arch_size[0], archstart_info.arch_size[1]);//
-        psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1] + archstart_info.joint_relative_pos[1]); 
-        this.node.addChild(psrite_arch_start,10);
+        psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1] + archstart_info.joint_relative_pos[1]);
+        this.m_node.addChild(psrite_arch_start, 10);
         //创建小木棍
         var btn_arch_start_gun = new MySprite("game/slop/q4");
         btn_arch_start_gun.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0], archstart_info.joint_relative_pos[1] + arch_start_pos[1] - 30);
-        this.node.addChild(btn_arch_start_gun, 22);
+        this.m_node.addChild(btn_arch_start_gun, 22);
         //创建起始建筑的连接点
         var btn_arch_start_joint = new MySprite(archstart_info.joint_pic);//,archstart_info.joint_size[0],archstart_info.joint_size[1]
-        btn_arch_start_joint.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0] ,archstart_info.joint_relative_pos[1] + arch_start_pos[1]); 
-        this.node.addChild(btn_arch_start_joint, 22);    
+        btn_arch_start_joint.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0], archstart_info.joint_relative_pos[1] + arch_start_pos[1]);
+        this.m_node.addChild(btn_arch_start_joint, 22);    
 
-        var startNote = cc.find("txt_startcount", this.node);
+        var startNote = cc.find(this.m_panel + "txt_startcount", this.node);
         startNote.setParent(psrite_arch_start);
         startNote.setPosition(0, 100);
         this.txtStartCount = startNote.getComponent(cc.Label);
@@ -330,15 +334,15 @@ export default class game extends cc.Component
         //btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
         btn_arch_end_gun.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1] - 30);
 
-        this.node.addChild(btn_arch_end_gun, 22);
+        this.m_node.addChild(btn_arch_end_gun, 22);
 
         //创建到达建筑的链接点
         var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
         //btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
         btn_arch_end_joint.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1]);
-        this.node.addChild(btn_arch_end_joint, 22);
-       
-        var endNote = cc.find("txt_endcount", this.node);
+        this.m_node.addChild(btn_arch_end_joint, 22);
+
+        var endNote = cc.find(this.m_panel + "txt_endcount", this.node);
         //endNote.setParent(psrite_arch_end);
 
         endNote.setParent(btn_arch_end_gun);
@@ -349,8 +353,8 @@ export default class game extends cc.Component
 
         var btn_addbianji = cc.find("addbianji",this.node);
         btn_addbianji.on("click",this.OnBtnAddBJ.bind(this));
-        
-        this.m_rope_graphic_node = cc.find("rope_graphic",this.node);
+
+        this.m_rope_graphic_node = cc.find(this.m_panel + "rope_graphic", this.node);
         this.m_rope_graphic_com = this.m_rope_graphic_node.getComponent("RopeGraphic");
         this.m_rope_graphic_node.zIndex = 15;
 
@@ -360,14 +364,14 @@ export default class game extends cc.Component
         //设置移动圈圈的音效半径
         var joint_radius = touchmovejoint.joint_radius;
         this.m_rope_graphic_com.SetJointRadius(joint_radius);
- 
-        var obstcle_graphic = cc.find("obstcle_graphic",this.node);
+
+        var obstcle_graphic = cc.find(this.m_panel + "obstcle_graphic", this.node);
         this.m_obstacle_graphic_com = obstcle_graphic.getComponent("ObstcleGraphic");
         obstcle_graphic.zIndex = 14;
          
         //移动的时候跟随的圈
-        this.m_move_joint_node=   new MySprite(touchmovejoint.joint_pic,touchmovejoint.joint_size[0],touchmovejoint.joint_size[1]);
-        this.node.addChild(this.m_move_joint_node,25);
+        this.m_move_joint_node = new MySprite(touchmovejoint.joint_pic, touchmovejoint.joint_size[0], touchmovejoint.joint_size[1]);
+        this.m_node.addChild(this.m_move_joint_node, 25);
         this.m_move_joint_node.active = false;
 
         var backhome = cc.find("backhome",this.node);
@@ -380,7 +384,7 @@ export default class game extends cc.Component
         btn_skip_level.on("click",this.OnBtnSkipLevel.bind(this));
       
         
-        var kill_grap_node=  cc.find("killobj/grap",this.node);
+        var kill_grap_node = cc.find(this.m_panel + "killobj/grap",this.node);
         var kill_graphic:cc.Graphics = kill_grap_node.getComponent(cc.Graphics);
 
         this.m_kill_obj_grapgic =kill_graphic;
@@ -390,7 +394,7 @@ export default class game extends cc.Component
 
      
 
-        this.m_bj = cc.find("bj",this.node); 
+        this.m_bj = cc.find(this.m_panel + "bj", this.node); 
         this.m_bj.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
         this.m_bj.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.m_bj.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
@@ -426,14 +430,11 @@ export default class game extends cc.Component
      
       
         //结束圈的信息
-        var endquan =  cc.find("endquan",this.node);
+        var endquan = cc.find(this.m_panel + "endquan", this.node);
         endquan.setPosition(this.m_end_joint_pt);
         endquan.runAction(cc.repeatForever(cc.rotateBy(0.1, 10)));
       
-        if(this.m_enter_level == 1)
-        {
-            this.Add_Level_Start_Tip();
-        }
+      
 
         this.FD_Init_All_Obstacle();
         this.scheduleOnce(this.FD_SetBJ_Visible.bind(this), 2);
@@ -445,25 +446,37 @@ export default class game extends cc.Component
     }
 
     MoveCamera() {
-        this.m_MainCamera.setPosition(750, 0, 0);
-        //this.scheduleOnce(function () {
-        //    //cc.tween(this.m_MainCamera).by(0.5, { position: cc.v3(0, 0, 0) }).start();
-        //    this.m_MainCamera.runAction(cc.moveTo(1.5, 0, 0)); 
-        //}, 2);    
+        //this.m_MainCamera.setPosition(750, 0, 0);
 
-        var func = cc.sequence(cc.delayTime(2), cc.moveTo(1.5, 0, 0));
-        this.m_MainCamera.runAction(func);
+        ////this.scheduleOnce(function () {
+        ////    //cc.tween(this.m_MainCamera).by(0.5, { position: cc.v3(0, 0, 0) }).start();
+        ////    this.m_MainCamera.runAction(cc.moveTo(1.5, 0, 0));
+        ////}, 2);
+
+        var func = cc.sequence(cc.delayTime(2), cc.moveTo(1.5, 0, 0), cc.callFunc(() => {
+            if(this.m_enter_level == 1)
+            {
+                this.Add_Level_Start_Tip();
+            }
+            this.m_CanMoveBg = true;
+        }));
+        //this.m_MainCamera.runAction(func);
+
+        this.m_node.setPosition(-750, 0, 0);
+        this.m_node.runAction(func);
     }
 
     EndMoveCamera() {
-        this.m_MainCamera.runAction(cc.moveTo(4, 750, 0));
+        //this.m_MainCamera.runAction(cc.moveTo(4, 750, 0));
+        this.m_node.setPosition(0, 0, 0);
+        this.m_node.runAction(cc.moveTo(4, -750, 0));
     }
 
 
     //设置背景显示
     FD_SetBJ_Visible()
     {
-        var bj_node =  cc.find("bj",this.node);
+        var bj_node = cc.find(this.m_panel + "bj", this.node);
         bj_node.active = true;
 
     }
@@ -483,21 +496,21 @@ export default class game extends cc.Component
         //var pnode = new MySprite("game/qipao/t");
         //this.node.addChild(pnode,5);
         //pnode.setPosition(0,-500);
-        var row = cc.find("guide/guide_row", this.node);
+        var row = cc.find(this.m_panel + "guide/guide_row", this.node);
         row.active = false;
-        var dianji = cc.find("guide/guide_dianji", this.node);
+        var dianji = cc.find(this.m_panel + "guide/guide_dianji", this.node);
         dianji.active = false;
-        var light = cc.find("guide/img_light", this.node);
+        var light = cc.find(this.m_panel + "guide/img_light", this.node);
         light.active = false;
-        var jiantou = cc.find("guide/guide_jiantou", this.node);
+        var jiantou = cc.find(this.m_panel + "guide/guide_jiantou", this.node);
         jiantou.active = false;
-        var content = cc.find("guide/Connect", this.node);
+        var content = cc.find(this.m_panel + "guide/Connect", this.node);
         content.active = false;
-        var touch = cc.find("guide/Touch", this.node);
+        var touch = cc.find(this.m_panel + "guide/Touch", this.node);
         touch.active = true;
-        var jiantou2 = cc.find("guide/guide_jiantou2", this.node);
+        var jiantou2 = cc.find(this.m_panel + "guide/guide_jiantou2", this.node);
         jiantou2.active = false;
-        var dianji2 = cc.find("guide/guide_dianji2", this.node);
+        var dianji2 = cc.find(this.m_panel + "guide/guide_dianji2", this.node);
         dianji2.active = true;
 
         
@@ -522,7 +535,7 @@ export default class game extends cc.Component
         var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
       
 
-        var row = cc.find("guide/guide_row", this.node);
+        var row = cc.find(this.m_panel + "guide/guide_row", this.node);
         //row.active = false;
         row.setPosition(endX, endY - 50);
         //var dianji = cc.find("guide/guide_dianji", this.node);
@@ -573,7 +586,7 @@ export default class game extends cc.Component
         //row.setPosition(config_info[0], config_info[1]);
         //jiantou.setPosition(config_info[0], config_info[1] );
 
-        var guide = cc.find("guide", this.node);
+        var guide = cc.find(this.m_panel + "guide", this.node);
         guide.active = true;
         guide.zIndex = 50;
 
@@ -594,10 +607,10 @@ export default class game extends cc.Component
         var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
         var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
 
-        var row = cc.find("guide/guide_row", this.node);
+        var row = cc.find(this.m_panel + "guide/guide_row", this.node);
         row.active = true;        
         row.setPosition(startX, startY - 50);
-        var dianji = cc.find("guide/guide_dianji", this.node);
+        var dianji = cc.find(this.m_panel + "guide/guide_dianji", this.node);
         dianji.active = true;
         dianji.setPosition(startX + 30, startY - 100);
         var anim = dianji.getComponent(sp.Skeleton);
@@ -612,13 +625,13 @@ export default class game extends cc.Component
         }));
         dianji.runAction(cc.repeatForever(func));
 
-        var jiantou = cc.find("guide/guide_jiantou", this.node);
+        var jiantou = cc.find(this.m_panel + "guide/guide_jiantou", this.node);
         jiantou.active = true;
         jiantou.setPosition(endX - 100, endY - 150);
-        var content = cc.find("guide/Connect", this.node);
+        var content = cc.find(this.m_panel + "guide/Connect", this.node);
         content.active = true;
 
-        var jiantou2 = cc.find("guide/guide_jiantou2", this.node);
+        var jiantou2 = cc.find(this.m_panel + "guide/guide_jiantou2", this.node);
         jiantou2.active = true;
         jiantou2.setPosition(startX + 150, startY + 50);
     }
@@ -751,8 +764,8 @@ export default class game extends cc.Component
     Init_All_Kill_Objs()
     {
 
-        var kill_sp_node=  cc.find("killobj/sp",this.node);
-        var kill_grap_node=  cc.find("killobj/grap",this.node);
+        var kill_sp_node = cc.find(this.m_panel + "killobj/sp", this.node);
+        var kill_grap_node = cc.find(this.m_panel + "killobj/grap",this.node);
         var kill_graphic:cc.Graphics = kill_grap_node.getComponent(cc.Graphics);
 
          
@@ -1016,7 +1029,7 @@ export default class game extends cc.Component
         var self = this;
         cc.loader.loadRes(boss_info.obj_res, cc.Prefab, (e, p) => {
             var pnode = cc.instantiate(p as cc.Prefab);
-            self.node.addChild(pnode, 30);
+            self.m_node.addChild(pnode, 30);
             pnode.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1]);
             var escapeBoss = new EscapeBoss();
             escapeBoss.Init(pnode, boss_info);
@@ -1089,7 +1102,7 @@ export default class game extends cc.Component
 
             var pnode:cc.Node = this.Instace_Level_People(irand_peope_type);
 
-            this.node.addChild(pnode,28);
+            this.m_node.addChild(pnode, 28);
             pnode.setSiblingIndex(1);
 
             var peopleinfo = new EscapePeople(irand_peope_type,iid);
@@ -1181,8 +1194,8 @@ export default class game extends cc.Component
             //    pnode2 = cc.instantiate(this.people_type_1);
             //}
             pnode2 = this.Instace_Level_People(hh_peopleid);
-            
-            this.node.addChild(pnode2,28);
+
+            this.m_node.addChild(pnode2, 28);
             pnode2.setPosition(hh_pos[0],hh_pos[1] + 5);
             pnode2.angle = hh_rotation;
 
@@ -1266,8 +1279,8 @@ export default class game extends cc.Component
         {
             objlist = [];
         }
-        
-        var obstcle_graphic_node = cc.find("obstcle_graphic",this.node);
+
+        var obstcle_graphic_node = cc.find(this.m_panel + "obstcle_graphic", this.node);
         var obstacle_gragphic = obstcle_graphic_node.getComponent(cc.Graphics);
         obstacle_gragphic.clear(true);
        
@@ -1292,8 +1305,8 @@ export default class game extends cc.Component
             if(obj_type ==  1)
             {
                 var obj_node = new MySprite(obj_pic,obj_pic_size[0],obj_pic_size[1]);
-                obj_node.setPosition(obj_pos[0],obj_pos[1]); 
-                this.node.addChild(obj_node,11);
+                obj_node.setPosition(obj_pos[0], obj_pos[1]);
+                this.m_node.addChild(obj_node, 11);
 
 
 
@@ -1318,8 +1331,8 @@ export default class game extends cc.Component
             else if(obj_type ==  2)
             {
                 var obj_node = new MySprite(obj_pic,obj_pic_size[0],obj_pic_size[1]);
-                obj_node.setPosition(obj_pos[0],obj_pos[1]); 
-                this.node.addChild(obj_node,11);
+                obj_node.setPosition(obj_pos[0], obj_pos[1]);
+                this.m_node.addChild(obj_node, 11);
 
                 var centerpt = new cc.Vec2(ff_info.obj_valid_relative_center_pt[0]+ obj_pos[0],ff_info.obj_valid_relative_center_pt[1]+ obj_pos[1]);
                 var radius = ff_info.obj_radius;
@@ -3102,11 +3115,16 @@ export default class game extends cc.Component
 
         return [0,0,null,[]]
     }
+
+    touchX: number = 0;
+
     //鼠标按下事件
     onTouchStart(event)
     {
         //鼠标按下位置
-        var pos:cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
+        var pos: cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
+        pos = new cc.Vec2(pos.x + 375, pos.y);
+        this.touchX = pos.x;
 
         //开始建筑连接点，周边多少像素内按下为有效开始拖动绳子
         var touchmonejoint = this.Get_Touch_Move_Joint_Info();
@@ -3211,31 +3229,43 @@ export default class game extends cc.Component
         }
        
     }
+    isSetEnd: boolean = true;
     onTouchMove(event) 
     {
-        
+
+        //鼠标移动位置
+        var pos: cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
+        pos = new cc.Vec2(pos.x + 375, pos.y);
+
         if(!this.m_b_start_drag)
         {
+            if (this.m_CanMoveBg) {
+                var tempX = pos.x - this.m_last_touchu_start_pt.x;
+                var curX = this.m_node.getPosition().x;
+                var curX = curX + tempX;
+                if (curX > 0) {
+                    curX = 0;
+                }
+                else if (curX < -750) {
+                    curX = -750;
+                }
+                this.m_node.setPosition(curX, 0, 0);
+            }          
             return;
         }
 
-        if(this.m_enter_level == 1)
+        if (this.m_enter_level == 1 && this.isSetEnd)
         {
+            this.isSetEnd = false;
             this.Add_Level_End_Tip();
         }
 
-        //鼠标移动位置
-        var pos:cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
-
-        
-
-        var valid_pos_x = (pos.x  - this.m_last_touchu_start_pt.x) + this.m_last_touchu_valid_pt.x;
-        var valid_pos_y = (pos.y  - this.m_last_touchu_start_pt.y) + this.m_last_touchu_valid_pt.y;
-        var src_valid_pos = new cc.Vec2(valid_pos_x,valid_pos_y)
-
+        var valid_pos_x = (pos.x - this.m_last_touchu_start_pt.x) + this.m_last_touchu_valid_pt.x;
+        var valid_pos_y = (pos.y - this.m_last_touchu_start_pt.y) + this.m_last_touchu_valid_pt.y;
+        var src_valid_pos = new cc.Vec2(valid_pos_x, valid_pos_y)
+    
         //绳子上次开始
         var last_start_rope_pt:cc.Vec2 = this.m_rope_graphic_com.Get_Last_Rope_Start_Pt();
-
 
 
         //调整下与障碍物冲突的坐标
@@ -3310,7 +3340,7 @@ export default class game extends cc.Component
     {
         //鼠标松开位置
         var pos:cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
-
+        pos = new cc.Vec2(pos.x + 375, pos.y);
         var valid_pos_x = (pos.x  - this.m_last_touchu_start_pt.x) + this.m_last_touchu_valid_pt.x;
         var valid_pos_y = (pos.y  - this.m_last_touchu_start_pt.y) + this.m_last_touchu_valid_pt.y;
 
@@ -3461,7 +3491,7 @@ export default class game extends cc.Component
     Update_Add_Kill_Bullets(dt:number)
     {
         var rescuinglist=  this.m_all_kill_obj_list.slice(0);
-        var killobj_sp = cc.find("killobj/sp",this.node);
+        var killobj_sp = cc.find(this.m_panel + "killobj/sp",this.node);
       
         for(var ff=0;ff<rescuinglist.length;ff++)
         {
@@ -3473,7 +3503,7 @@ export default class game extends cc.Component
     //增加一枚子弹
     Add_Bullet_Kill_OBJ(bullet:cc.Node,movevec:cc.Vec2,movespeed:number)
     {
-        var killobj_sp = cc.find("killobj/sp",this.node);
+        var killobj_sp = cc.find(this.m_panel + "killobj/sp",this.node);
         killobj_sp.addChild(bullet,40);
      
 
@@ -3915,7 +3945,7 @@ export default class game extends cc.Component
 
         this.m_total_killed_people_count = this.m_failed_people_list.length; 
 
-        var killobj_sp = cc.find("killobj/sp",this.node);
+        var killobj_sp = cc.find(this.m_panel + "killobj/sp",this.node);
         
         for(var ff=0;ff<boomb_obj_id_map.size();ff++)
         {
@@ -4223,7 +4253,7 @@ export default class game extends cc.Component
 
         //this.m_boss_info.Set_Node_Animate("daiji2");
 
-        var guide = cc.find("guide", this.node);
+        var guide = cc.find(this.m_panel + "guide", this.node);
         guide.active = false;
          
         //this.scheduleOnce(function () {
@@ -4239,7 +4269,7 @@ export default class game extends cc.Component
             var srcpos = this.txtEndCount.node.getPosition().y;
             var endX = this.m_boss_info.m_node.getPosition().x;//archEnd_info.endRoll_relative_pos[0];
             var action = cc.moveTo(4, endX - 500, srcpos);
-
+            this.m_CanMoveBg = false;
             //var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {                
             //}))
             //this.m_boss_info.m_node.runAction(seq);
