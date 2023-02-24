@@ -101,8 +101,8 @@ export default class Bullet
     {
          var rc:cc.Rect = this.m_node.getBoundingBox();
  
-      
-      //  Utils.Draw_RC(rc,grphic);
+      //下方绘制
+        Utils.Draw_RC(rc,grphic);
 
     }
 

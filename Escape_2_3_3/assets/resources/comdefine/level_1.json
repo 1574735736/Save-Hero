@@ -2,7 +2,8 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[-190,200]
+        "arch_pos":[-190,200],
+        "link_pos":[-80,255]
     },
     "archend":
     {

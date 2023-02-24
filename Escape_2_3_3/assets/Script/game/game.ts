@@ -216,7 +216,7 @@ export default class game extends cc.Component
     m_panel: string = "panel_main/"
 
     m_CanMoveBg: boolean = false;
-
+    m_CountTouch: boolean = true;
 
     public static getInstance(): game {
         if (game._instance == null) {
@@ -234,7 +234,7 @@ export default class game extends cc.Component
         game._instance = this;
 
         this.node.opacity = 0;
-        var pseq = cc.sequence(cc.fadeTo(0.3, 255), cc.callFunc(() => {
+        var pseq = cc.sequence(cc.fadeTo(1, 255), cc.callFunc(() => {
         }));
         this.node.runAction(pseq);
 
@@ -292,13 +292,21 @@ export default class game extends cc.Component
         var psrite_arch_start = new MySprite(archstart_info.arch_pic, archstart_info.arch_size[0], archstart_info.arch_size[1]);//
         psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1] + archstart_info.joint_relative_pos[1]);
         this.m_node.addChild(psrite_arch_start, 10);
+
+        var linkPosX = archstart_info.joint_relative_pos[0] + arch_start_pos[0];
+        var linkPosY = archstart_info.joint_relative_pos[1] + arch_start_pos[1];
+        if (archstart_config_info.link_pos) {
+            linkPosX = archstart_config_info.link_pos[0];
+            linkPosY = archstart_config_info.link_pos[1];
+        }
+
         //创建小木棍
         var btn_arch_start_gun = new MySprite("game/slop/q4");
-        btn_arch_start_gun.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0], archstart_info.joint_relative_pos[1] + arch_start_pos[1] - 30);
+        btn_arch_start_gun.setPosition(linkPosX, linkPosY - 30);
         this.m_node.addChild(btn_arch_start_gun, 22);
         //创建起始建筑的连接点
         var btn_arch_start_joint = new MySprite(archstart_info.joint_pic);//,archstart_info.joint_size[0],archstart_info.joint_size[1]
-        btn_arch_start_joint.setPosition(archstart_info.joint_relative_pos[0] + arch_start_pos[0], archstart_info.joint_relative_pos[1] + arch_start_pos[1]);
+        btn_arch_start_joint.setPosition(linkPosX, linkPosY);
         this.m_node.addChild(btn_arch_start_joint, 22);    
 
         var startNote = cc.find(this.m_panel + "txt_startcount", this.node);
@@ -307,7 +315,7 @@ export default class game extends cc.Component
         this.txtStartCount = startNote.getComponent(cc.Label);
         this.txtStartCount.string = "";        
 
-        this.m_start_joint_pt = new cc.Vec2(archstart_info.joint_relative_pos[0] + arch_start_pos[0],archstart_info.joint_relative_pos[1] + arch_start_pos[1]);
+        this.m_start_joint_pt = new cc.Vec2(linkPosX, linkPosY);
         this.m_last_moveing_joint_pt = this.m_start_joint_pt;
 
 
@@ -328,18 +336,26 @@ export default class game extends cc.Component
 
         //this.m_end_joint_pt = new cc.Vec2(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1] );
         this.m_end_joint_pt = new cc.Vec2(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1]);
+        var endX = archend_info.endRoll_relative_pos[0];
+        var endY = archend_info.endRoll_relative_pos[1];
+        if (archend_config_info.link_pos) {
+            this.m_end_joint_pt = new cc.Vec2(archend_config_info.link_pos[0], archend_config_info.link_pos[1]);
+            endX = archend_config_info.link_pos[0];
+            endY = archend_config_info.link_pos[1];
+        }
+       
 
         //创建小木棍
         var btn_arch_end_gun = new MySprite("game/slop/q4");
         //btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
-        btn_arch_end_gun.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1] - 30);
+        btn_arch_end_gun.setPosition(endX, endY - 30);
 
         this.m_node.addChild(btn_arch_end_gun, 22);
 
         //创建到达建筑的链接点
         var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
         //btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
-        btn_arch_end_joint.setPosition(archend_info.endRoll_relative_pos[0], archend_info.endRoll_relative_pos[1]);
+        btn_arch_end_joint.setPosition(endX, endY);
         this.m_node.addChild(btn_arch_end_joint, 22);
 
         var endNote = cc.find(this.m_panel + "txt_endcount", this.node);
@@ -452,17 +468,17 @@ export default class game extends cc.Component
         ////    //cc.tween(this.m_MainCamera).by(0.5, { position: cc.v3(0, 0, 0) }).start();
         ////    this.m_MainCamera.runAction(cc.moveTo(1.5, 0, 0));
         ////}, 2);
-
-        var func = cc.sequence(cc.delayTime(2), cc.moveTo(1.5, 0, 0), cc.callFunc(() => {
+        this.m_node.setPosition(0, 0, 0);
+        var func = cc.sequence(cc.delayTime(2), cc.moveTo(2, -750, 0), cc.delayTime(1.5), cc.moveTo(1, 0, 0), cc.callFunc(() => {
             if(this.m_enter_level == 1)
             {
                 this.Add_Level_Start_Tip();
             }
             this.m_CanMoveBg = true;
+            this.m_CountTouch = false;
         }));
         //this.m_MainCamera.runAction(func);
-
-        this.m_node.setPosition(-750, 0, 0);
+      
         this.m_node.runAction(func);
     }
 
@@ -531,9 +547,14 @@ export default class game extends cc.Component
       
         var end_pos = this.m_enter_level_config.archend.arch_pos;
         var archEnd_info = this.Get_Arch_End_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archend.typeid);
-        var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
-        var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
-      
+        if (this.m_enter_level_config.archend.link_pos) {
+            var endX = this.m_enter_level_config.archend.link_pos[0];
+            var endY = this.m_enter_level_config.archend.link_pos[1];
+        }
+        else {
+            var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
+            var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
+        }             
 
         var row = cc.find(this.m_panel + "guide/guide_row", this.node);
         //row.active = false;
@@ -596,16 +617,28 @@ export default class game extends cc.Component
         //    light.setScale(0, 1);
         //}));
         //light.runAction(cc.repeatForever(actionScale));
-      
-        var start_pos = this.m_enter_level_config.archstart.arch_pos;        
+
+       
+        var start_pos = this.m_enter_level_config.archstart.arch_pos;        //this.m_start_joint_pt
         var archStart_info = this.Get_Arch_Start_Info();//EscapeMng.GetInstance().Find_Detail_Arch_Info_By_TypeID(this.m_enter_level_config.archstart.typeid);
         var startX = start_pos[0] + archStart_info.joint_relative_pos[0];
         var startY = start_pos[1] + archStart_info.joint_relative_pos[1];
+        if (this.m_enter_level_config.link_pos) {
+            startX = this.m_enter_level_config.link_pos[0];
+            startY = this.m_enter_level_config.link_pos[1];
+        }
 
         var end_pos = this.m_enter_level_config.archend.arch_pos;
         var archEnd_info = this.Get_Arch_End_Info();
-        var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
-        var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
+        if (this.m_enter_level_config.archend.link_pos) {
+            var endX = this.m_enter_level_config.archend.link_pos[0];
+            var endY = this.m_enter_level_config.archend.link_pos[1];
+        }
+        else {
+            var endX = archEnd_info.endRoll_relative_pos[0];//end_pos[0] + archEnd_info.joint_relative_pos[0];
+            var endY = archEnd_info.endRoll_relative_pos[1];//end_pos[1] + archEnd_info.joint_relative_pos[1];
+        }
+
 
         var row = cc.find(this.m_panel + "guide/guide_row", this.node);
         row.active = true;        
@@ -811,15 +844,12 @@ export default class game extends cc.Component
 
             kill_sp_node.addChild(ps, 10);
 
-            console.log("ff_kill_info.type    " + ff_kill_info.type);
-
             //if (ff_kill_info.type == 1) {
             //    var size = obj_pic_size[0] * (136 / 110);
             //    var pz: MySprite = new MySprite("game/obstacle/dj", size, size);
             //    pz.setParent(ps)
             //    pz.setPosition(0, 12.5);
             //}
-
 
             var new_killobj = new KillObj(this,ff+1);
             new_killobj.Init(bgraphic,ps,ff_obj_src_info,ff_kill_info,kill_graphic);
@@ -3150,6 +3180,9 @@ export default class game extends cc.Component
     //鼠标按下事件
     onTouchStart(event)
     {
+        if (this.m_CountTouch) {
+            return
+        }
         //鼠标按下位置
         var pos: cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
         pos = new cc.Vec2(pos.x + 375, pos.y);
@@ -3261,7 +3294,9 @@ export default class game extends cc.Component
     isSetEnd: boolean = true;
     onTouchMove(event) 
     {
-
+        if (this.m_CountTouch) {
+            return
+        }
         //鼠标移动位置
         var pos: cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
         pos = new cc.Vec2(pos.x + 375, pos.y);
@@ -3367,6 +3402,9 @@ export default class game extends cc.Component
 
     onTouchEnd(event) 
     {
+        if (this.m_CountTouch) {
+            return
+        }
         //鼠标松开位置
         var pos:cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
         pos = new cc.Vec2(pos.x + 375, pos.y);
@@ -3469,6 +3507,11 @@ export default class game extends cc.Component
 
     onTouchCancel(event) 
     {
+
+        if (this.m_CountTouch) {
+            return
+        }
+
         if(this.m_b_rope_jointed)
         {
             this.m_b_in_rescureing = false;
@@ -3499,11 +3542,11 @@ export default class game extends cc.Component
         var rescuinglist = this.m_rescureing_people_list.slice(0);
 
         //绘制小人碰撞盒
-        //for(var ff=0;ff<rescuinglist.length;ff++)
-        //{
-        //    var ff_people_info:EscapePeople = rescuinglist[ff];
-        //    ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
-        //}
+        for(var ff=0;ff<rescuinglist.length;ff++)
+        {
+            var ff_people_info:EscapePeople = rescuinglist[ff];
+            ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
+        }
 
         //this.m_boss_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
 
@@ -4082,15 +4125,24 @@ export default class game extends cc.Component
 
         var arch_end_pos = this.m_enter_level_config.archend.arch_pos;
 
-        var startx = arch_success_people_pos.relative_startx + arch_end_info.endRoll_relative_pos[0]; //arch_end_pos[0];
-        var endx = arch_success_people_pos.relative_endx + arch_end_info.endRoll_relative_pos[0];//arch_end_pos[0];
-
+        if (this.m_enter_level_config.archend.link_pos) {
+            var startx = arch_success_people_pos.relative_startx + this.m_enter_level_config.archend.link_pos[0]; //arch_end_pos[0];
+            var endx = arch_success_people_pos.relative_endx + this.m_enter_level_config.archend.link_pos[0];//arch_end_pos[0];
+        }
+        else {
+            var startx = arch_success_people_pos.relative_startx + arch_end_info.endRoll_relative_pos[0]; //arch_end_pos[0];
+            var endx = arch_success_people_pos.relative_endx + arch_end_info.endRoll_relative_pos[0];//arch_end_pos[0];
+        }
+      
 
         var ix1 = startx + (endx-startx)/4;
         var ix2 = startx + (endx-startx)*3/4;
 
  
         var iy = arch_success_people_pos.stay_y;//arch_success_people_pos.relative_y +arch_end_pos[1];
+        if (this.m_enter_level_config.archend.link_pos) {
+            iy = this.m_enter_level_config.archend.link_pos[1];
+        }
 
         
         //将人物分成几组，每组 per_arr_people_count人
@@ -4161,19 +4213,29 @@ export default class game extends cc.Component
 
         var arch_end_pos = this.m_enter_level_config.archend.arch_pos;
 
-        var startx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_startx;//arch_success_people_pos.relative_startx + arch_end_pos[0];
-        var endx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_endx;//arch_success_people_pos.relative_endx + arch_end_pos[0];
+        if (this.m_enter_level_config.archend.link_pos) {
+            var startx = this.m_enter_level_config.archend.link_pos[0] + arch_success_people_pos.relative_startx;
+            var endx = this.m_enter_level_config.archend.link_pos[0] + arch_success_people_pos.relative_endx;
+        }
+        else {
+            var startx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_startx;//arch_success_people_pos.relative_startx + arch_end_pos[0];
+            var endx = arch_end_info.endRoll_relative_pos[0] + arch_success_people_pos.relative_endx;//arch_success_people_pos.relative_endx + arch_end_pos[0];
+        }
+    
 
         var ix = startx + (endx - startx)*this.m_succesed_people_list.length/this.m_total_need_rescur_people_count;
-        var iy = arch_success_people_pos.stay_y;//arch_success_people_pos.relative_y +arch_end_pos[1];
+        var iy = arch_success_people_pos.stay_y - 20;//arch_success_people_pos.relative_y +arch_end_pos[1];
+        if (this.m_enter_level_config.archend.link_pos) {
+            iy = this.m_enter_level_config.archend.link_pos[1] - 40;
+        }
 
         this.m_total_rescured_people_count++;
 
         //people.SetPosition(ix, iy);
         people.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
         var posX: number = Utils.GetRandomNum(endx, startx);
-        var posY: number = Utils.GetRandomNum(iy + 20, iy - 20);
-        people.SetPosition(posX, posY);
+        //var posY: number = Utils.GetRandomNum(iy + 20, iy - 20);
+        people.SetPosition(posX, iy);
 
         //this.ReOrder_Resuing_Success_People(true);
         people.TurnScale();
@@ -4297,8 +4359,18 @@ export default class game extends cc.Component
         if (this.m_succesed_people_list.length > 0) {
             var srcpos = this.txtEndCount.node.getPosition().y;
             var endX = this.m_boss_info.m_node.getPosition().x;//archEnd_info.endRoll_relative_pos[0];
-            var action = cc.moveTo(4, endX - 500, srcpos);
+
+            let worldPos = this.txtEndCount.node.parent.convertToWorldSpaceAR(this.txtEndCount.node.position); 
+            let bossPos = this.m_boss_info.m_node.parent.convertToWorldSpaceAR(this.m_boss_info.m_node.position); 
+
+         
+
+            var action = cc.moveTo(4, bossPos.x - worldPos .x - 300, srcpos);
+
             this.m_CanMoveBg = false;
+
+            console.log("this.txtEndCount.node.getPosition().x :" + this.txtEndCount.node.getPosition().x);
+
             //var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {                
             //}))
             //this.m_boss_info.m_node.runAction(seq);

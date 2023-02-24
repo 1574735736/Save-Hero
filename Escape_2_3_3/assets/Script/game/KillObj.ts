@@ -657,48 +657,48 @@ export default class KillObj
              return;
          }
 
-
+         //下方绘制
          
-         //var killinfo = this.m_kill_obj_com_define_info.killinfo;
+         var killinfo = this.m_kill_obj_com_define_info.killinfo;
 
-         //var valid_killtype = killinfo.valid_killtype;
-         //var valid_radius = killinfo.valid_radius;
-         //var valid_w = killinfo.valid_w;
-         //var valid_h = killinfo.valid_h;
+         var valid_killtype = killinfo.valid_killtype;
+         var valid_radius = killinfo.valid_radius;
+         var valid_w = killinfo.valid_w;
+         var valid_h = killinfo.valid_h;
 
-         //var pos = this.m_node.getPosition();
+         var pos = this.m_node.getPosition();
 
-         //if(valid_killtype == 1)
-         //{
-         //   var rc = this.m_node.getBoundingBox();
-         //   this.m_gragphic.moveTo(rc.xMin,rc.yMax);
-         //   this.m_gragphic.lineTo(rc.xMax,rc.yMax);
-         //   this.m_gragphic.lineTo(rc.xMax,rc.yMin);
-         //   this.m_gragphic.lineTo(rc.xMin,rc.yMin);
-         //   this.m_gragphic.lineTo(rc.xMin,rc.yMax);
+         if(valid_killtype == 1)
+         {
+            var rc = this.m_node.getBoundingBox();
+            this.m_gragphic.moveTo(rc.xMin,rc.yMax);
+            this.m_gragphic.lineTo(rc.xMax,rc.yMax);
+            this.m_gragphic.lineTo(rc.xMax,rc.yMin);
+            this.m_gragphic.lineTo(rc.xMin,rc.yMin);
+            this.m_gragphic.lineTo(rc.xMin,rc.yMax);
  
 
-         //}
-         //else if(valid_killtype == 2)
-         //{
+         }
+         else if(valid_killtype == 2)
+         {
 
-         //   this.m_gragphic.circle(pos.x,pos.y,valid_radius);
-         //}
-         //else if(valid_killtype == 3)
-         //{
+            this.m_gragphic.circle(pos.x,pos.y,valid_radius);
+         }
+         else if(valid_killtype == 3)
+         {
           
            
-         //   var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
+            var people_poly_pt_list:cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_node.angle);
          
       
-         //   this.Draw_Pt_List(people_poly_pt_list);
+            this.Draw_Pt_List(people_poly_pt_list);
 
       
   
 
-         //}
+         }
 
-         //this.m_gragphic.stroke();
+         this.m_gragphic.stroke();
 
          
      }
