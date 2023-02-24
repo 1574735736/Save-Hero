@@ -13,16 +13,23 @@ export default class EscapeBoss {
 
     m_txtBlood: cc.Label = null;
     m_spCom: sp.Skeleton = null;
+    m_slider: cc.ProgressBar = null;
 
     m_blood: number = 0;
 
-
     isDeath: boolean = false;
 
+    m_totalBlood: number = 0;
 
-    Init(pnode: cc.Node, pinfo) {
+
+    Init(pnode: cc.Node, pinfo, strTxt: cc.Label, BossSlider: cc.ProgressBar, totolNum: number) {
         this.m_node = pnode;
         this.m_info = pinfo;
+        this.m_txtBlood = strTxt;
+        this.m_slider = BossSlider;
+        this.m_totalBlood = totolNum;
+        this.m_blood = totolNum;
+        this.SetText(this.m_totalBlood);
     }
 
     //绘制子弹区域，正式上线后不再使用
@@ -126,14 +133,18 @@ export default class EscapeBoss {
     }
 
     //设置角色血量
-    SetText(blood: number) {
+    SetText(blood: number) {      
+
+        let num = (blood / this.m_totalBlood);
+        this.m_slider.progress = Number(num.toFixed(2));
+
         if (this.m_txtBlood) {
-            this.m_txtBlood.string = "" + blood;
+            this.m_txtBlood.string = "[" + blood + "]";
             return;
-        }
+        }        
         var wnode = this.m_node.getChildByName("txt_blood");
         this.m_txtBlood = wnode.getComponent(cc.Label);
-        this.m_txtBlood.string = "" + blood;       
+        this.m_txtBlood.string = "[" + blood + "]";    
     }
 
 

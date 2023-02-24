@@ -2,7 +2,7 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[-230,360]
+        "arch_pos":[150,360]
     },
     "archend":
     {
@@ -27,19 +27,26 @@
             {
                   
                 "typeid":5,
-                "obj_pos":[180,300] 
+                "obj_pos":[-180,150] ,
+                "obj_pic_size":[100,100],
+                "obj_radius":50
+            
                 
             } ,
             {
                   
                 "typeid":5,
-                "obj_pos":[180,50] 
-                
+                "obj_pos":[-180,-100] ,
+                "obj_pic_size":[100,100],
+                "obj_radius":50
+             
             } ,
             {
                   
                 "typeid":5,
-                "obj_pos":[180,-250] 
+                "obj_pos":[-180,-350] ,
+                "obj_pic_size":[100,100],
+                "obj_radius":50
                 
             } 
         ]
@@ -51,18 +58,19 @@
             {
                   
                 "typeid":8,
-                "initpos":[-150,10],
+                "initpos":[150,-100],
                 "initrotation":0,
+                "obj_pic_size":[300,300],
+                "obj_radius":[320,320],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":30
                 }
                 
             }  
         ]
 
-    }
-    ,
+    }   ,
     "bossobjs":
     {
         "typeid":4

@@ -60,10 +60,16 @@ export default class game extends cc.Component
     @property(cc.Node)
     m_node: cc.Node = null;
 
+
     //@property(cc.Prefab)
     //peoplePre: cc.Prefab = null;
 
     curPeople_p = null;
+
+    //boss Hp Slider
+    m_HpBossSlider: cc.ProgressBar = null;
+    //boss Hp Text
+    m_HpBossTxt: cc.Label = null;
 
 
     private static _instance: game = null;
@@ -242,6 +248,12 @@ export default class game extends cc.Component
         this.m_enter_level = EscapeMng.GetInstance().m_enter_level;
         this.m_enter_level_config = EscapeMng.GetInstance().m_enter_level_config;
         //this.InitPeoples();
+
+        //获取BossHp
+        this.m_HpBossSlider = cc.find(this.m_panel + "img_sliderbg/img_slider", this.node).getComponent(cc.ProgressBar);
+        this.m_HpBossTxt = cc.find(this.m_panel + "img_sliderbg/txt_bosshp", this.node).getComponent(cc.Label);
+        this.m_HpBossSlider.progress = 1;
+
 
         FirebaseReport.reportKeys(FireKeys.level_GoIn, this.m_enter_level);
 
@@ -1067,11 +1079,14 @@ export default class game extends cc.Component
             var pnode = cc.instantiate(p as cc.Prefab);
             self.m_node.addChild(pnode, 30);
             pnode.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1]);
+
+            this.m_HpBossTxt.node.parent.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1] + 700);
+
             var escapeBoss = new EscapeBoss();
-            escapeBoss.Init(pnode, boss_info);
+            escapeBoss.Init(pnode, boss_info, this.m_HpBossTxt, this.m_HpBossSlider, this.m_total_need_rescur_people_count);
             this.m_boss_info = escapeBoss;
-            this.m_boss_info.m_blood = this.m_total_need_rescur_people_count;
-            escapeBoss.SetText(this.m_total_need_rescur_people_count);
+            //this.m_boss_info.m_blood = this.m_total_need_rescur_people_count;
+            //escapeBoss.SetText(this.m_total_need_rescur_people_count);
         });
 
     }
@@ -4362,14 +4377,10 @@ export default class game extends cc.Component
 
             let worldPos = this.txtEndCount.node.parent.convertToWorldSpaceAR(this.txtEndCount.node.position); 
             let bossPos = this.m_boss_info.m_node.parent.convertToWorldSpaceAR(this.m_boss_info.m_node.position); 
-
          
-
             var action = cc.moveTo(4, bossPos.x - worldPos .x - 300, srcpos);
 
             this.m_CanMoveBg = false;
-
-            console.log("this.txtEndCount.node.getPosition().x :" + this.txtEndCount.node.getPosition().x);
 
             //var seq = cc.sequence(cc.scaleTo(1, 1.5, 1.5), cc.callFunc(() => {                
             //}))

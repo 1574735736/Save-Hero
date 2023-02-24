@@ -27,18 +27,27 @@
             {
                   
                 "typeid":1,
-                "obj_pos":[-250,-230] 
+                "obj_pos":[-250,-230] , 
+                "color":[255,255,255], 
+                "obj_pic_size":[120,120],
+                "obj_valid_size":[120,120] 
                 
             } ,
             {
                   
                 "typeid":1,
-                "obj_pos":[250,130] 
+                "obj_pos":[250,130] ,
+                "color":[255,255,255], 
+                "obj_pic_size":[120,120],
+                "obj_valid_size":[120,120] 
                 
             } ,
             { 
                 "typeid":3, 
-                "obj_pos":[0,0]  
+                "obj_pos":[0,0]  ,
+                "color":[255,255,255], 
+                "obj_pic_size":[120,120],
+                "obj_valid_size":[120,120] 
             }
         ]
     }

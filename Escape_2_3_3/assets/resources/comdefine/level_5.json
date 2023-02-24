@@ -27,13 +27,17 @@
             {
                   
                 "typeid":5,
-                "obj_pos":[230,-220] 
-                
+                "obj_pos":[230,-200] ,
+                "obj_pic_size":[100,100],
+                "obj_radius":50
             } ,
             {
                   
                 "typeid":5,
-                "obj_pos":[-180,180] 
+                "obj_pos":[-180,100] ,
+                "obj_pic_size":[100,100],
+                "obj_radius":50
+               
                 
             }  
         ]
@@ -45,22 +49,26 @@
             {
                   
                 "typeid":8,
-                "initpos":[-200,-80],
+                "initpos":[-200,-200],
                 "initrotation":0,
+                "obj_pic_size":[300,300],
+                "obj_radius":150,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":30
                 }
                 
             }  ,
             {
                   
                 "typeid":8,
-                "initpos":[220,110],
+                "initpos":[220,100],
                 "initrotation":0,
+                "obj_pic_size":[300,300],
+                "obj_radius":150,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":30
                 }
                 
             }  
