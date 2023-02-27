@@ -32,7 +32,7 @@ export default class alginbottom extends cc.Component {
         var ireals = cx2/cy2;
 
 
-        var caculate_topy = cy/2;
+        var caculate_topy = cy/3;
         if(ireals > icomss)
         {
             //宽比实际宽

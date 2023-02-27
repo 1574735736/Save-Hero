@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-400]
+        "arch_pos":[230,-400],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     {
@@ -29,25 +30,25 @@
                 "typeid":1,
                 "obj_pos":[-250,-230] , 
                 "color":[255,255,255], 
-                "obj_pic_size":[120,120],
-                "obj_valid_size":[120,120] 
+                "obj_pic_size":[100,100],
+                "obj_valid_size":[100,100] 
                 
             } ,
             {
                   
                 "typeid":1,
-                "obj_pos":[250,130] ,
+                "obj_pos":[233,212] ,
                 "color":[255,255,255], 
-                "obj_pic_size":[120,120],
-                "obj_valid_size":[120,120] 
+                "obj_pic_size":[100,100],
+                "obj_valid_size":[100,100] 
                 
             } ,
             { 
                 "typeid":3, 
                 "obj_pos":[0,0]  ,
                 "color":[255,255,255], 
-                "obj_pic_size":[120,120],
-                "obj_radius":60
+                "obj_pic_size":[180,180],
+                "obj_radius":90
             }
         ]
     }

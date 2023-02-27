@@ -235,7 +235,7 @@
             "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
             "bgraphic":0,
             "desc1":"obj_pic-物体图片，anchropt中心点位置，obj_pic_size-物体尺寸,initpos-物体初始位置,initrotation-物体初始角度",
-            "obj_pic":"game/barrier/t3",
+            "obj_pic":"game/barrier/t1",
             "anchropt":[0.5,0.5],
             "obj_pic_size":[360,15],
             "desc2":"bkill-是否碰撞后杀死人物,为0碰到不会杀死，为1会杀死", 
@@ -475,28 +475,28 @@
             "type":1,
             "valid_w":400,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss1"
         },
         {
             "type":2,
             "valid_w":230,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss2"
         },
         {
             "type":3,
             "valid_w":125,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss3"
         },
         {
             "type":4,
             "valid_w":180,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss4"
         },
         {
