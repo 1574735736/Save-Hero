@@ -487,7 +487,7 @@ export default class game extends cc.Component
         var scaleMul = 0.7
 
         this.m_node.setPosition(0, 0, 0);
-        var func = cc.sequence(cc.delayTime(1.5), cc.moveTo(2, -750 * scaleMul, 0), cc.delayTime(1), cc.moveTo(1, 0, 0),  cc.callFunc(() => {
+        var func = cc.sequence(cc.delayTime(1.5), cc.moveTo(2, -750 * scaleMul, 0), cc.delayTime(0.8), cc.moveTo(1, 0, 0),  cc.callFunc(() => {
             if(this.m_enter_level == 1)
             {
                 this.Add_Level_Start_Tip();
