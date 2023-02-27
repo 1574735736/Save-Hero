@@ -515,9 +515,23 @@ export default class KillObj
      {
          var killinfo = this.m_kill_obj_com_define_info.killinfo;
          var valid_killtype = killinfo.valid_killtype;
+         
          var valid_radius = killinfo.valid_radius;
+
+         if (this.m_kill_obj_src_info.obj_radius) {
+             valid_radius = this.m_kill_obj_src_info.obj_radius;
+         }
+
          var valid_w = killinfo.valid_w;
          var valid_h = killinfo.valid_h;
+         if (this.m_kill_obj_src_info.obj_valid_size) {
+             valid_w = this.m_kill_obj_src_info.obj_valid_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_valid_size[1];
+         }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_w = this.m_kill_obj_src_info.obj_pic_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_pic_size[1];
+         }
 
          var pos = this.m_node.getPosition();
 
@@ -663,8 +677,22 @@ export default class KillObj
 
          var valid_killtype = killinfo.valid_killtype;
          var valid_radius = killinfo.valid_radius;
+
+         if (this.m_kill_obj_src_info.obj_radius) {
+             valid_radius = this.m_kill_obj_src_info.obj_radius;
+         }
+
          var valid_w = killinfo.valid_w;
          var valid_h = killinfo.valid_h;
+
+         if (this.m_kill_obj_src_info.obj_valid_size) {
+             valid_w = this.m_kill_obj_src_info.obj_valid_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_valid_size[1];
+         }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_w = this.m_kill_obj_src_info.obj_pic_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_pic_size[1];
+         }
 
          var pos = this.m_node.getPosition();
 
@@ -744,8 +772,22 @@ export default class KillObj
 
          var valid_killtype = killinfo.valid_killtype;
          var valid_radius = killinfo.valid_radius;
+
+         if (this.m_kill_obj_src_info.obj_radius) {
+             valid_radius = this.m_kill_obj_src_info.obj_radius;
+         }
+
          var valid_w = killinfo.valid_w;
          var valid_h = killinfo.valid_h;
+
+         if (this.m_kill_obj_src_info.obj_valid_size) {
+             valid_w = this.m_kill_obj_src_info.obj_valid_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_valid_size[1];
+         }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_w = this.m_kill_obj_src_info.obj_pic_size[0];
+             valid_h = this.m_kill_obj_src_info.obj_pic_size[1];
+         }
 
          var pos = this.m_node.getPosition();
 

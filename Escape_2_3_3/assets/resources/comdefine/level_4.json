@@ -61,7 +61,7 @@
                 "initpos":[150,-100],
                 "initrotation":0,
                 "obj_pic_size":[300,300],
-                "obj_radius":[320,320],
+                "obj_radius":150,
                 "rotate":
                 {
                     "rotateing_rate":30
