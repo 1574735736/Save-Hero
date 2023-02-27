@@ -521,6 +521,9 @@ export default class KillObj
          if (this.m_kill_obj_src_info.obj_radius) {
              valid_radius = this.m_kill_obj_src_info.obj_radius;
          }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_radius = this.m_kill_obj_src_info.obj_pic_size[0] * 0.5;
+         }
 
          var valid_w = killinfo.valid_w;
          var valid_h = killinfo.valid_h;
@@ -681,6 +684,9 @@ export default class KillObj
          if (this.m_kill_obj_src_info.obj_radius) {
              valid_radius = this.m_kill_obj_src_info.obj_radius;
          }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_radius = this.m_kill_obj_src_info.obj_pic_size[0] * 0.5;
+         }
 
          var valid_w = killinfo.valid_w;
          var valid_h = killinfo.valid_h;
@@ -775,6 +781,9 @@ export default class KillObj
 
          if (this.m_kill_obj_src_info.obj_radius) {
              valid_radius = this.m_kill_obj_src_info.obj_radius;
+         }
+         else if (this.m_kill_obj_src_info.obj_pic_size) {
+             valid_radius = this.m_kill_obj_src_info.obj_pic_size[0] * 0.5;
          }
 
          var valid_w = killinfo.valid_w;

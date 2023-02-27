@@ -1383,6 +1383,9 @@ export default class game extends cc.Component
                 if (ff_src_info.obj_valid_size) {
                     obj_valid_size = ff_src_info.obj_valid_size;
                 }
+                else if (ff_src_info.obj_pic_size) {
+                    obj_valid_size = ff_src_info.obj_pic_size;
+                }
 
 
         
@@ -1417,6 +1420,9 @@ export default class game extends cc.Component
                 var radius = ff_info.obj_radius;
                 if (ff_src_info.obj_radius) {
                     radius = ff_src_info.obj_radius;
+                }
+                else if (ff_src_info.obj_pic_size) {
+                    radius = ff_src_info.obj_pic_size[0] * 0.5;
                 }
               
                 //this.m_obstacle_graphic_com.AddCirCle(centerpt,radius);
