@@ -54,8 +54,8 @@ export default class game extends cc.Component
     @property(cc.Node)
     tip_cantShowAd: cc.Node = null;
 
-    @property(cc.Node)
-    m_MainCamera: cc.Node = null;
+    @property(cc.Camera)
+    m_MainCamera: cc.Camera = null;
 
     @property(cc.Node)
     m_node: cc.Node = null;
@@ -483,18 +483,26 @@ export default class game extends cc.Component
         ////    //cc.tween(this.m_MainCamera).by(0.5, { position: cc.v3(0, 0, 0) }).start();
         ////    this.m_MainCamera.runAction(cc.moveTo(1.5, 0, 0));
         ////}, 2);
+
+        var scaleMul = 0.7
+
         this.m_node.setPosition(0, 0, 0);
-        var func = cc.sequence(cc.delayTime(2), cc.moveTo(2, -750, 0), cc.delayTime(1.5), cc.moveTo(1, 0, 0), cc.callFunc(() => {
+        var func = cc.sequence(cc.delayTime(1.5), cc.moveTo(2, -750 * scaleMul, 0), cc.delayTime(1), cc.moveTo(1, 0, 0),  cc.callFunc(() => {
             if(this.m_enter_level == 1)
             {
                 this.Add_Level_Start_Tip();
             }
             this.m_CanMoveBg = true;
             this.m_CountTouch = false;
+            //this.m_MainCamera.zoomRatio = 1;
         }));
+
+        var func2 = cc.sequence(cc.delayTime(1.5), cc.scaleTo(2, scaleMul, scaleMul), cc.delayTime(0.8), cc.scaleTo(1, 1, 1))
+
         //this.m_MainCamera.runAction(func);
       
         this.m_node.runAction(func);
+        this.m_node.runAction(func2);
     }
 
     EndMoveCamera() {
@@ -1378,10 +1386,11 @@ export default class game extends cc.Component
 
 
         
-                var leftpt = new cc.Vec2(ff_info.obj_valid_relative_left_pt[0] + obj_pos[0],ff_info.obj_valid_relative_left_pt[1] + obj_pos[1]);
+                //var leftpt = new cc.Vec2(ff_info.obj_valid_relative_left_pt[0] + obj_pos[0],ff_info.obj_valid_relative_left_pt[1] + obj_pos[1]);
+                var leftpt = new cc.Vec2(obj_pic_size[0] * -0.5 + obj_pos[0], obj_pic_size[1] * -0.5 + obj_pos[1]);
                 var obj_valid_sizew = new WSize(obj_valid_size[0],obj_valid_size[1]);
     
-               // this.m_obstacle_graphic_com.AddRect(leftpt,obj_valid_sizew);
+                //this.m_obstacle_graphic_com.AddRect(leftpt,obj_valid_sizew);
 
 
                 //1：矩形，2：圆形
