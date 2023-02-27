@@ -60,6 +60,9 @@ export default class game extends cc.Component
     @property(cc.Node)
     m_node: cc.Node = null;
 
+    @property(cc.Label)
+    m_ClickPos: cc.Label = null;
+
 
     //@property(cc.Prefab)
     //peoplePre: cc.Prefab = null;
@@ -302,7 +305,7 @@ export default class game extends cc.Component
 
         //创建起始的建筑
         var psrite_arch_start = new MySprite(archstart_info.arch_pic, archstart_info.arch_size[0], archstart_info.arch_size[1]);//
-        psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1] + archstart_info.joint_relative_pos[1]);
+        psrite_arch_start.setPosition(arch_start_pos[0], arch_start_pos[1]); //+ archstart_info.joint_relative_pos[1]
         this.m_node.addChild(psrite_arch_start, 10);
 
         var linkPosX = archstart_info.joint_relative_pos[0] + arch_start_pos[0];
@@ -3195,6 +3198,8 @@ export default class game extends cc.Component
     //鼠标按下事件
     onTouchStart(event)
     {
+
+
         if (this.m_CountTouch) {
             return
         }
@@ -3202,6 +3207,9 @@ export default class game extends cc.Component
         var pos: cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
         pos = new cc.Vec2(pos.x + 375, pos.y);
         this.touchX = pos.x;
+
+
+        this.m_ClickPos.string = "[" + Math.round(pos.x) + "," + Math.round(pos.y)  + "]";
 
         //开始建筑连接点，周边多少像素内按下为有效开始拖动绳子
         var touchmonejoint = this.Get_Touch_Move_Joint_Info();

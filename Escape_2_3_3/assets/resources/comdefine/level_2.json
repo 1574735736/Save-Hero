@@ -47,7 +47,7 @@
                 "obj_pos":[0,0]  ,
                 "color":[255,255,255], 
                 "obj_pic_size":[120,120],
-                "obj_valid_size":[120,120] 
+                "obj_radius":60
             }
         ]
     }

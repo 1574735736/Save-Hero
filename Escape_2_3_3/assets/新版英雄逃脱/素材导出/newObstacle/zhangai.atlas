@@ -1,0 +1,125 @@
+
+zhangai.png
+size: 256,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+t10
+  rotate: false
+  xy: 81, 998
+  size: 54, 55
+  orig: 56, 56
+  offset: 1, 0
+  index: -1
+t11
+  rotate: false
+  xy: 2, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+t12
+  rotate: false
+  xy: 81, 1112
+  size: 44, 44
+  orig: 44, 44
+  offset: 0, 0
+  index: -1
+t13
+  rotate: false
+  xy: 81, 1205
+  size: 28, 67
+  orig: 29, 68
+  offset: 0, 1
+  index: -1
+t14
+  rotate: true
+  xy: 2, 310
+  size: 103, 105
+  orig: 103, 105
+  offset: 0, 0
+  index: -1
+t15
+  rotate: false
+  xy: 2, 916
+  size: 60, 1089
+  orig: 62, 1091
+  offset: 1, 1
+  index: -1
+t17
+  rotate: false
+  xy: 2, 916
+  size: 60, 1089
+  orig: 62, 1091
+  offset: 1, 1
+  index: -1
+t16
+  rotate: true
+  xy: 2, 205
+  size: 103, 105
+  orig: 103, 105
+  offset: 0, 0
+  index: -1
+t18
+  rotate: false
+  xy: 64, 962
+  size: 48, 28
+  orig: 48, 28
+  offset: 0, 0
+  index: -1
+t19
+  rotate: true
+  xy: 97, 415
+  size: 545, 26
+  orig: 545, 26
+  offset: 0, 0
+  index: -1
+t20
+  rotate: true
+  xy: 64, 1396
+  size: 609, 62
+  orig: 611, 64
+  offset: 1, 1
+  index: -1
+t21
+  rotate: false
+  xy: 2, 100
+  size: 105, 103
+  orig: 105, 103
+  offset: 0, 0
+  index: -1
+t3
+  rotate: true
+  xy: 64, 998
+  size: 274, 15
+  orig: 274, 15
+  offset: 0, 0
+  index: -1
+t4
+  rotate: true
+  xy: 64, 998
+  size: 274, 15
+  orig: 274, 15
+  offset: 0, 0
+  index: -1
+t5
+  rotate: true
+  xy: 64, 1274
+  size: 120, 58
+  orig: 120, 58
+  offset: 0, 0
+  index: -1
+t6
+  rotate: true
+  xy: 2, 415
+  size: 499, 93
+  orig: 499, 93
+  offset: 0, 0
+  index: -1
+t9
+  rotate: false
+  xy: 81, 1055
+  size: 54, 55
+  orig: 56, 56
+  offset: 1, 0
+  index: -1
