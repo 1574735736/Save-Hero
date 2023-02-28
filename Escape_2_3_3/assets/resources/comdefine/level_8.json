@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[-230,360]
+        "arch_pos":[-230,360],
+        "link_pos":[-150,420]
     },
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-280]
+        "arch_pos":[230,-280],
+        "link_pos":[200,-420]
     },
     "touchmovejoint":
     {
@@ -27,7 +29,7 @@
             {
                   
                 "typeid":2,
-                "obj_pos":[-200,-260] 
+                "obj_pos":[-200,-300] 
                 
             }  
         ]
@@ -41,6 +43,8 @@
                 "typeid":3,
                 "initpos":[-90, 60],
                 "initrotation":0 ,
+                "obj_pic_size":[300,50],
+                "obj_valid_size":[300,50] ,
                 "rotate":
                 { 
                    "rotateing_rate":1 

@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[150,360]
+        "arch_pos":[150,360],
+        "link_pos":[70,430]
     },
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-260,-400]
+        "arch_pos":[-260,-400],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     {
@@ -60,8 +62,8 @@
                 "typeid":8,
                 "initpos":[150,-100],
                 "initrotation":0,
-                "obj_pic_size":[300,300],
-                "obj_radius":150,
+                "obj_pic_size":[320,320],
+                "obj_radius":160,
                 "rotate":
                 {
                     "rotateing_rate":30

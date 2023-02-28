@@ -503,14 +503,14 @@
             "type":5,
             "valid_w":150,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss5"
         },
         {
             "type":6,
             "valid_w":160,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[800,-480],
             "obj_res":"prefab/boss6"
         }
     ]
