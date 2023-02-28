@@ -468,6 +468,21 @@
             "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)" 
 
         }  
+        ,
+        {
+            "type":13,
+            "namedesc":"齿轮下的灰线条",
+            "desc":"bgraphic代表是不是用graphic绘制的线，否则为图片使用obj_pic,bkill:是否碰撞上杀死小人",
+            "bgraphic":0,
+            "desc1":"obj_pic-物体图片，anchropt中心点位置，obj_pic_size-物体尺寸,initpos-物体初始位置,initrotation-物体初始角度",
+            "obj_pic":"game/barrier/t20",
+            "anchropt":[0.5,0.5],
+            "obj_pic_size":[611,64],
+            "desc2":"bkill-是否碰撞后杀死人物,为0碰到不会杀死，为1会杀死", 
+            "desc3":"rotate-物体是否旋转，rotateing_rate没：每0.1秒旋转角度",
+            "desc4":"move-是否移动，movespeed-移动速度，movestart，moveend，物体在这两个物体间来回移动,move_stay_in_topos_delay_time:配置的话物体移动到最终点的时候停留的时间(秒)" 
+
+        }  
     ],
     "bossobjs":
     [
@@ -510,7 +525,7 @@
             "type":6,
             "valid_w":160,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[800,-520],
             "obj_res":"prefab/boss6"
         }
     ]

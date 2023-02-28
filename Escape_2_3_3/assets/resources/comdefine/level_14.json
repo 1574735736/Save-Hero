@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":4,
-        "arch_pos":[230,330]
+        "arch_pos":[230,330],
+        "link_pos":[147,405]
     },
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-270,10]
+        "arch_pos":[-270,10],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     {
@@ -16,18 +18,18 @@
     "peopleinfo":
     {
         "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
-        "need_resure_min_people_count":8,
+        "need_resure_min_people_count":7,
         "arch_start_people_count":4,
         "outer_people_list":[
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[250,70]
+                "pos":[-170,224]
             } ,
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[-180,420]
+                "pos":[188,224]
             } ,
             {
                 "peopleid":1,
@@ -37,7 +39,7 @@
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[120,-170]
+                "pos":[180,-170]
             } 
         ]
     }
@@ -49,13 +51,13 @@
             {
                   
                 "typeid":1,
-                "obj_pos":[250,0] 
+                "obj_pos":[-168,154] 
                 
             } ,
             {
                   
                 "typeid":1,
-                "obj_pos":[-180,350] 
+                "obj_pos":[186,154] 
                 
             }  
             ,
@@ -68,7 +70,7 @@
             {
                   
                 "typeid":1,
-                "obj_pos":[120,-240] 
+                "obj_pos":[186,-240] 
                 
             }  
         ]

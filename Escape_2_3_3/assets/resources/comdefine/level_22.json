@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-230,-450]
+        "arch_pos":[-230,-450],
+        "link_pos":[-180,-420]
     },
     "touchmovejoint":
     { 
@@ -29,25 +30,29 @@
             {
                   
                 "typeid":5,
-                "obj_pos":[200,-100] 
+                "obj_pos":[200,-100] ,
+                "obj_pic_size":[100,100]
                 
             } ,
             {
                   
                 "typeid":5,
-                "obj_pos":[200,100] 
+                "obj_pos":[200,100] ,
+                "obj_pic_size":[100,100]
                 
             }  ,
               {
                   
                 "typeid":5,
-                "obj_pos":[-100,200] 
+                "obj_pos":[-250,200] ,
+                "obj_pic_size":[100,100]
                 
             } ,  
              {
                   
                 "typeid":5,
-                "obj_pos":[-100,-200] 
+                "obj_pos":[-250,-200] ,
+                "obj_pic_size":[100,100]
                 
             } 
              
@@ -66,47 +71,51 @@
         [
             {
                   
-                "typeid":1, 
-                "initpos":[-200,0],
-                "initrotation":0
+                "typeid":13, 
+                "initpos":[-180,0],
+                "initrotation":0,
+                "obj_pic_size":[300,30]
             },
             {
                   
                 "typeid":2, 
                 "initpos":[-150,0],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 ,
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-300,0],
-                    "moveend":[ -50,0]
+                    "movespeed":80,
+                    "movestart":[-317,1],
+                    "moveend":[ -46,1]
                 }
 
             },
              {
                   
-                "typeid":1, 
+                "typeid":13, 
                 "initpos":[200,-300],
-                "initrotation":0
+                "initrotation":0,
+                "obj_pic_size":[300,30]
             },
             {
                   
                 "typeid":2, 
                 "initpos":[300,-300],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 ,
                 "move":{
-                    "movespeed":40,
-                    "movestart":[300,-300],
-                    "moveend":[ 100,-300]
+                    "movespeed":80,
+                    "movestart":[66,-299],
+                    "moveend":[ 331,-299]
                 }
 
             }

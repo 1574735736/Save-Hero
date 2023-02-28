@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-260,-400]
+        "arch_pos":[-260,-400],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     {
@@ -42,9 +43,11 @@
               
             {
                   
-                "typeid":1, 
+                "typeid":13, 
                 "initpos":[60,-130],
-                "initrotation":0 
+                "initrotation":0 ,
+                "obj_pic_size":[450,45]
+                
             },
             {
                   
@@ -53,21 +56,22 @@
                 "initrotation":0,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 },
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-60,-130],
-                    "moveend":[ 180,-130]
+                    "movespeed":100,
+                    "movestart":[-142,-129],
+                    "moveend":[ 261,-126]
                 }
                 
 
             },
             {
                   
-                "typeid":1, 
+                "typeid":13, 
                 "initpos":[60,230],
-                "initrotation":0
+                "initrotation":0,
+                "obj_pic_size":[450,45]
             },
             {
                   
@@ -76,13 +80,13 @@
                 "initrotation":0,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 ,
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-60,230],
-                    "moveend":[ 180,230]
+                    "movespeed":100,
+                    "movestart":[-143,233],
+                    "moveend":[ 262,232]
                 }
 
             }
@@ -94,7 +98,7 @@
                 "initrotation":0,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
 

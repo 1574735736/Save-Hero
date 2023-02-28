@@ -8,7 +8,7 @@
     {
         "typeid":2,
         "arch_pos":[230,-330],
-        "link_pos":[-243,-420]
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     {
@@ -35,9 +35,10 @@
             
             {
                   
-                "typeid":1,
+                "typeid":13,
                 "initpos":[-40, 0],
-                "initrotation":0 
+                "initrotation":0 ,
+                "obj_pic_size":[360,38]
                 
             }  ,
             {
@@ -49,9 +50,9 @@
                     "rotateing_rate":8
                 },
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-220,0],
-                    "moveend":[ 140,0]
+                    "movespeed":80,
+                    "movestart":[-203,3],
+                    "moveend":[ 122,3]
                 }
                  
             }

@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-440]
+        "arch_pos":[230,-440],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     {
@@ -27,37 +28,43 @@
             {
                   
                 "typeid":2,
-                "obj_pos":[-200,160] 
+                "obj_pos":[-200,160] ,
+                "obj_pic_size":[80,80]
                 
             }  ,
             {
                   
                 "typeid":2,
-                "obj_pos":[0,160] 
+                "obj_pos":[0,160] ,
+                "obj_pic_size":[80,80]
                 
             }   ,
             {
                   
                 "typeid":2,
-                "obj_pos":[200,160] 
+                "obj_pos":[200,160] ,
+                "obj_pic_size":[80,80]
                 
             } ,
             {
                   
                 "typeid":2,
-                "obj_pos":[-200,-160] 
+                "obj_pos":[-200,-160] ,
+                "obj_pic_size":[80,80]
                 
             }  ,
             {
                   
                 "typeid":2,
-                "obj_pos":[0,-160] 
+                "obj_pos":[0,-160] ,
+                "obj_pic_size":[80,80]
                 
             }   ,
             {
                   
                 "typeid":2,
-                "obj_pos":[200,-160] 
+                "obj_pos":[200,-160] ,
+                "obj_pic_size":[80,80]
                 
             }   ,
             {
@@ -80,9 +87,10 @@
         "objlist":[
             {
                   
-                "typeid":1,
+                "typeid":13,
                 "initpos":[0, 0],
-                "initrotation":0 
+                "initrotation":0 ,
+                "obj_pic_size":[480,50]
                 
             }  ,
             {
@@ -91,12 +99,12 @@
                 "initrotation":0,
                 "rotate":
                 {
-                    "rotateing_rate":8
+                    "rotateing_rate":20
                 },
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-180,0],
-                    "moveend":[ 180,0]
+                    "movespeed":80,
+                    "movestart":[-216,0],
+                    "moveend":[ 216,0]
                 }
                  
             }
