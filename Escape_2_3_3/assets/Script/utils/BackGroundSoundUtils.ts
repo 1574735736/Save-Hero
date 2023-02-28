@@ -43,13 +43,13 @@ export default class BackGroundSoundUtils
     // 初始读取声音保存的值
     initMusicSound() {
         const music = MyLocalStorge.getItem("bk_music_shaonaomukuai_volum");
-        if (music != null && music != undefined && music!= "") this.m_bk_music_sound_volum = Number(music);
+        if (music != null && music != undefined && music != "") this.m_bk_music_sound_volum = 0;// Number(music);
         else {
             this.m_bk_music_sound_volum = 1;
             this.saveMusic();
         }
         const sound = MyLocalStorge.getItem("bk_sound_shaonaomukuai_volum");
-        if (sound != null && sound != undefined && sound != "") this.m_effect_sound_volum = Number(sound);
+        if (sound != null && sound != undefined && sound != "") this.m_effect_sound_volum = 0;// Number(sound);
         else {
             this.m_effect_sound_volum = 0.8;
             this.saveSound();

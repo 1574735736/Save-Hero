@@ -222,6 +222,8 @@ export default class game extends cc.Component
 
     m_caidai: cc.Node = null;
 
+    m_StartLinkAni: sp.Skeleton = null;
+
     m_panel: string = "panel_main/"
 
     m_CanMoveBg: boolean = false;
@@ -316,17 +318,26 @@ export default class game extends cc.Component
         }
 
         //创建小木棍
-        var btn_arch_start_gun = new MySprite("game/slop/q4");
-        btn_arch_start_gun.setPosition(linkPosX, linkPosY - 30);
-        this.m_node.addChild(btn_arch_start_gun, 22);
-        //创建起始建筑的连接点
-        var btn_arch_start_joint = new MySprite(archstart_info.joint_pic);//,archstart_info.joint_size[0],archstart_info.joint_size[1]
-        btn_arch_start_joint.setPosition(linkPosX, linkPosY);
-        this.m_node.addChild(btn_arch_start_joint, 22);    
+        var startLink = cc.find(this.m_panel + "ani_startlink", this.node);
+        startLink.setPosition(linkPosX, linkPosY);
+        this.m_StartLinkAni = startLink.getChildByName("zhangai").getComponent(sp.Skeleton);
+        this.m_StartLinkAni.paused = true;
+
+
+        //var btn_arch_start_gun = new MySprite("game/slop/q4");
+        //btn_arch_start_gun.setPosition(linkPosX, linkPosY - 30);
+        //this.m_node.addChild(btn_arch_start_gun, 22);
+        ////创建起始建筑的连接点
+        //var btn_arch_start_joint = new MySprite(archstart_info.joint_pic);//,archstart_info.joint_size[0],archstart_info.joint_size[1]
+        //btn_arch_start_joint.setPosition(linkPosX, linkPosY);
+        //this.m_node.addChild(btn_arch_start_joint, 22);    
+
+
+
 
         var startNote = cc.find(this.m_panel + "txt_startcount", this.node);
         startNote.setParent(psrite_arch_start);
-        startNote.setPosition(0, 100);
+        startNote.setPosition(0, 150);
         this.txtStartCount = startNote.getComponent(cc.Label);
         this.txtStartCount.string = "";        
 
@@ -361,24 +372,29 @@ export default class game extends cc.Component
        
 
         //创建小木棍
-        var btn_arch_end_gun = new MySprite("game/slop/q4");
-        //btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
-        btn_arch_end_gun.setPosition(endX, endY - 30);
+        var endLink = cc.find(this.m_panel + "ani_endlink", this.node);
+        endLink.setPosition(endX, endY);
 
-        this.m_node.addChild(btn_arch_end_gun, 22);
+        //var btn_arch_end_gun = new MySprite("game/slop/q4");
+        ////btn_arch_end_gun.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0], archend_info.joint_relative_pos[1] + arch_end_pos[1] - 30);
+        //btn_arch_end_gun.setPosition(endX, endY - 30);
 
-        //创建到达建筑的链接点
-        var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
-        //btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
-        btn_arch_end_joint.setPosition(endX, endY);
-        this.m_node.addChild(btn_arch_end_joint, 22);
+        //this.m_node.addChild(btn_arch_end_gun, 22);
+
+        ////创建到达建筑的链接点
+        //var btn_arch_end_joint = new MySprite(archend_info.joint_pic);//,archend_info.joint_size[0],archend_info.joint_size[1]
+        ////btn_arch_end_joint.setPosition(archend_info.joint_relative_pos[0] + arch_end_pos[0],archend_info.joint_relative_pos[1] + arch_end_pos[1]); 
+        //btn_arch_end_joint.setPosition(endX, endY);
+        //this.m_node.addChild(btn_arch_end_joint, 22);
+
+
 
         var endNote = cc.find(this.m_panel + "txt_endcount", this.node);
-        //endNote.setParent(psrite_arch_end);
+      
+        endNote.setParent(endLink);
+        //endNote.setParent(btn_arch_end_gun);
 
-        endNote.setParent(btn_arch_end_gun);
-
-        endNote.setPosition(0, 100);
+        endNote.setPosition(0, 120);
         this.txtEndCount = endNote.getComponent(cc.Label);
         this.txtEndCount.string = "";
 
@@ -462,8 +478,9 @@ export default class game extends cc.Component
       
         //结束圈的信息
         var endquan = cc.find(this.m_panel + "endquan", this.node);
-        endquan.setPosition(this.m_end_joint_pt);
-        endquan.runAction(cc.repeatForever(cc.rotateBy(0.1, 10)));
+        endquan.active = false;
+        //endquan.setPosition(this.m_end_joint_pt);
+        //endquan.runAction(cc.repeatForever(cc.rotateBy(0.1, 10)));
       
       
 
@@ -3425,7 +3442,22 @@ export default class game extends cc.Component
             real_valid_pos = valid_pos; 
         }
 
-   
+
+        let distance1 = real_valid_pos.sub(this.m_rope_graphic_com.m_last_role_end_pt).mag()
+        let distance2 = this.m_rope_graphic_com.m_last_moving_pt.sub(this.m_rope_graphic_com.m_last_role_end_pt).mag()
+        let distance = (distance1 - distance2) >= 0 ? 1:-1;
+
+        if (this.oldForward != distance) {
+            this.oldForward = distance;
+            if (distance > 0) {
+                SpineManager.getInstance().playSpinAnimation(this.m_StartLinkAni, "d6-2", true);
+            }
+            else if (distance < 0) {
+                SpineManager.getInstance().playSpinAnimation(this.m_StartLinkAni, "d6", true);
+            }
+            this.oldForward = distance;
+        }               
+
 
         this.m_rope_graphic_com.Set_Touch_Move_Pos(real_valid_pos);
 
@@ -3436,13 +3468,14 @@ export default class game extends cc.Component
         //this.m_move_joint_node.setPosition(pos);
     }
 
-
+    oldForward: number = 0; 
 
     onTouchEnd(event) 
     {
         if (this.m_CountTouch) {
             return
         }
+        this.m_StartLinkAni.paused = true;
         //鼠标松开位置
         var pos:cc.Vec2 = this.m_bj.convertToNodeSpaceAR(event.getLocation());
         pos = new cc.Vec2(pos.x + 375, pos.y);
@@ -3454,6 +3487,7 @@ export default class game extends cc.Component
 
         this.m_b_in_rescureing = false;
         this.m_last_rescure_tick = 0;
+        this.oldForward = 0;
          
         if(!this.m_b_start_drag)
         {
@@ -3549,6 +3583,8 @@ export default class game extends cc.Component
         if (this.m_CountTouch) {
             return
         }
+
+        this.m_StartLinkAni.paused = true;
 
         if(this.m_b_rope_jointed)
         {
@@ -3937,44 +3973,60 @@ export default class game extends cc.Component
             return;
         }
 
-        if (this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count && this.m_all_start_arch_waitfor_resure_people_list.length == 0)
-        {
-            if(!this.m_b_game_finished)
-            {
-                this.m_b_game_finished = 1;
-                this.scheduleOnce(this.FD_Success.bind(this),1);
-            }
-            
+       
+        if (this.m_all_start_arch_waitfor_resure_people_list.length > 0) {
             return;
         }
+
+
+        //if (this.m_all_outer_waitfor_resure_people_list.length > 0 && this.m_all_start_arch_waitfor_resure_people_list.length > 0) {
+
+        //}
+
+        if (!this.m_b_game_finished) {
+            this.m_b_game_finished = 1;
+            this.scheduleOnce(this.FD_Success.bind(this), 1);
+        }
+
+
+        //if (this.m_total_rescured_people_count >= this.m_total_need_rescur_people_count && this.m_all_start_arch_waitfor_resure_people_list.length == 0)
+        //{
+        //    if(!this.m_b_game_finished)
+        //    {
+        //        this.m_b_game_finished = 1;
+        //        this.scheduleOnce(this.FD_Success.bind(this),1);
+        //    }
+            
+        //    return;
+        //}
         
 
-        var ikilledobjcount = this.m_failed_people_list.length;
+        //var ikilledobjcount = this.m_failed_people_list.length;
 
-        var ileftvalidobj = this.m_init_all_people_count - ikilledobjcount - this.m_total_rescured_people_count;
+        //var ileftvalidobj = this.m_init_all_people_count - ikilledobjcount - this.m_total_rescured_people_count;
 
-        var bcannot_sucess = 0;
+        //var bcannot_sucess = 0;
 
-        //已经不可能营救完成了
-        if(ileftvalidobj + this.m_total_rescured_people_count < this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0)
-        {
-            bcannot_sucess = 1;
+        ////已经不可能营救完成了
+        //if(ileftvalidobj + this.m_total_rescured_people_count < this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0)
+        //{
+        //    bcannot_sucess = 1;
          
-        }
+        //}
 
-        if(this.m_total_rescured_people_count < this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0 && this.m_all_start_arch_waitfor_resure_people_list.length == 0)
-        {
-            bcannot_sucess = 1;
-        }
+        //if(this.m_total_rescured_people_count < this.m_total_need_rescur_people_count && this.m_rescureing_people_list.length == 0 && this.m_all_start_arch_waitfor_resure_people_list.length == 0)
+        //{
+        //    bcannot_sucess = 1;
+        //}
 
-        if(bcannot_sucess)
-        {
-            this.m_b_game_finished = 1;
-            this.m_b_game_successed = 0;
+        //if(bcannot_sucess)
+        //{
+        //    this.m_b_game_finished = 1;
+        //    this.m_b_game_successed = 0;
              
-            this.scheduleOnce(this.FD_Fail_Dlg.bind(this),1);
+        //    this.scheduleOnce(this.FD_Fail_Dlg.bind(this),1);
 
-        }
+        //}
     }
     //杀死小人
     Check_Kill_Escape_People()

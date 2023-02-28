@@ -712,7 +712,7 @@ export default class RopeGraphic extends cc.Component {
     }
 
 
-    //重新画线,绘制绳子
+    //重新画线,绘制绳子 
     ReDrawRopeLines()
     {
         this.graphics.clear(true);
@@ -731,7 +731,6 @@ export default class RopeGraphic extends cc.Component {
         var prev_obstcle =  null;
         var prev_pt=  null;
 
-        
         for(var ff=1;ff<this.m_all_pt_path_list.length;ff++)
         {
             var ff_pt:cc.Vec2 = this.m_all_pt_path_list[ff];
@@ -887,18 +886,22 @@ export default class RopeGraphic extends cc.Component {
     }
     //鼠标移动画线
     Set_Touch_Move_Pos(move_pos:cc.Vec2)
-    { 
+    {
+        
         this.m_last_moving_pt = move_pos;
         this.m_last_role_end_pt = this.Caculate_End_Joint_Role_Pt(move_pos,this.m_joint_radius) ;
 
         this.ReDrawRopeLines();
-
+                
         /*
         this.graphics.moveTo(this.m_start_joint_pt.x,this.m_start_joint_pt.y);
         this.graphics.lineTo(move_pos.x,move_pos.y);
         this.graphics.stroke();
         */
     }
+
+
+
     //清空数据
     ClearRope()
     {

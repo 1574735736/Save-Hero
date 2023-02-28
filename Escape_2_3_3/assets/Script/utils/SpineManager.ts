@@ -21,10 +21,12 @@ export default class SpineManager extends BaseInstanceClass {
         // console.log('²¥·Å¶¯»­', animationName, 'spinSkeleton', spinSkeleton, isLoop)
         if (startCallBack) {
             spinSkeleton.setStartListener(startCallBack);
-        }        
+        }
+        spinSkeleton.paused = false;
         spinSkeleton.loop = isLoop;
         spinSkeleton.timeScale = timeScale;
         spinSkeleton.animation = animationName;
+        
         // spinSkeleton.setAnimation(0,animationName,isLoop);
         if (completeCallback) {
             spinSkeleton.setCompleteListener(completeCallback);
@@ -38,6 +40,7 @@ export default class SpineManager extends BaseInstanceClass {
                 console.log("LoadSpin ", err)
                 return
             }
+            spinSkeleton.paused = false;
             spinSkeleton.skeletonData = spData;
             spinSkeleton.defaultSkin = skinName;
             spinSkeleton.setSkin(skinName);

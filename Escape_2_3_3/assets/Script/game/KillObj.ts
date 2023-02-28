@@ -628,9 +628,15 @@ export default class KillObj
             this.m_gragphic.moveTo(bullet_start_pt.x,bullet_start_pt.y);
        
             var addvec_norm = fire_vec.normalize();
-    
-            var iaddx = addvec_norm.x * 3000;
-            var iaddy = addvec_norm.y * 3000;
+
+            var lightLent = 750;
+            if (this.m_kill_obj_src_info.length) {
+               
+                lightLent = this.m_kill_obj_src_info.length;
+            }
+
+            var iaddx = addvec_norm.x * lightLent;
+            var iaddy = addvec_norm.y * lightLent;
  
 
             var all_prevenet_shap_list = this.m_parent_game.Get_All_Prevent_FireLine_Shape_Info_List();

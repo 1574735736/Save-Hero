@@ -66,7 +66,8 @@
                   
                 "typeid":7,
                 "initpos":[-90, -2],
-                "initrotation":0 
+                "initrotation":0 ,
+                "length":100
               
                 
                 
@@ -75,7 +76,8 @@
                   
                 "typeid":7,
                 "initpos":[90, 250],
-                "initrotation":180
+                "initrotation":180,
+                "length":100
                
                 
             } ,
@@ -83,8 +85,41 @@
                   
                 "typeid":7,
                 "initpos":[42, -197],
-                "initrotation":180
+                "initrotation":180,
+                "length":100
                
+                
+            } ,
+
+            {
+                  
+                "typeid":14,
+                "initpos":[200, 0],
+                "initrotation":0 
+                
+            }  ,
+            {
+                "typeid":15,
+                "initpos":[-72.5,0],
+                "initrotation":0,
+               
+                "move":{
+                    "movespeed":100,
+                    "movestart":[-72.5,500],
+                    "moveend":[-72.5,-500]
+                }
+                 
+            },
+            {
+                  
+                "typeid":16,
+                "initpos":[176, 0],
+                "initrotation":180,
+                "move":{
+                    "movespeed":100,
+                    "movestart":[176,500],
+                    "moveend":[176,-500]
+                }
                 
             } 
 
