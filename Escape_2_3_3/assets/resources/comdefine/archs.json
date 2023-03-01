@@ -374,7 +374,7 @@
             [
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
-                    "center_parent_pt":[0,3],
+                    "center_parent_pt":[0,0],
                     "src_offset_pos":[46,0],
                     "color":[247,0,0]
                 } 

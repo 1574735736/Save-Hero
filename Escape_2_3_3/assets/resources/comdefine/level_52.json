@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[-230,360]
+        "arch_pos":[-236,-401],
+        "link_pos":[243,-420]
     },
     "archend":
     {
         "typeid":2,
-        "arch_pos":[260,360]
+        "arch_pos":[260,360],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 
@@ -106,8 +108,9 @@
             
             {
                 "typeid":7,
-                "initpos":[0,-500],
-                "initrotation": 90 
+                "initpos":[0,400],
+                "initrotation": 270 ,
+                "length":800
             }  , 
             {
                 "typeid":4,

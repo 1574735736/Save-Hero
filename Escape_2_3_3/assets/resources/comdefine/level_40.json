@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-230,-480]
+        "arch_pos":[-230,-480],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     { 
@@ -22,12 +23,12 @@
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[160,110]
+                "pos":[160,120]
             } ,
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[-180,10]
+                "pos":[-180,20]
             }  
         ]
         
@@ -51,6 +52,11 @@
                 
             } ,{
                   
+                "typeid":8,
+                "obj_pos":[-262, -142] 
+                
+            } ,{
+                  
                 "typeid":9,
                 "obj_pos":[ 0, -250] 
                 
@@ -65,9 +71,10 @@
         [ 
          
             {
-                "typeid":1,
+                "typeid":13,
                 "initpos":[ 30, 220],
-                "initrotation":0
+                "initrotation":0,
+                "obj_pic_size":[360,36]
              
             }  , 
            
@@ -77,10 +84,10 @@
                 "initrotation":0,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":50
                 },
                 "move":{
-                    "movespeed":20,
+                    "movespeed":100,
                     "movestart":[-140,220],
                     "moveend":[ 200,220]
                 } 
@@ -89,7 +96,8 @@
             {
                 "typeid":7,
                 "initpos":[ -160, -140],
-                "initrotation":0
+                "initrotation":0,
+                "length":500
                 
              
             }  

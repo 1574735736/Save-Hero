@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":1,
-        "arch_pos":[-200,360]
+        "arch_pos":[-211,447],
+        "link_pos":[-127,518]
     },
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-230,-450]
+        "arch_pos":[-230,-450],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     { 
@@ -29,12 +31,15 @@
             {
                   
                 "typeid":6,
-                "obj_pos":[-230,260] 
+                "obj_pos":[-200,360] ,
+                "obj_pic_size":[400,40]
                 
-            } , {
+            } , 
+            {
                   
                 "typeid":6,
-                "obj_pos":[320,260] 
+                "obj_pos":[250,360]  ,
+                "obj_pic_size":[300,40]
                 
             } ,
 
@@ -42,20 +47,57 @@
             {
                   
                 "typeid":6,
-                "obj_pos":[-200,20] 
+                "obj_pos":[-150,200] ,
+                "obj_pic_size":[500,40]
                 
-            } , {
+            } , 
+
+            {
                   
                 "typeid":6,
-                "obj_pos":[360,20] 
+                "obj_pos":[300,200] ,
+                "obj_pic_size":[200,40]
                 
-            } 
-            , {
+            } , 
+            
+            {
                   
                 "typeid":6,
-                "obj_pos":[240,-230] 
+                "obj_pos":[137,40] ,
+                "obj_pic_size":[500,40]
                 
-            } 
+            } ,
+
+
+            {
+                  
+                "typeid":6,
+                "obj_pos":[-150,-140] ,
+                "obj_pic_size":[500,40]
+                
+            } , 
+
+            {
+                  
+                "typeid":6,
+                "obj_pos":[300,-140] ,
+                "obj_pic_size":[200,40]
+                
+            } , 
+            {
+                  
+                "typeid":6,
+                "obj_pos":[-200,-300] ,
+                "obj_pic_size":[400,40]
+                
+            } , 
+            {
+                  
+                "typeid":6,
+                "obj_pos":[250,-300]  ,
+                "obj_pic_size":[300,40]
+                
+            }
 
 
 
@@ -69,47 +111,49 @@
         [
             {
                   
-                "typeid":1, 
-                "initpos":[-100,150],
+                "typeid":13, 
+                "initpos":[0,278],
                 "initrotation":0
             },
             {
                  
-               "typeid":1, 
-               "initpos":[-100,-150],
+               "typeid":13, 
+               "initpos":[0,-228],
                "initrotation":0
            },
             {
                   
                 "typeid":2, 
-                "initpos":[-250,150],
+                "initpos":[-276,281],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":80
                 }
                 ,
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-250,150],
-                    "moveend":[  50,150]
+                    "movespeed":100,
+                    "movestart":[-276,281],
+                    "moveend":[  276,281]
                 }
 
             },
             {
                   
                 "typeid":2, 
-                "initpos":[-250,-150],
+                "initpos":[-276,-225],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":80
                 }
                 ,
                 "move":{
-                    "movespeed":40,
-                    "movestart":[-250,-150],
-                    "moveend":[ 50,-150]
+                    "movespeed":100,
+                    "movestart":[-276,-225],
+                    "moveend":[ 276,-225]
                 }
 
             }
