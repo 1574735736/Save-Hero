@@ -322,6 +322,7 @@ export default class game extends cc.Component
         startLink.setPosition(linkPosX, linkPosY);
         this.m_StartLinkAni = startLink.getChildByName("zhangai").getComponent(sp.Skeleton);
         this.m_StartLinkAni.paused = true;
+        startLink.zIndex = 80;
 
 
         //var btn_arch_start_gun = new MySprite("game/slop/q4");
@@ -898,6 +899,9 @@ export default class game extends cc.Component
                 ps.color = cc.color(ff_obj_src_info.color[0], ff_obj_src_info.color[1], ff_obj_src_info.color[2]);
             }
 
+            var img = ps.getComponent(cc.Sprite);
+            img.type = cc.Sprite.Type.SLICED;
+
             this.m_all_kill_obj_list.push(new_killobj);
         }
    
@@ -1416,11 +1420,12 @@ export default class game extends cc.Component
                 //1：矩形，2：圆形
                 //this.m_all_obstacle_info_list.push([1,leftpt,obj_valid_sizew]);
              
-               
 
+                var img = obj_node.getComponent(cc.Sprite);
+                img.type = cc.Sprite.Type.SLICED;
 
                 var obj_info  = new ObstacleOBJ(obsid);
-                obj_info.Init(obj_node, obstacle_gragphic, 1, leftpt, obj_valid_sizew);
+                obj_info.Init(obj_node, obstacle_gragphic, 1, leftpt, obj_valid_sizew, ff_src_info);
 
                 
 
@@ -1447,12 +1452,15 @@ export default class game extends cc.Component
                  //1：矩形，2：圆形
                 // this.m_all_obstacle_info_list.push([2,centerpt,radius]);
                  var obj_info  = new ObstacleOBJ(obsid);
-                 obj_info.Init(obj_node,obstacle_gragphic,2,centerpt,radius);
+                obj_info.Init(obj_node, obstacle_gragphic, 2, centerpt, radius, ff_src_info);
+
+                var img = obj_node.getComponent(cc.Sprite);
+                img.type = cc.Sprite.Type.SLICED;
  
                  this.m_all_obstacle_obj_list.push(obj_info);
  
             }
-
+            
             if (ff_src_info.color) {
                 var curColor = cc.color(ff_src_info.color[0], ff_src_info.color[1], ff_src_info.color[2]);
                 obj_node.color = curColor;

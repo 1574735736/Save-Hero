@@ -183,7 +183,7 @@
             "desc":" id:障碍物id,obj_pic:障碍物图片,obj_pos:障碍物位置,obj_pic_size:障碍物尺寸,obj_type:障碍物类型，为1的时候使用 obj_valid_left_pt，obj_valid_size代表左上角点，尺寸，为2 的时候obj_valid_center_pt，obj_radius代表圆形中心点和半径",
             "type":7,
             "namedesc":"竖向长矩形",
-            "obj_pic":"game/barrier/t23",
+            "obj_pic":"game/barrier/t25",
             "obj_pic_size":[60,200],
             "obj_type":1,
             "obj_type_desc":"1:矩形，2：圆形",
@@ -375,7 +375,7 @@
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,3],
-                    "src_offset_pos":[46,3],
+                    "src_offset_pos":[46,0],
                     "color":[247,0,0]
                 } 
             ]

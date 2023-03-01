@@ -604,8 +604,9 @@ export default class KillObj
             var parent_obj_centerpt = this.m_node.getPosition();
             var angle = this.m_node.angle;
 
-         
-            var degree = angle*Math.PI/180;
+            //console.log("angle     :" + angle);
+            var degree = angle * Math.PI / 180;
+            //console.log("degree     :" + degree);
     
             //开始点坐标
             var start_pt = parent_obj_centerpt;
