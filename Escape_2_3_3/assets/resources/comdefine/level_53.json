@@ -2,12 +2,14 @@
     "archstart":
     {
         "typeid":4,
-        "arch_pos":[230,360]
+        "arch_pos":[230,360],
+        "link_pos":[150,425]
     },
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-240,-360]
+        "arch_pos":[-240,-360],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     { 
@@ -22,32 +24,32 @@
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[  0,140]
+                "pos":[  0,60]
             } ,
             {
                 "peopleid":1,
-                "rotation":30,
-                "pos":[-30,120]
+                "rotation":-30,
+                "pos":[30,55]
             }  ,
             {
                 "peopleid":1,
-                "rotation":-30,
-                "pos":[30,120]
+                "rotation":30,
+                "pos":[-30,55]
             } ,
              {
                 "peopleid":1,
                 "rotation":180,
-                "pos":[  0,20]
+                "pos":[  0,-70]
             } ,
             {
                 "peopleid":1,
                 "rotation":150,
-                "pos":[-30,20]
+                "pos":[-30,-65]
             }  ,
             {
                 "peopleid":1,
                 "rotation":-150,
-                "pos":[30,20]
+                "pos":[30,-65]
             }  
         ]  
         
@@ -62,7 +64,8 @@
             {
                   
                 "typeid":5,
-                "obj_pos":[0,80] 
+                "obj_pos":[0,0] ,
+                "obj_pic_size":[100,100]
                 
             } 
 
@@ -76,38 +79,38 @@
             
             {
                 "typeid":4,
-                "initpos":[0,260],
+                "initpos":[0,200],
                 "initrotation":0 ,
                 "circlemove":{
                     "rotateing_rate":0.5,      
-                    "ciclemove_centerpt":[ 0,  80]
+                    "ciclemove_centerpt":[ 0,  20]
                 }
             }  ,
               {
                 "typeid":4,
-                "initpos":[0,-100],
+                "initpos":[0,-200],
                 "initrotation":0 ,
                 "circlemove":{
                     "rotateing_rate":0.5,      
-                    "ciclemove_centerpt":[ 0,  80]
+                    "ciclemove_centerpt":[ 0,  -0]
                 }
             }  ,
             {
               "typeid":4,
-              "initpos":[180,80],
+              "initpos":[200,0],
               "initrotation":0 ,
               "circlemove":{
                   "rotateing_rate":0.5,      
-                  "ciclemove_centerpt":[ 0,  80]
+                  "ciclemove_centerpt":[ -0,  0]
               }
           }   ,
           {
             "typeid":4,
-            "initpos":[-180,80],
+            "initpos":[-200,0],
             "initrotation":0 ,
             "circlemove":{
                 "rotateing_rate":0.5,      
-                "ciclemove_centerpt":[ 0,  80]
+                "ciclemove_centerpt":[ 20,  0]
             }
         }  
 
