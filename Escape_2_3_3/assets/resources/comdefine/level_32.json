@@ -113,47 +113,50 @@
                   
                 "typeid":13, 
                 "initpos":[0,278],
-                "initrotation":0
+                "initrotation":0,
+                "obj_pic_size":[600,29]
             },
             {
                  
                "typeid":13, 
                "initpos":[0,-228],
-               "initrotation":0
+               "initrotation":0,
+               "obj_pic_size":[600,29]
+               
            },
             {
                   
                 "typeid":2, 
-                "initpos":[-276,281],
+                "initpos":[-276,278],
                 "initrotation":0,
                 "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":80
+                    "rotateing_rate":100
                 }
                 ,
                 "move":{
                     "movespeed":100,
-                    "movestart":[-276,281],
-                    "moveend":[  276,281]
+                    "movestart":[-290,278],
+                    "moveend":[  280,278]
                 }
 
             },
             {
                   
                 "typeid":2, 
-                "initpos":[-276,-225],
+                "initpos":[-276,-228],
                 "initrotation":0,
                 "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":80
+                    "rotateing_rate":100
                 }
                 ,
                 "move":{
                     "movespeed":100,
-                    "movestart":[-276,-225],
-                    "moveend":[ 276,-225]
+                    "movestart":[-284,-228],
+                    "moveend":[ 285,-228]
                 }
 
             }

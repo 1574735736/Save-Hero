@@ -77,7 +77,7 @@
                 "obj_radius":40,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  ,
@@ -90,7 +90,7 @@
                 "obj_radius":40,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             } ,
@@ -103,7 +103,7 @@
                 "obj_radius":40,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }   ,
@@ -116,7 +116,7 @@
                 "obj_radius":40,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
 
                 

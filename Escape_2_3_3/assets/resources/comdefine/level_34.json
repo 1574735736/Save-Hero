@@ -70,7 +70,7 @@
                 "typeid":13, 
                 "initpos":[ -300,  0],
                 "initrotation":90 ,
-                "obj_pic_size":[600]
+                "obj_pic_size":[600,29]
     
             } ,{
               

@@ -42,7 +42,7 @@
              {
                   
                 "typeid":1,
-                "obj_pos":[100,-200] 
+                "obj_pos":[100,-250] 
                 
             } 
              
@@ -65,7 +65,7 @@
             {
                   
                 "typeid":7,
-                "initpos":[-90, -2],
+                "initpos":[-90, 0],
                 "initrotation":0 ,
                 "length":450
               
@@ -84,7 +84,7 @@
             {
                   
                 "typeid":7,
-                "initpos":[42, -197],
+                "initpos":[42, -250],
                 "initrotation":180,
                 "length":450
                

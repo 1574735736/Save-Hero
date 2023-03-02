@@ -32,8 +32,9 @@
             {
                   
                 "typeid":1,
-                "obj_pos":[114,100] ,
-                "obj_pic_size":[200,40]
+                "obj_pos":[40,0] ,
+                "obj_pic_size":[100,100]
+
             } 
         ]
     }
@@ -57,16 +58,17 @@
             {
                 "typeid":4,
                 "initpos":[280,0],
-                "initrotation":0  
+                "initrotation":0 
             } 
             ,
             {
                 "typeid":3,
                 "initpos":[-200,0],
                 "initrotation":0  ,
+                "obj_pic_size":[350,50],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
             } 
 

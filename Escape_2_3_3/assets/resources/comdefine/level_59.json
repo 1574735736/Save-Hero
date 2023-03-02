@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[240,-420]
+        "arch_pos":[240,-420],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 
@@ -17,17 +18,28 @@
     {
         "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
         "need_resure_min_people_count":25,
-        "arch_start_people_count":26 ,
+        "arch_start_people_count":24 ,
         "outer_people_list":[
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[ 80,110]
+                "pos":[ 70,120]
             } ,
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[ -80,-30]
+                "pos":[ 90,120]
+            } ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[ -70,-40]
+            }  
+            ,
+            {
+                "peopleid":1,
+                "rotation":0,
+                "pos":[ -90,-40]
             }   
         ]  
         
@@ -63,7 +75,7 @@
                 "initpos":[150,150],
                 "initrotation":0 ,
                 "circlemove":{
-                    "rotateing_rate":0.5,      
+                    "rotateing_rate":2,      
                     "ciclemove_centerpt":[ 0,  0]
                 }
             } , {
@@ -71,7 +83,7 @@
                 "initpos":[-150,-150],
                 "initrotation":0 ,
                 "circlemove":{
-                    "rotateing_rate":0.5,      
+                    "rotateing_rate":2,      
                     "ciclemove_centerpt":[ 0,  0]
                 }
             } 

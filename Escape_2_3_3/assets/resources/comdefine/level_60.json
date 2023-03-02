@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[240,-420]
+        "arch_pos":[240,-420],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 
@@ -17,7 +18,7 @@
     {
         "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
         "need_resure_min_people_count":10,
-        "arch_start_people_count":16 
+        "arch_start_people_count":20 
     }
     ,
     "obstacle":
@@ -37,63 +38,125 @@
         [ 
             {
                 "typeid":4,
-                "initpos":[300,100],
-                "initrotation":0 
+                "initpos":[360,100],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[360,100],
+                    "moveend":[ 160,100]
+                } 
             } , 
             {
                 "typeid":4,
-                "initpos":[200,100],
-                "initrotation":0  
+                "initpos":[260,100],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[260,100],
+                    "moveend":[ 60,100]
+                }  
             } , 
             {
                 "typeid":4,
-                "initpos":[100,100],
-                "initrotation":0  
+                "initpos":[160,100],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[160,100],
+                    "moveend":[ -40,100]
+                }   
             } , 
             {
                 "typeid":4,
-                "initpos":[0,100],
-                "initrotation":0  
+                "initpos":[60,100],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[60,100],
+                    "moveend":[ -140,100]
+                }   
             } , 
             {
                 "typeid":4,
-                "initpos":[-100,100],
-                "initrotation":0  
+                "initpos":[-40,100],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-40,100],
+                    "moveend":[ -240,100]
+                }   
             } , 
             {
                 "typeid":4,
-                "initpos":[-200,100],
+                "initpos":[-140,100],
                 "initrotation":0  
+                , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-140,100],
+                    "moveend":[ -340,100]
+                } 
             }  , 
             {
                 "typeid":4,
-                "initpos":[200, -80],
-                "initrotation":0  
+                "initpos":[140, -80],
+                "initrotation":0 , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[140,-80],
+                    "moveend":[ 340,-80]
+                } 
             } , 
             {
                 "typeid":4,
-                "initpos":[100,-80],
-                "initrotation":0  
+                "initpos":[40,-80],
+                "initrotation":0 , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[40,-80],
+                    "moveend":[ 240,-80]
+                }     
             } , 
             {
                 "typeid":4,
-                "initpos":[0,-80],
-                "initrotation":0  
+                "initpos":[-60,-80],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-60,-80],
+                    "moveend":[ 140,-80]
+                }    
             } , 
             {
                 "typeid":4,
-                "initpos":[-100,-80],
-                "initrotation":0  
+                "initpos":[-160,-80],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-160,-80],
+                    "moveend":[ 40,-80]
+                } 
+                
             } , 
             {
                 "typeid":4,
-                "initpos":[-200,-80],
-                "initrotation":0  
+                "initpos":[-260,-80],
+                "initrotation":0  , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-260,-80],
+                    "moveend":[ -60,-80]
+                }  
             } , 
             {
                 "typeid":4,
-                "initpos":[-300,-80],
-                "initrotation":0  
+                "initpos":[-360,-80],
+                "initrotation":0 , 
+                "move":{
+                    "movespeed":80,
+                    "movestart":[-360,-80],
+                    "moveend":[ -160,-80]
+                }   
             } 
         ]
 

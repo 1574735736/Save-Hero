@@ -545,42 +545,42 @@
             "type":1,
             "valid_w":400,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss1"
         },
         {
             "type":2,
             "valid_w":230,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss2"
         },
         {
             "type":3,
             "valid_w":125,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss3"
         },
         {
             "type":4,
             "valid_w":180,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss4"
         },
         {
             "type":5,
             "valid_w":150,
             "valid_h":150,
-            "obj_pos":[800,-480],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss5"
         },
         {
             "type":6,
             "valid_w":160,
             "valid_h":150,
-            "obj_pos":[800,-520],
+            "obj_pos":[900,-480],
             "obj_res":"prefab/boss6"
         }
     ]

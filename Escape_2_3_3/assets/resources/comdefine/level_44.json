@@ -53,7 +53,7 @@
                 "typeid":13,
                 "initpos":[160,60],
                 "initrotation":90,
-                "obj_pic_size":[200]
+                "obj_pic_size":[200,29]
              
             }  ,
           
@@ -61,7 +61,7 @@
                 "typeid":13,
                 "initpos":[ -100,120],
                 "initrotation":90,
-                "obj_pic_size":[200]
+                "obj_pic_size":[200,29]
              
             }  
             ,

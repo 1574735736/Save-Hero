@@ -69,14 +69,16 @@
             }   ,
             {
                   
-                "typeid":4,
-                "obj_pos":[430, 0] 
+                "typeid":1,
+                "obj_pos":[350, 0] ,
+                "obj_pic_size":[100,100]
                 
             }     ,
             {
                   
-                "typeid":4,
-                "obj_pos":[-430, 0] 
+                "typeid":1,
+                "obj_pos":[-350, 0] ,
+                "obj_pic_size":[100,100]
                 
             }    
         ]
@@ -90,7 +92,7 @@
                 "typeid":13,
                 "initpos":[0, 0],
                 "initrotation":0 ,
-                "obj_pic_size":[480,50]
+                "obj_pic_size":[480,29]
                 
             }  ,
             {

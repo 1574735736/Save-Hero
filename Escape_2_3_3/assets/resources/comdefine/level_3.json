@@ -29,17 +29,16 @@
             {
                   
                 "typeid":4,
-                "obj_pos":[-180,-130] ,
-                "obj_pic_size":[400,100],
-                "obj_valid_size":[400,100] 
+                "obj_pos":[-200,-150] ,
+                "obj_pic_size":[400,100] 
                 
             } ,
+            
             {
                   
                 "typeid":4,
-                "obj_pos":[180,130] ,
-                "obj_pic_size":[400,100],
-                "obj_valid_size":[400,100] 
+                "obj_pos":[160,130] ,
+                "obj_pic_size":[480,100]
             } 
 
         ]

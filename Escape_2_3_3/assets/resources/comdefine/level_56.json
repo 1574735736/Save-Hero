@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-240,-360]
+        "arch_pos":[-240,-360],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     { 
@@ -17,7 +18,7 @@
     {
         "desc":"need_resure_min_people_count:最终需要解救最低人数,arch_start_peoples_count:开始建筑人数",
         "need_resure_min_people_count":10,
-        "arch_start_people_count":2,
+        "arch_start_people_count":3,
         "outer_people_list":[
             {
                 "peopleid":1,
