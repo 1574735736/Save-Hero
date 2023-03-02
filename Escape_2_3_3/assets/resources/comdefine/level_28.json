@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-450]
+        "arch_pos":[230,-450],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 
@@ -28,14 +29,16 @@
 
             {
                   
-                "typeid":6,
-                "obj_pos":[0,140] 
+                "typeid":4,
+                "obj_pos":[0,140] ,
+                "obj_pic_size":[400,50]
                 
             } ,
             {
                   
-                "typeid":6,
-                "obj_pos":[0,-140] 
+                "typeid":4,
+                "obj_pos":[0,-140] ,
+                "obj_pic_size":[400,50]
                 
             }  
 

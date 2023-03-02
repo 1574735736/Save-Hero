@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-230,-480]
+        "arch_pos":[-230,-480],
+        "link_pos":[-243,-420]
     },
     "touchmovejoint":
     { 
@@ -56,6 +57,7 @@
                 "obj_pos":[-150,-150] 
                 
             } 
+    
 
         ]
     }
@@ -78,7 +80,7 @@
                 "initrotation":0     ,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }  
                
     
@@ -97,19 +99,33 @@
                 "initrotation":0     ,
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }  
                
     
-            }  ,{
+            } 
+            ,{
+              
+                "typeid":13, 
+                "initpos":[   40,  40],
+                "initrotation":90     ,
+                "obj_pic_size":[200,20]
+               
+    
+            } ,{
               
                 "typeid":2, 
                 "initpos":[   40,  40],
                 "initrotation":0     ,
                 "rotate":
                 {
-                    "rotateing_rate":10
-                }  
+                    "rotateing_rate":20
+                }  ,
+                "move":{
+                    "movespeed":60,
+                    "movestart":[37,131],
+                    "moveend":[ 41,-51]
+                }
                
     
             }

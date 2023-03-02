@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-480]
+        "arch_pos":[230,-480],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 

@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":3,
-        "arch_pos":[-230,-520]
+        "arch_pos":[-230,-520],
+        "link_pos":[0,-420]
     },
     "touchmovejoint":
     { 
@@ -30,37 +31,41 @@
             {
                   
                 "typeid":8,
-                "obj_pos":[-240, 0] 
+                "obj_pos":[-235, -20] ,
+                "obj_pic_size":[60,60]
                 
             },
             {
                   
                 "typeid":8,
-                "obj_pos":[ 40, -130] 
+                "obj_pos":[ 12, -129] ,
+                "obj_pic_size":[60,60]
                 
             } ,
             {
                   
                 "typeid":8,
-                "obj_pos":[ 280, -260] 
+                "obj_pos":[ 280, -260]
                 
             }  ,
             {
                   
                 "typeid":2,
-                "obj_pos":[ 280,  0] 
+                "obj_pos":[ 161, 30] ,
+                "obj_pic_size":[80,80]
                 
             }   ,
             {
                   
                 "typeid":8,
-                "obj_pos":[ -180, 200] 
+                "obj_pos":[ -220, 200] 
                 
             }  ,
             {
                   
                 "typeid":2,
-                "obj_pos":[ 130,  360] 
+                "obj_pos":[ 160,  321] , 
+                "obj_pic_size":[80,80]
                 
             }
 
@@ -77,9 +82,10 @@
                 "typeid":11,
                 "initpos":[-280, -200],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  , {
@@ -87,9 +93,10 @@
                 "typeid":11,
                 "initpos":[ -60, -200],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  
@@ -99,31 +106,34 @@
                 "typeid":11,
                 "initpos":[ -120, -20],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }   , 
             {
                   
                 "typeid":11,
-                "initpos":[  160, -60],
+                "initpos":[  82, -45],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  , 
             {
                   
                 "typeid":2,
-                "initpos":[ -20,240],
+                "initpos":[ -102,200],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  , 
@@ -132,9 +142,10 @@
                 "typeid":2,
                 "initpos":[240,200],
                 "initrotation":0,
+                "obj_pic_size":[80,80],
                 "rotate":
                 {
-                    "rotateing_rate":10
+                    "rotateing_rate":20
                 }
                 
             }  

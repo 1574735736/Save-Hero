@@ -7,7 +7,8 @@
     "archend":
     {
         "typeid":2,
-        "arch_pos":[230,-480]
+        "arch_pos":[230,-480],
+        "link_pos":[243,-420]
     },
     "touchmovejoint":
     { 
@@ -22,18 +23,24 @@
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[40,0]
+                "pos":[0,8]
             } ,
             {
                 "peopleid":1,
                 "rotation":0,
-                "pos":[100,0]
+                "pos":[60,8]
             } 
             ,{
                 "peopleid":1,
                 "rotation":0,
-                "pos":[160,0]
+                "pos":[120,8]
             }  
+            ,{
+                "peopleid":1,
+                "rotation":0,
+                "pos":[180,8]
+            }  
+           
            
         ]
     }
