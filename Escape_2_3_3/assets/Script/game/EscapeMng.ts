@@ -179,7 +179,7 @@ export default class EscapeMng
             iprevlevel = 1; 
         }
 
-        this.m_last_enter_level = 44; //Number(iprevlevel); 
+        this.m_last_enter_level = 42; //Number(iprevlevel); 
 
         let unlockLevel = MyLocalStorge.getItem("espace_unlock_level","");
         if (!unlockLevel) {

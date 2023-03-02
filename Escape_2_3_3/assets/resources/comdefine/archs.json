@@ -326,7 +326,7 @@
                    
                     "desc1":"从父物体中心点center_parent_pt偏移点位置出发，向src_offset_pos位置，这个方向的子弹,从src_offset_pos出发。speedtime:每隔几秒发射一次子弹,obj_pic:子弹图片,obj_pic_size:子弹图片尺寸",
                     "center_parent_pt":[0,0],
-                    "src_offset_pos":[50,0],
+                    "src_offset_pos":[45,5],
                     "speedtime":2,
                     "obj_pic":"game/killobj/feidao",
                     "obj_pic_size":[60,15],
@@ -345,19 +345,19 @@
             "bgraphic":0,
             "obj_pic":"game/barrier/t5",
             "anchropt":[0.5,0.5],
-            "obj_pic_size":[122,73], 
+            "obj_pic_size":[118,56], 
             "firelines":
             [
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,0],
-                    "src_offset_pos":[62,0],
+                    "src_offset_pos":[58,0],
                     "color":[247,0,0]
                 },
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,0],
-                    "src_offset_pos":[-62,0],
+                    "src_offset_pos":[-58,0],
                     "color":[247,0,0]
                 }
             ]
@@ -369,13 +369,13 @@
             "bgraphic":0,
             "obj_pic":"game/barrier/t2",
             "anchropt":[0.5,0.5],
-            "obj_pic_size":[96,73], 
+            "obj_pic_size":[87,56], 
             "firelines":
             [
                 {
                     "desc":"center_parent_pt默认或者不加为0,0，也就父节点中心点，加上就是父节点中心点加上这个偏移作为射线的起始点,与src_offset_pos组合成向量代表射线方向",
                     "center_parent_pt":[0,0],
-                    "src_offset_pos":[46,0],
+                    "src_offset_pos":[42,0],
                     "color":[247,0,0]
                 } 
             ]
