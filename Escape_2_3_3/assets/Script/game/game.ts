@@ -229,6 +229,8 @@ export default class game extends cc.Component
     m_CanMoveBg: boolean = false;
     m_CountTouch: boolean = true;
 
+    m_coinAni: sp.Skeleton = null;
+
     public static getInstance(): game {
         if (game._instance == null) {
             game._instance = new game();
@@ -650,7 +652,7 @@ export default class game extends cc.Component
 
         var guide = cc.find(this.m_panel + "guide", this.node);
         guide.active = true;
-        guide.zIndex = 50;
+        guide.zIndex = 90;
 
         //var light = cc.find("guide/img_light", this.node);
         //light.active = true;
@@ -908,52 +910,52 @@ export default class game extends cc.Component
     }
 
     //获得所有能挡住子弹和射线的形状
-    Get_All_Prevent_FireLine_Shape_Info_List()
-    {
-        var all_shape_info_list=  [];
+    //Get_All_Prevent_FireLine_Shape_Info_List()
+    //{
+    //    var all_shape_info_list=  [];
 
         
-        for(var ff=0;ff<this.m_all_obstacle_obj_list.length;ff++)
-        {
-            var ff_obj:ObstacleOBJ  = this.m_all_obstacle_obj_list[ff];
-            var ff_type = ff_obj.m_itype;
-            var ff_pt = ff_obj.m_left_center_pt;
-            var ff_size = ff_obj.m_valid_size;
-            var ff_radius= ff_obj.m_valid_radius;
+    //    for(var ff=0;ff<this.m_all_obstacle_obj_list.length;ff++)
+    //    {
+    //        var ff_obj:ObstacleOBJ  = this.m_all_obstacle_obj_list[ff];
+    //        var ff_type = ff_obj.m_itype;
+    //        var ff_pt = ff_obj.m_left_center_pt;
+    //        var ff_size = ff_obj.m_valid_size;
+    //        var ff_radius= ff_obj.m_valid_radius;
 
 
-            if(ff_type == 1)
-            {
-                all_shape_info_list.push([ff_type,ff_pt,ff_size,ff_obj]);
-            } 
-            else if(ff_type == 2)
-            {
-                all_shape_info_list.push([ff_type,ff_pt,ff_radius,ff_obj]);
-            }
+    //        if(ff_type == 1)
+    //        {
+    //            all_shape_info_list.push([ff_type,ff_pt,ff_size,ff_obj]);
+    //        } 
+    //        else if(ff_type == 2)
+    //        {
+    //            all_shape_info_list.push([ff_type,ff_pt,ff_radius,ff_obj]);
+    //        }
          
             
-        }
+    //    }
 
   
-        for(var ff=0;ff<this.m_all_kill_obj_list.length;ff++)
-        {
-            var killobj:KillObj = this.m_all_kill_obj_list[ff];
+    //    for(var ff=0;ff<this.m_all_kill_obj_list.length;ff++)
+    //    {
+    //        var killobj:KillObj = this.m_all_kill_obj_list[ff];
 
-            if(!killobj.IS_Shape_OBJ())
-            {
-                continue;
+    //        if(!killobj.IS_Shape_OBJ())
+    //        {
+    //            continue;
 
-            }
+    //        }
    
-            var shapeinfo = killobj.Get_Shape_Info();
-            all_shape_info_list.push(shapeinfo);
+    //        var shapeinfo = killobj.Get_Shape_Info();
+    //        all_shape_info_list.push(shapeinfo);
 
       
-        }
+    //    }
 
 
-        return all_shape_info_list;
-    }
+    //    return all_shape_info_list;
+    //}
 
     //获得所有遮挡子弹或者射线的普通shape形状信息
     Get_All_Obstacle_Shape_InfoList() 
@@ -967,16 +969,17 @@ export default class game extends cc.Component
             var ff_type = ff_obj.m_itype;
             var ff_pt = ff_obj.m_left_center_pt;
             var ff_size = ff_obj.m_valid_size;
-            var ff_radius= ff_obj.m_valid_radius;
+            var ff_radius = ff_obj.m_valid_radius;
+            var angle = ff_obj.m_obj_node.angle;
 
 
             if(ff_type == 1)
             {
-                all_shape_info_list.push([ff_type,ff_pt,ff_size,ff_obj]);
+                all_shape_info_list.push([ff_type, ff_pt, ff_size, ff_obj, angle]);
             } 
             else if(ff_type == 2)
             {
-                all_shape_info_list.push([ff_type,ff_pt,ff_radius,ff_obj]);
+                all_shape_info_list.push([ff_type, ff_pt, ff_radius, ff_obj, angle]);
             }
          
             
@@ -1106,19 +1109,23 @@ export default class game extends cc.Component
         }
         var boss_info = EscapeMng.GetInstance().Find_Detail_BossInfo_By_TypeID(boss_config_info.typeid);
 
+        this.m_coinAni = cc.find(this.m_panel + "ani_bassbeating", this.node).getComponent(sp.Skeleton);
+
         var self = this;
         cc.loader.loadRes(boss_info.obj_res, cc.Prefab, (e, p) => {
-            var pnode = cc.instantiate(p as cc.Prefab);
+            var pnode = cc.instantiate(p as cc.Prefab); 
             self.m_node.addChild(pnode, 30);
             pnode.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1]);
 
             this.m_HpBossTxt.node.parent.setPosition(boss_info.obj_pos[0], boss_info.obj_pos[1] + 700);
 
             var escapeBoss = new EscapeBoss();
-            escapeBoss.Init(pnode, boss_info, this.m_HpBossTxt, this.m_HpBossSlider, this.m_total_need_rescur_people_count);
+            escapeBoss.Init(this, pnode, boss_info, this.m_HpBossTxt, this.m_HpBossSlider, this.m_total_need_rescur_people_count);
             this.m_boss_info = escapeBoss;
             //this.m_boss_info.m_blood = this.m_total_need_rescur_people_count;
             //escapeBoss.SetText(this.m_total_need_rescur_people_count);
+            this.m_coinAni.node.setParent(pnode);
+            this.m_coinAni.node.setPosition(0, 0);
         });
 
     }
@@ -1188,7 +1195,7 @@ export default class game extends cc.Component
             this.m_node.addChild(pnode, 28);
             pnode.setSiblingIndex(1);
 
-            var peopleinfo = new EscapePeople(irand_peope_type,iid);
+            var peopleinfo = new EscapePeople(irand_peope_type, iid, this);
             peopleinfo.Init(pnode, ff_info);
 
             var speed = Utils.GetRandomNum(1, 3) * 0.2;
@@ -1284,7 +1291,7 @@ export default class game extends cc.Component
 
 
 
-            var peopleinfo2 = new EscapePeople(hh_peopleid,iid);
+            var peopleinfo2 = new EscapePeople(hh_peopleid, iid, this);
             peopleinfo2.Init(pnode2, ff_info);
             peopleinfo2.SetScale(0.24, EscapeMng.GetInstance().Get_Hero());
  
@@ -3923,49 +3930,129 @@ export default class game extends cc.Component
     UpdateFloorMove() {
         if (this.m_b_boss_start == 1 && this.m_b_boss_end == 0) {
 
+            if (this.isBossAttack) {
+                return;
+            }
+
+            var attack: number = Utils.GetRandomNum(0, this.m_total_rescured_people_count * 50);
+
             for (var i = 0; i < this.m_succesed_people_list.length; i++) {
                 var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
-                var speed: number = Utils.GetRandomNum(1, 3);
-                ff_people_info.Move_X(speed);
+                //var speed: number = Utils.GetRandomNum(1, 3);
+                //ff_people_info.Move_X(speed);
 
-                if (this.m_boss_info.m_blood > 0) {
+                ff_people_info.UpdateAttack(i == attack && this.isBossAttack == false);               
 
-                    var pos = this.m_boss_info.m_node.getPosition();
+                //if (this.m_boss_info.m_blood > 0) {
 
-                    var valid_w = this.m_boss_info.m_info.valid_w;
-                    var valid_h = this.m_boss_info.m_info.valid_h;
+                //    var pos = this.m_boss_info.m_node.getPosition();
 
-                    var people_poly_pt_list: cc.Vec2[] = ff_people_info.Get_Valid_Bound_Poly_Pt_List();
+                //    var valid_w = this.m_boss_info.m_info.valid_w;
+                //    var valid_h = this.m_boss_info.m_info.valid_h;
 
-                    var kill_poly_pt_list: cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_boss_info.m_node.angle);
-                    var bin = cc.Intersection.polygonPolygon(people_poly_pt_list, kill_poly_pt_list);
+                //    var people_poly_pt_list: cc.Vec2[] = ff_people_info.Get_Valid_Bound_Poly_Pt_List();
 
-                    if (bin) {
-                        this.m_boss_info.m_blood--;
-                        this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
-                        this.m_boss_info.SetText(this.m_boss_info.m_blood);
-                        ff_people_info.FateDeath();
-                        this.m_succesed_people_list.splice(i, 1);
-                        this.m_total_rescured_people_count--;
-                        this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;
-                        this.Refresh_People_Rescure_Count_Info();
-                    }
-                }
+
+
+                //    var kill_poly_pt_list: cc.Vec2[] = InterceptUtils.Get_Valid_Bound_Poly_Pt_List(pos, valid_w, valid_h, this.m_boss_info.m_node.angle);
+                //    var bin = cc.Intersection.polygonPolygon(people_poly_pt_list, kill_poly_pt_list);
+
+                //    if (bin) {
+                //        this.m_boss_info.m_blood--;
+                //        this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
+                //        this.m_boss_info.SetText(this.m_boss_info.m_blood);
+                        
+                //        ff_people_info.FateDeath();
+                //        this.m_succesed_people_list.splice(i, 1);
+                //        this.m_total_rescured_people_count--;
+                //        this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;
+                //        this.Refresh_People_Rescure_Count_Info();
+
+                //        this.CoinBossAni();
+
+                //    }
+                //}
             }
-            if (this.m_boss_info.m_blood <= 0) {
-                this.m_b_boss_end = 1;
-                this.FD_GameWin();
-                for (var i = 0; i < this.m_succesed_people_list.length; i++) {
-                    var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
-                    ff_people_info.Set_Node_Animate("shengli");
-                }
-            }
-            if (this.m_boss_info.m_blood > 0 && this.m_total_rescured_people_count <= 0) {
-                this.m_b_boss_end = 1;
-                this.FD_GameFail();
-            }
+
+          
         }
 
+    }
+    isBossAttack = false;
+    //boss 攻击
+    BossAttack(Count) {
+        this.isBossAttack = true;
+        for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+            if (i < Count) {
+                var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
+                ff_people_info.curAttackStatus = 3
+                ff_people_info.UpdateAttack(false);
+                this.m_succesed_people_list.splice(i, 1);
+                this.m_total_rescured_people_count--;
+                this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;
+                this.Refresh_People_Rescure_Count_Info();
+            }
+            else {
+                ff_people_info.curAttackStatus = 5;
+                ff_people_info.UpdateAttack(false);
+            }
+        }
+    }
+    //boss 攻击结束
+    BossEndAttack() {
+        this.isBossAttack = false;
+        this.GameEndStay();
+    }
+
+    //boss 被攻击
+    BossBeBet() {  
+        if (this.isBossAttack) {
+            return;
+        }
+        this.m_boss_info.m_blood--;
+        this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
+        this.m_boss_info.BeAssaulted(this.m_boss_info.m_blood);
+        //this.GameEndStay();
+    }
+
+    SortPeople() {
+        let ascPersons = this.m_succesed_people_list.sort((a, b) => a.m_node.getPosition().x - b.m_node.getPosition().x);
+        return ascPersons;
+    }
+
+    
+    GameEndStay() {
+        if (this.m_boss_info.m_blood <= 0) {
+            this.m_b_boss_end = 1;
+            this.FD_GameWin();
+            for (var i = 0; i < this.m_succesed_people_list.length; i++) {
+                var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
+                ff_people_info.Set_Node_Animate("shengli");
+            }
+        }
+        if (this.m_boss_info.m_blood > 0 && this.m_total_rescured_people_count <= 0) {
+            this.m_b_boss_end = 1;
+            this.FD_GameFail();
+        }
+    }
+
+    //播放被攻击金币特效
+    CoinBossAni() {
+        
+        if (this.m_coinAni.node.active) {
+            return
+        }
+
+        //var mul: number = Utils.GetRandomNum(1, 2);
+        //if (mul != 1) {
+        //    return;
+        //}
+
+        this.m_coinAni.node.active = true;
+        let self = this;
+        SpineManager.getInstance().playSpinAnimation(this.m_coinAni, "jb1", false, function () {
+            self.m_coinAni.node.active = false;
+        });
     }
 
     //判断营救是否结束了
@@ -4283,7 +4370,7 @@ export default class game extends cc.Component
 
            if(bneedreanim)
            {
-               people.TurnScale();
+             /*  people.TurnScale();*/
                people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
            }
         }
@@ -4336,7 +4423,7 @@ export default class game extends cc.Component
         people.SetPosition(posX, iy);
 
         //this.ReOrder_Resuing_Success_People(true);
-        people.TurnScale();
+      /*  people.TurnScale();*/
         people.Set_Node_Animate("daiji2", EscapeMng.GetInstance().Get_Hero());
          
         this.Refresh_People_Rescure_Count_Info();
@@ -4472,20 +4559,25 @@ export default class game extends cc.Component
             if (this.m_succesed_people_list.length > 0) {
                 this.txtEndCount.node.runAction(action);
                 this.EndMoveCamera();
-                this.m_boss_info.FateAttack();
+                //this.m_boss_info.FateAttack();
             }
             this.m_b_boss_start = 1;
             for (var i = 0; i < this.m_succesed_people_list.length; i++) {
                 var people: EscapePeople = this.m_succesed_people_list[i];
-                people.TurnScale();
-                people.Set_Node_Animate("benpao");
+                //people.TurnScale();
+                //people.Set_Node_Animate("benpao");
+                var pos = this.m_boss_info.m_node.getPosition();
+                var valid_w = this.m_boss_info.m_info.valid_w;
+                var tempX: number = Utils.GetRandomNum(10, 200);
+                people.InitAttack(pos, valid_w, tempX);
             }
         }
         else {
             this.m_b_boss_start = 1;
         }
-      
     }
+
+  
 
     FD_GameWin() {
 

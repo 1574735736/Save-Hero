@@ -1,5 +1,6 @@
 import InterceptUtils from "../utils/InterceptUtils";
-
+import SpineManager from "../utils/SpineManager";
+import Utils from "../utils/Utils";
 /*
 小人信息
 */
@@ -41,11 +42,14 @@ export default class EscapePeople
     m_JumpEndX: number = 0;
 
     //人在开始建筑的时候，分组序号，开始建筑人分成六组显示
-    m_start_arch_people_type_index:number =  0;
+    m_start_arch_people_type_index: number = 0;
 
-    constructor(ipeople_type, iid)
+    m_ParFunc = null;
+
+    constructor(ipeople_type, iid,pFunc)
     {
         this.m_id = iid;
+        this.m_ParFunc = pFunc;
 
     }
     //获得开始建筑区域分组
@@ -108,7 +112,7 @@ export default class EscapePeople
 
 
     FateDeath() {
-        this.Set_Node_Animate("gongji", 2, () => {
+        this.Set_Node_Animate("siwang2", 2, () => {
             this.m_node.destroy();
             this.m_node = null;
         });
@@ -185,12 +189,17 @@ export default class EscapePeople
         var wnode = this.m_node.getChildByName("p");//("w");
         var sp_com = wnode.getComponent(sp.Skeleton);
         sp_com.setToSetupPose();
+        sp_com.unscheduleAllCallbacks();
         sp_com.loop = index == 1 ? true : false;
-        sp_com.setAnimation(0, "" + aniname, true);   
+        sp_com.setAnimation(0, "" + aniname, sp_com.loop);   
 
         if (endCallBack) {
-            sp_com.setCompleteListener(endCallBack);
-        }  
+            sp_com.setCompleteListener(() => {
+                endCallBack();
+                sp_com.unscheduleAllCallbacks();
+            });
+        }
+        //SpineManager.getInstance().playSpinAnimation(sp_com, "" + aniname, index == 1, endCallBack)
     }
 
    
@@ -337,15 +346,120 @@ export default class EscapePeople
             var irate = this.m_in_role_curve_eplse_dt/iall_use_tick;
             this.Caculate_Set_Pos(irate);
             return;
-       }
-
-
-
-        
+       }        
 
         var ilefttime = this.m_in_role_curve_eplse_dt - iall_use_tick;
 
         this.On_Change_To_Next_Curve(parentgame,ilefttime);
         
+    }
+    //进行攻击
+    curAttackStatus: number = 0;  //当前攻击进行的阶段  0准备阶段 ， 1 冲刺阶段 ， 2攻击阶段 ，3 死亡过程阶段 ，4 等待动作执行 ,5 跑到位置后待机 
+    bossX: number = 0;
+    bossValidX: number = 0;
+    standPosX: number = 0
+    curAttack: number = 4; // 0 前进  1 攻击  2 返回 3 待机
+    bossAttackX: number = 0;
+
+    InitAttack(bossPos, valid_w ,standPosX) {
+        this.bossX = bossPos.x
+        this.bossValidX = valid_w;
+        this.standPosX = this.bossX - standPosX - this.bossValidX * 0.5;
+        this.bossAttackX = this.bossX - this.bossValidX * 0.5;
+    }
+
+    UpdateAttack(isAttack) {
+
+        if (this.curAttackStatus == 0) {
+    /*        this.TurnScale();*/
+            this.Set_Node_Animate("benpao2");            
+            this.curAttackStatus = 1;
+        }
+        else if (this.curAttackStatus == 1) {
+            var speed: number = Utils.GetRandomNum(1, 5);
+            if (this.m_node.getPosition().x < this.standPosX) {
+                this.Move_X(speed);
+            }
+            else {
+                var att: number = Utils.GetRandomNum(1, 15);    
+                this.curAttack == 4
+                if (att == 1) {
+                    this.curAttackStatus = 2
+                }
+                else {
+                    this.curAttackStatus = 5
+                }
+            }
+        }
+        else if (this.curAttackStatus == 2) {
+
+            if (this.curAttack == 4) {
+                this.Set_Node_Animate("benpao2");
+                this.curAttack = 0;
+            }
+            else if (this.curAttack == 0) {
+                var speed: number = Utils.GetRandomNum(1, 5);
+                if (this.m_node.getPosition().x < this.bossAttackX) {
+                    this.Move_X(speed);
+                }
+                else {
+                    this.curAttack = 1
+                }
+            }
+            else if (this.curAttack == 1) {
+                this.curAttack = 3;
+                var aniIdx = Utils.GetRandomNum(1, 5);
+          
+                this.Set_Node_Animate("gongji" + aniIdx, 2, () => {
+                    this.curAttack = 5
+                });
+                this.m_ParFunc.BossBeBet();
+            }
+            else if (this.curAttack == 2) {     
+                var speed: number = Utils.GetRandomNum(1, 5) * -1;
+                if (this.m_node.getPosition().x > this.standPosX) {
+                    if (this.m_node.scaleX > 0) {
+                        this.TurnScale();
+                    }
+
+                    this.Move_X(speed);
+                }
+                else {
+                    this.curAttack = 4
+                    if (this.m_node.scaleX < 0) {
+                        this.m_node.setScale(1, 1);
+                    }
+                    this.curAttackStatus = 5
+                }
+
+            }
+            else if (this.curAttack == 3) {   //等动作完成             
+                return
+            }
+            else if (this.curAttack == 5) {
+                this.Set_Node_Animate("benpao2");
+                this.curAttack = 2;
+            }
+        }
+        else if (this.curAttackStatus == 3) {
+            //var self = this;
+            //this.Set_Node_Animate("siwang2", 2, function () {
+            //    self.m_node.destroy();
+            //    self.m_node = null;
+            //});
+            this.FateDeath();
+            this.curAttackStatus = 6;
+        }
+        else if (this.curAttackStatus == 4) {
+            if (isAttack) {
+                this.curAttackStatus = 2;
+                this.curAttack = 4
+            }
+            return;
+        }
+        else if (this.curAttackStatus == 5) {
+            this.Set_Node_Animate("daiji2");
+            this.curAttackStatus = 4;
+        }
     }
 }

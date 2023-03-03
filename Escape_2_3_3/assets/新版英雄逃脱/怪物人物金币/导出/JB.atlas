@@ -1,0 +1,13 @@
+
+JB.png
+size: 47,47
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+JB
+  rotate: false
+  xy: 2, 2
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1

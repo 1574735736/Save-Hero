@@ -34,6 +34,7 @@ export default class GameEndWin extends cc.Component {
 
     ani_zhuanPan: sp.Skeleton = null;
     ani_reward: sp.Skeleton = null;
+    ani_coinflay: sp.Skeleton = null;
 
     startRowTimer: number = 0; //开始旋转时的时间戳；
     rowMilTimer: number = 667; //旋转一圈所有的时间；
@@ -70,6 +71,7 @@ export default class GameEndWin extends cc.Component {
 
         this.ani_zhuanPan = cc.find("ani_zhuanpan", this.node).getComponent(sp.Skeleton);
         this.ani_reward = cc.find("ani_reward", this.node).getComponent(sp.Skeleton);
+        this.ani_coinflay = cc.find("ani_flayani", this.node).getComponent(sp.Skeleton);
 
         this.onUpdateCoin();
         this.onTitleAction();
@@ -282,7 +284,7 @@ export default class GameEndWin extends cc.Component {
         //    this.onUpdateCoin();
         //}), cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); }))
         //this.node.runAction(func);
-           
+        var self = this;
         var func = cc.sequence(
             cc.delayTime(0.5),
             cc.callFunc(() => {
@@ -292,15 +294,21 @@ export default class GameEndWin extends cc.Component {
             }),
             cc.delayTime(1.5),
             cc.callFunc(() => {
-                console.log("old   " + EscapeMng.GetInstance().Get_Gold_Coin());    
+                this.ani_coinflay.node.active = true;
+                SpineManager.getInstance().playSpinAnimation(this.ani_coinflay, "jinbi", false, function () {
+                   
+                });
+            }), cc.delayTime(1.5), cc.callFunc(() => {
                 var nowCoin = this.TempGetCount + EscapeMng.GetInstance().Get_Gold_Coin();
                 EscapeMng.GetInstance().Set_Gold_Coin(nowCoin);
-                this.onUpdateCoin();
+                self.onUpdateCoin();
             })
-            , cc.delayTime(1.5), cc.callFunc(() => { this.OnBtnExit(); })
+            , cc.delayTime(1), cc.callFunc(() => {     
+
+                this.OnBtnExit();
+            })
         );
         this.node.runAction(func);
-
         
     }
 

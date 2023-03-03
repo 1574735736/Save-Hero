@@ -5,7 +5,7 @@ const {ccclass, property} = cc._decorator;
 /*
 适配工具类，加上这个脚本的节点自动对齐下方
 
-*/
+//*/
 
 
 @ccclass

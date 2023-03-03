@@ -341,10 +341,7 @@ export default class EscapeCacu
                     inter_ajuest_pt = inter_info[1];
                     intercept_obstacle_info = ff_info;
                     break;
-                }
-                
- 
-
+                }                 
             }
             else if(ff_type == 2)
             {

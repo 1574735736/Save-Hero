@@ -48,8 +48,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        0,
+        251,
+        1041,
         0,
         0,
         0,
@@ -151,8 +151,8 @@
       }
     ],
     "paused": false,
-    "defaultSkin": "default",
-    "defaultAnimation": "daiji",
+    "defaultSkin": "yp",
+    "defaultAnimation": "daiji2",
     "_preCacheMode": 0,
     "_cacheMode": 0,
     "loop": true,
@@ -163,13 +163,13 @@
     "_frameCache": null,
     "_curFrame": null,
     "_skeletonCache": null,
-    "_animationName": "daiji",
+    "_animationName": "daiji2",
     "_animationQueue": [],
     "_headAniInfo": null,
     "_playTimes": 0,
     "_isAniComplete": true,
     "_N$skeletonData": {
-      "__uuid__": "13344c87-edd7-4558-b041-d64cfa233b2d"
+      "__uuid__": "cbe49a6f-1f38-4b46-93a8-34aece5f0cfc"
     },
     "_N$_defaultCacheMode": 0,
     "_N$debugSlots": false,

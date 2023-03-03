@@ -1,6 +1,7 @@
 import InterceptUtils from "../utils/InterceptUtils";
 const { ccclass, property } = cc._decorator;
 import Utils from "../utils/Utils";
+import SpineManager from "../utils/SpineManager";
 
 @ccclass
 export default class EscapeBoss {
@@ -21,8 +22,15 @@ export default class EscapeBoss {
 
     m_totalBlood: number = 0;
 
+    isBeAss: boolean = false;
 
-    Init(pnode: cc.Node, pinfo, strTxt: cc.Label, BossSlider: cc.ProgressBar, totolNum: number) {
+    reduceHp: number = 8; //没减多少血进行一次攻击
+    reduceCount: number = 0; //达到减少的血量要求就进行攻击
+
+    m_parentFunc = null;
+
+
+    Init(parentFunc ,pnode: cc.Node, pinfo, strTxt: cc.Label, BossSlider: cc.ProgressBar, totolNum: number ) {
         this.m_node = pnode;
         this.m_info = pinfo;
         this.m_txtBlood = strTxt;
@@ -30,6 +38,7 @@ export default class EscapeBoss {
         this.m_totalBlood = totolNum;
         this.m_blood = totolNum;
         this.SetText(this.m_totalBlood);
+        this.m_parentFunc = parentFunc;
     }
 
     //绘制子弹区域，正式上线后不再使用
@@ -92,9 +101,15 @@ export default class EscapeBoss {
     }
 
     FateAttack() {
+        //this.Set_Node_Animate("gongji", 2, () => {
+        //    this.Set_Node_Animate("gongji2");
+        //});
         this.Set_Node_Animate("gongji", 2, () => {
-            this.Set_Node_Animate("gongji2");
+            this.Set_Node_Animate("daiji");
+            this.m_parentFunc.BossEndAttack();
+            this.isBeAss = false;
         });
+        
     }
 
 
@@ -108,9 +123,15 @@ export default class EscapeBoss {
     //设置人骨骼动画显示
     Set_Node_Animate(aniname: string, index: number = 1, callBack: Function = null) {
         if (this.m_spCom) {
+            this.m_spCom.unscheduleAllCallbacks();
             this.m_spCom.setToSetupPose();
-            this.m_spCom.loop = index == 1 ? true : false;
-            this.m_spCom.setAnimation(0, "" + aniname, true);
+            if (index == 1) {
+                this.m_spCom.loop = true;
+            }
+            else {
+                this.m_spCom.loop = false;
+            }
+            this.m_spCom.setAnimation(0, "" + aniname, index == 1);
             if (callBack) {
                 this.m_spCom.setCompleteListener(callBack);
             } 
@@ -120,16 +141,41 @@ export default class EscapeBoss {
         this.m_spCom = wnode.getComponent(sp.Skeleton);
         this.m_spCom.setToSetupPose();
 
-        this.m_spCom.loop = index == 1 ? true : false;
+        if (index == 1) {
+            this.m_spCom.loop = true;
+        }
+        else {
+            this.m_spCom.loop = false;
+        }
+
+        this.m_spCom.unscheduleAllCallbacks();
 
         if (callBack) {
             this.m_spCom.setCompleteListener(callBack);
         } 
 
-        this.m_spCom.setAnimation(0, "" + aniname, true);
+        this.m_spCom.setAnimation(0, "" + aniname, index == 1);
+        
+    }
 
-      
-  
+    BeAssaulted(blood: number) {
+        if (!this.isBeAss) {
+            this.isBeAss = true;
+            var self = this
+            this.m_parentFunc.CoinBossAni();
+            this.Set_Node_Animate("shouji", 2, function () {
+                self.isBeAss = false;
+                self.Set_Node_Animate("daiji")
+            });
+        }
+        this.reduceCount ++ ;
+        if (this.reduceHp <= this.reduceCount || blood == 0) { // 进行攻击
+            var count = this.reduceCount;
+            this.reduceCount = 0;
+            this.m_parentFunc.BossAttack(count);
+            this.FateAttack()
+        }
+        this.SetText(blood);
     }
 
     //设置角色血量
