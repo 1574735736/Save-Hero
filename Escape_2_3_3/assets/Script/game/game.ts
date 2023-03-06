@@ -1162,7 +1162,6 @@ export default class game extends cc.Component
             per_arr_people_count = 1;
         }
 
-        console.log("per_arr_people_count       :" + per_arr_people_count);
 
         var inArrIdx = 0;
         var ry: number = 0;
@@ -3631,11 +3630,11 @@ export default class game extends cc.Component
         var rescuinglist = this.m_rescureing_people_list.slice(0);
 
         //绘制小人碰撞盒
-        for(var ff=0;ff<rescuinglist.length;ff++)
-        {
-            var ff_people_info:EscapePeople = rescuinglist[ff];
-            ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
-        }
+        //for(var ff=0;ff<rescuinglist.length;ff++)
+        //{
+        //    var ff_people_info:EscapePeople = rescuinglist[ff];
+        //    ff_people_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
+        //}
 
         //this.m_boss_info.RedrawValidPoloyRegin(this.m_kill_obj_grapgic);
 
@@ -3982,28 +3981,37 @@ export default class game extends cc.Component
     //boss 攻击
     BossAttack(Count) {
         this.isBossAttack = true;
-        for (var i = 0; i < this.m_succesed_people_list.length; i++) {
-            if (i < Count) {
+        var number = 0;
+        for (var i = this.m_succesed_people_list.length -1 ; i >=  0; i--) {
+            number = number + 1;
+            if (number <= Count) {                
                 var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
-                ff_people_info.curAttackStatus = 3
-                ff_people_info.UpdateAttack(false);
+                //ff_people_info.curAttackStatus = 3
+                //ff_people_info.UpdateAttack(false);
+                ff_people_info.curAttackStatus = 6;
+                ff_people_info.FateDeath();                
+
                 this.m_succesed_people_list.splice(i, 1);
                 this.m_total_rescured_people_count--;
-                this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;
-                this.Refresh_People_Rescure_Count_Info();
+                this.m_total_rescured_people_count = this.m_total_rescured_people_count < 0 ? 0 : this.m_total_rescured_people_count;                
             }
             else {
                 ff_people_info.curAttackStatus = 5;
                 ff_people_info.UpdateAttack(false);
             }
         }
-    }
+        this.Refresh_People_Rescure_Count_Info();
+    } 
     //boss 攻击结束
     BossEndAttack() {
+        if (this.m_b_boss_end == 1) {
+            return
+        }
         this.isBossAttack = false;
         this.GameEndStay();
     }
-
+    reduceCount: number = 0 //达到减少的血量要求就进行攻击
+    reduceHp: number = 8; //没减多少血进行一次攻击
     //boss 被攻击
     BossBeBet() {  
         if (this.isBossAttack) {
@@ -4011,7 +4019,21 @@ export default class game extends cc.Component
         }
         this.m_boss_info.m_blood--;
         this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
-        this.m_boss_info.BeAssaulted(this.m_boss_info.m_blood);
+        
+        this.reduceCount++; 
+        if (this.reduceCount >= this.reduceHp   || this.m_boss_info.m_blood == 0 || this.reduceCount >= this.m_total_rescured_people_count) {
+            var count = this.reduceCount;
+            this.reduceCount = 0;
+            this.m_boss_info.FateAttack()
+            this.BossAttack(count);                        
+            this.m_boss_info.SetText(this.m_boss_info.m_blood);
+        }
+        else {
+            this.m_boss_info.BeAssaulted(this.m_boss_info.m_blood);
+        }
+
+
+
         //this.GameEndStay();
     }
 
@@ -4031,7 +4053,7 @@ export default class game extends cc.Component
             }
         }
         if (this.m_boss_info.m_blood > 0 && this.m_total_rescured_people_count <= 0) {
-            this.m_b_boss_end = 1;
+            this.m_b_boss_end = 1;            
             this.FD_GameFail();
         }
     }
@@ -4043,10 +4065,10 @@ export default class game extends cc.Component
             return
         }
 
-        //var mul: number = Utils.GetRandomNum(1, 2);
-        //if (mul != 1) {
-        //    return;
-        //}
+        var mul: number = Utils.GetRandomNum(1, 2);
+        if (mul != 1) {
+            return;
+        }
 
         this.m_coinAni.node.active = true;
         let self = this;
@@ -4573,7 +4595,8 @@ export default class game extends cc.Component
             }
         }
         else {
-            this.m_b_boss_start = 1;
+            //this.m_b_boss_start = 1;
+            this.FD_GameFail();
         }
     }
 
@@ -4630,6 +4653,7 @@ export default class game extends cc.Component
 
     FD_GameFail() {
 
+        this.m_boss_info.Set_Node_Animate("shengli")
         this.scheduleOnce(function () {
             var self = this;
             cc.loader.loadRes("prefab/gamefail", cc.Prefab, (ee, p) => {
@@ -4669,7 +4693,6 @@ export default class game extends cc.Component
     }
 
     onDestroy() {
-        console.log("game.onDestroy()");
         //隐藏banner广告
         if (cc.sys.platform == cc.sys.ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BannerAdManager", "JsCall_hideAd", "()V");

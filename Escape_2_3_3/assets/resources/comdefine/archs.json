@@ -543,7 +543,7 @@
     [
         {
             "type":1,
-            "valid_w":400,
+            "valid_w":220,
             "valid_h":150,
             "obj_pos":[900,-480],
             "obj_res":"prefab/boss1"
@@ -557,14 +557,14 @@
         },
         {
             "type":3,
-            "valid_w":125,
+            "valid_w":230,
             "valid_h":150,
             "obj_pos":[900,-480],
             "obj_res":"prefab/boss3"
         },
         {
             "type":4,
-            "valid_w":180,
+            "valid_w":220,
             "valid_h":150,
             "obj_pos":[900,-480],
             "obj_res":"prefab/boss4"
@@ -578,7 +578,7 @@
         },
         {
             "type":6,
-            "valid_w":160,
+            "valid_w":200,
             "valid_h":150,
             "obj_pos":[900,-480],
             "obj_res":"prefab/boss6"

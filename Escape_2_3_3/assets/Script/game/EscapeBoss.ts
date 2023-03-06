@@ -168,13 +168,13 @@ export default class EscapeBoss {
                 self.Set_Node_Animate("daiji")
             });
         }
-        this.reduceCount ++ ;
-        if (this.reduceHp <= this.reduceCount || blood == 0) { // 进行攻击
-            var count = this.reduceCount;
-            this.reduceCount = 0;
-            this.m_parentFunc.BossAttack(count);
-            this.FateAttack()
-        }
+        //this.reduceCount ++ ;
+        //if (this.reduceHp <= this.reduceCount || blood == 0) { // 进行攻击
+        //    var count = this.reduceCount;
+        //    this.reduceCount = 0;
+        //    this.m_parentFunc.BossAttack(count);
+        //    this.FateAttack()
+        //}
         this.SetText(blood);
     }
 

@@ -411,7 +411,9 @@ export default class EscapePeople
                 var aniIdx = Utils.GetRandomNum(1, 5);
           
                 this.Set_Node_Animate("gongji" + aniIdx, 2, () => {
-                    this.curAttack = 5
+                    if (this.curAttack == 3) {
+                        this.curAttack = 5
+                    }                    
                 });
                 this.m_ParFunc.BossBeBet();
             }
