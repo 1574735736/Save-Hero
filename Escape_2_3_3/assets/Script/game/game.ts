@@ -1127,7 +1127,7 @@ export default class game extends cc.Component
             this.m_coinAni.node.setParent(pnode);
             this.m_coinAni.node.setPosition(0, 0);
         });
-
+        this.reduceHp = Utils.GetRandomNum(6, 9);
     }
 
     //初始化所有逃生的小人
@@ -3933,7 +3933,7 @@ export default class game extends cc.Component
                 return;
             }
 
-            var attack: number = Utils.GetRandomNum(0, this.m_total_rescured_people_count * 50);
+            var attack: number = Utils.GetRandomNum(0, this.m_total_rescured_people_count * 10);
 
             for (var i = 0; i < this.m_succesed_people_list.length; i++) {
                 var ff_people_info: EscapePeople = this.m_succesed_people_list[i];
@@ -4017,6 +4017,16 @@ export default class game extends cc.Component
         if (this.isBossAttack) {
             return;
         }
+
+        //var mul: number = Utils.GetRandomNum(1, 5);
+        //if (mul != 1) {
+        //    return;
+        //}
+
+        if (this.m_boss_info.isBeAss) {
+            return;
+        }
+
         this.m_boss_info.m_blood--;
         this.m_boss_info.m_blood = this.m_boss_info.m_blood < 0 ? 0 : this.m_boss_info.m_blood;
         
@@ -4027,6 +4037,7 @@ export default class game extends cc.Component
             this.m_boss_info.FateAttack()
             this.BossAttack(count);                        
             this.m_boss_info.SetText(this.m_boss_info.m_blood);
+            this.reduceHp = Utils.GetRandomNum(6, 9);
         }
         else {
             this.m_boss_info.BeAssaulted(this.m_boss_info.m_blood);
@@ -4321,6 +4332,7 @@ export default class game extends cc.Component
 
        
         this.Refresh_People_Rescure_Count_Info();
+        sdkManager.GetInstance().vibrationEffect();
     }
 
     //营救成功后，分组显示营救的人

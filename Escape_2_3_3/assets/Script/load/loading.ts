@@ -27,7 +27,7 @@ export default class loading extends cc.Component {
     private static _instance: loading = null; 
 
 
-    loadingTime = 1000;//5秒
+    loadingTime = 8000;//5秒
     timer = 0;
 
     updateLock = false;

@@ -27,7 +27,7 @@ export default class GetSkinView extends cc.Component {
         GetSkinView._instance = this;
         var frame = this.node.getChildByName("Frame");
         frame.setScale(0, 0);
-        frame.runAction(cc.scaleTo(0.3, 1, 1));
+        frame.runAction(cc.scaleTo(0.5, 1, 1).easing(cc.easeBackOut()));
     }
 
     start () {

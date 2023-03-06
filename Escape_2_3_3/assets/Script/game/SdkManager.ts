@@ -52,6 +52,16 @@ export default class SdkManager{
 
     }
 
+    // 震动效果
+    public vibrationEffect() {
+        if (cc.sys.os === cc.sys.OS_IOS) {
+            //调用苹果的方法;
+        }
+        else if (cc.sys.os === cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "vibrator", "(I)V", 100);
+        }
+    }
+
 
     public static JavaCall_AdLoadSuccess(): void  {
         if (SdkManager.GetInstance().callBackSuccess) {

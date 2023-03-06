@@ -34,7 +34,7 @@ export default class SkinView extends cc.Component {
     onLoad() {
         SkinView._instance = this;
         this.node.setScale(0, 0);
-        this.node.runAction(cc.scaleTo(0.3, 1, 1));
+        this.node.runAction(cc.scaleTo(0.5, 1, 1).easing(cc.easeBackOut()));
     }
 
     start () {
@@ -79,7 +79,7 @@ export default class SkinView extends cc.Component {
         //    Game.getInstance().onUpdateHero();
         //}
         BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
-        var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
+        var actionScale = cc.sequence(cc.scaleTo(0.5, 0, 0).easing(cc.easeBackIn()), cc.callFunc(() => {
             this.node.destroy();
         }));//.easing(cc.easeQuarticActionOut)
         this.node.runAction(actionScale);

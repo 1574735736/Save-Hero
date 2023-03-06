@@ -65,7 +65,9 @@ export default class selgk extends cc.Component {
         }
 
         this.node.setScale(0, 0);
-        this.node.runAction(cc.scaleTo(0.3, 1, 1));
+        var action = cc.scaleTo(0.5, 1, 1).easing(cc.easeBackOut())
+        //action.easing(cc.easeBackInOut)
+        this.node.runAction(action);
 
         this.updateSelgk();
         this.onUpdateCoin();
@@ -155,7 +157,7 @@ export default class selgk extends cc.Component {
     OnBtnExit()
     {
         BackGroundSoundUtils.GetInstance().PlayEffect("effect_button");
-        var actionScale = cc.sequence(cc.scaleTo(0.3, 0, 0), cc.callFunc(() => {
+        var actionScale = cc.sequence(cc.scaleTo(0.5, 0, 0).easing(cc.easeBackIn()), cc.callFunc(() => {
             this.node.destroy();
         }));
         this.node.runAction(actionScale);
